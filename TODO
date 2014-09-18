@@ -1,0 +1,19 @@
+Add support for
+ - mboost
+ - CoxBoost
+ - gbm?
+ - GAMboost
+ - lars
+ - penalized
+ - glmnet
+ - stepwise selection (step / MASS:stepAIC)
+ - gamboostLSS
+ - random forests?
+ - ... have a look at the machine learning task view
+
+Add support for
+  a) additional arguments in the fitters
+  b) a formula interface
+  c) add computation of phat (i.e. stability paths)
+  d) check in plotting function if phat exists
+

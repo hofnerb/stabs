@@ -1,0 +1,16 @@
+Package: stabs
+Title: Stability Selection
+Version: 0.1-0
+Date: 2014-xx-yy
+Authors@R: c(person("Benjamin", "Hofner", role = c("aut", "cre"),
+	            email = "benjamin.hofner@fau.de"),
+       	     person("Torsten", "Hothorn", role = c("aut")))
+Description: Resampling procedures to assess the stability of selected variables
+    with additional finite sample error control for high dimensional variable
+    selection procedures such as Lasso or boosting
+Depends: R (>= 2.14.0), methods, stats, parallel
+Imports: mboost (> 2.3-0)
+Suggests: glmnet, TH.data, hdi, lars
+LazyData: yes
+License: GPL-2
+URL: http://r-forge.r-project.org/projects/stabsel/

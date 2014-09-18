@@ -1,0 +1,242 @@
+
+R version 3.1.1 (2014-07-10) -- "Sock it to Me"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library("stabs")
+Loading required package: parallel
+> library("mboost")
+This is mboost 2.3-1. See 'package?mboost' and the NEWS file
+for a complete list of changes.
+
+> library("glmnet")
+Loading required package: Matrix
+Loaded glmnet 1.9-8
+
+> library("lars")
+Loaded lars 1.2
+
+> library("TH.data")
+> 
+> ## load data set
+> data("bodyfat", package = "TH.data")
+> ## and set seed
+> set.seed(1234)
+> 
+> ################################################################################
+> ### stabsel with mboost
+> mod <- glmboost(DEXfat ~ ., data = bodyfat)
+> 
+> ## compute cutoff ahead of running stabsel to see if it is a sensible
+> ## parameter choice.
+> ##   p = ncol(bodyfat) - 1 (= Outcome) + 1 ( = Intercept)
+> stabsel_parameters(q = 3, PFER = 1, p = ncol(bodyfat) - 1 + 1,
++                    sampling.type = "MB")
+Stability Selection without further assumptions
+Cutoff: 0.95; q: 3; PFER:  1 
+> ## the same:
+> stabsel_parameters(mod, q = 3, PFER = 1, sampling.type = "MB")
+Stability Selection without further assumptions
+Cutoff: 0.95; q: 3; PFER:  1 
+> ## the same:
+> stabsel(mod, q = 3, PFER = 1, sampling.type = "MB", eval = FALSE)
+Stability Selection without further assumptions
+Cutoff: 0.95; q: 3; PFER:  1 
+> 
+> ## now run stability selection
+> (sbody <- stabsel(mod, q = 3, PFER = 1, sampling.type = "MB"))
+	Stability Selection without further assumptions
+
+Selected base-learners:
+waistcirc   hipcirc 
+        3         4 
+
+Selection probabilities:
+ (Intercept)          age elbowbreadth  kneebreadth     anthro3c     anthro3b 
+        0.00         0.00         0.00         0.02         0.10         0.11 
+     anthro4     anthro3a    waistcirc      hipcirc 
+        0.12         0.66         0.99         1.00 
+
+Cutoff: 0.95; q: 3; PFER:  1 
+
+> opar <- par(mai = par("mai") * c(1, 1, 1, 2.7))
+> plot(sbody, type = "paths", ymargin = 6)
+> par(opar)
+> plot(sbody)
+> 
+> ################################################################################
+> ### run stability selection with lasso (from glmnet)
+> stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
++                 cutoff = 0.75, PFER = 1)
+> stab
+	Stability Selection with unimodality assumption
+
+Selected base-learners:
+waistcirc   hipcirc 
+        2         3 
+
+Selection probabilities:
+         age elbowbreadth  kneebreadth     anthro3b      anthro4     anthro3c 
+        0.00         0.00         0.00         0.09         0.09         0.11 
+    anthro3a    waistcirc      hipcirc 
+        0.33         0.94         0.97 
+
+Cutoff: 0.75; q: 2; PFER(*):  0.454 
+   (*) or expected number of low selection probability variables
+
+> plot(stab, type = "maxsel")
+> 
+> ### compare results with hdi
+> if (require("hdi")) {
++     stab_hdi <- stability(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
++                           EV = 1, threshold = 0.75)
++     stab_hdi
++     sort(stab_hdi$freq)
++ }
+Loading required package: hdi
+Loading required package: linprog
+Loading required package: lpSolve
+Loading required package: MASS
+Loading required package: scalreg
+         age elbowbreadth  kneebreadth      anthro4     anthro3c     anthro3b 
+        0.00         0.00         0.02         0.10         0.11         0.13 
+    anthro3a    waistcirc      hipcirc 
+        0.60         0.98         1.00 
+> 
+> stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
++                 cutoff = 0.75, PFER = 1, sampling.type = "MB")
+> stab
+	Stability Selection without further assumptions
+
+Selected base-learners:
+waistcirc   hipcirc 
+        2         3 
+
+Selection probabilities:
+         age elbowbreadth  kneebreadth     anthro3b     anthro3c      anthro4 
+        0.00         0.00         0.02         0.06         0.06         0.09 
+    anthro3a    waistcirc      hipcirc 
+        0.38         0.90         0.95 
+
+Cutoff: 0.75; q: 2; PFER:  0.889 
+
+> plot(stab, type = "maxsel")
+> 
+> ################################################################################
+> ### with package lars
+> stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
++                 fitfun = lars.stepwise,
++                 cutoff = 0.75, PFER = 1, sampling.type = "MB")
+> stab
+	Stability Selection without further assumptions
+
+No base-learner selected
+
+Selection probabilities:
+         age elbowbreadth  kneebreadth     anthro3c      anthro4     anthro3a 
+        0.01         0.01         0.06         0.08         0.10         0.13 
+     hipcirc    waistcirc     anthro3b 
+        0.50         0.51         0.60 
+
+Cutoff: 0.75; q: 2; PFER:  0.889 
+
+> plot(stab, type = "maxsel")
+> 
+> set.seed(1234)
+> stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
++                 fitfun = lars.lasso,
++                 cutoff = 0.75, PFER = 1, sampling.type = "MB")
+> stab
+	Stability Selection without further assumptions
+
+Selected base-learners:
+waistcirc   hipcirc 
+        2         3 
+
+Selection probabilities:
+         age elbowbreadth  kneebreadth     anthro3b     anthro3c      anthro4 
+        0.00         0.00         0.00         0.01         0.01         0.03 
+    anthro3a    waistcirc      hipcirc 
+        0.11         0.92         0.92 
+
+Cutoff: 0.75; q: 2; PFER:  0.889 
+
+> plot(stab, type = "maxsel")
+> 
+> ## check data.frame interface
+> set.seed(1234)
+> stab.df <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
++                    fitfun = lars.lasso,
++                    cutoff = 0.75, PFER = 1, sampling.type = "MB")
+> stab.df
+	Stability Selection without further assumptions
+
+Selected base-learners:
+waistcirc   hipcirc 
+        2         3 
+
+Selection probabilities:
+         age elbowbreadth  kneebreadth     anthro3b     anthro3c      anthro4 
+        0.00         0.00         0.00         0.01         0.01         0.03 
+    anthro3a    waistcirc      hipcirc 
+        0.11         0.92         0.92 
+
+Cutoff: 0.75; q: 2; PFER:  0.889 
+
+> stopifnot(all.equal(stab$max, stab.df$max))
+> ## and with explicit intercept?
+> set.seed(1234)
+> stab.int <- stabsel(x = bodyfat[, -2], y = bodyfat[,2], intercept = TRUE,
++                     fitfun = lars.lasso,
++                     cutoff = 0.75, PFER = 1, sampling.type = "MB")
+> stab.int
+	Stability Selection without further assumptions
+
+Selected base-learners:
+waistcirc   hipcirc 
+        3         4 
+
+Selection probabilities:
+ (Intercept)          age elbowbreadth  kneebreadth     anthro3b     anthro3c 
+        0.00         0.00         0.00         0.00         0.01         0.01 
+     anthro4     anthro3a    waistcirc      hipcirc 
+        0.03         0.11         0.92         0.92 
+
+Cutoff: 0.75; q: 2; PFER:  0.8 
+
+> stopifnot(all.equal(stab$max, stab.int$max[-1]))
+> 
+> ################################################################################
+> if (FALSE) {
++ ## Lasso
++ library("lars")
++ 
++ lars <- lars(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2], max.steps = 2)
++ coef(lars)[10,]
++ lars <- update(lars, x = as.matrix(bodyfat[1:10, -2]), y = bodyfat[1:10,2])
++ 
++ library("glmnet")
++ mod <- glmnet(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
++               lambda = seq(0, 20, length = 1000))
++ plot(mod)
++ cf <- coef(mod)[, apply(coef(mod), 2, function(x) sum(x != 0)) == 3]
++ selected <- names(cf[cf[, 1] != 0, 1])
++ 
++ ## caret: http://topepo.github.io/caret/modelList.html
++ }
+> 
+> proc.time()
+   user  system elapsed 
+  5.887   0.481   5.727 
