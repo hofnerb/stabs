@@ -52,11 +52,12 @@ plot(stab, type = "maxsel")
 
 ################################################################################
 ### with package lars
-stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
-                fitfun = lars.stepwise,
-                cutoff = 0.75, PFER = 1, sampling.type = "MB")
-stab
-plot(stab, type = "maxsel")
+set.seed(1234)
+stab.stepwise <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
+                         fitfun = lars.stepwise,
+                         cutoff = 0.75, PFER = 1, sampling.type = "MB")
+stab.stepwise
+plot(stab.stepwise, type = "maxsel")
 
 set.seed(1234)
 stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
@@ -79,6 +80,27 @@ stab.int <- stabsel(x = bodyfat[, -2], y = bodyfat[,2], intercept = TRUE,
                     cutoff = 0.75, PFER = 1, sampling.type = "MB")
 stab.int
 stopifnot(all.equal(stab$max, stab.int$max[-1]))
+
+################################################################################
+### use args.fitfun
+set.seed(1234)
+stab.args <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
+                     fitfun = lars.lasso,
+                     args.fitfun = list(type = "stepwise"),
+                     cutoff = 0.75, PFER = 1, sampling.type = "MB")
+stab.args
+stopifnot(all.equal(stab.stepwise$max, stab.args$max))
+
+################################################################################
+### get length of formula
+
+fm <- DEXfat ~ bbs(age) + bbs(waistcirc) + bols(hipcirc) + bols(elbowbreath)
+length(strsplit(deparse(fm), " \\+ ")[[1]])
+
+## now this depends on the data...
+fm <- DEXfat ~ .
+length(strsplit(deparse(fm), " \\+ ")[[1]])
+
 
 ################################################################################
 if (FALSE) {

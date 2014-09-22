@@ -196,7 +196,8 @@ check_folds <- function(folds, B, n, sampling.type) {
     folds
 }
 
-run_stabsel <- function(fitter, n, p, cutoff, q, PFER, folds, B, assumption,
+run_stabsel <- function(fitter, args.fitter,
+                        n, p, cutoff, q, PFER, folds, B, assumption,
                         sampling.type, papply, verbose, FWER, eval, names, ...) {
 
     folds <- check_folds(folds, B = B, n = n, sampling.type = sampling.type)
@@ -215,7 +216,8 @@ run_stabsel <- function(fitter, n, p, cutoff, q, PFER, folds, B, assumption,
     ## fit model on subsamples;
     ## Depending on papply, this is done sequentially or in parallel
     res <- matrix(nrow = ncol(folds), byrow = TRUE,
-                  unlist(papply(1:ncol(folds), fitter, folds = folds, q = q, ...)))
+                  unlist(papply(1:ncol(folds), fitter, folds = folds, q = q,
+                                args.fitfun = args.fitter, ...)))
     colnames(res) <- names
 
     ### TODO: Currently stability paths "phat" are missing

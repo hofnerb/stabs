@@ -69,3 +69,11 @@ lars.stepwise <- function(x, y, q, ...) {
     names(ret) <- colnames(x)
     ret
 }
+
+## mboost.glmboost <- function(formula, data, weights, ...) {
+##     if (!require("mboost"))
+##         stop("Package ", sQuote("mboost"), " needed but not available")
+##
+##     ## fit model
+##     fit <- glmboost(formula, data, weights, ...)
+## }
