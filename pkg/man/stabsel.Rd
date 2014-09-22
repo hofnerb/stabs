@@ -14,7 +14,8 @@
 stabsel(x, ...)
 
 ## a method to fit models with stability selection
-\method{stabsel}{matrix}(x, y, fitfun = glmnet.lasso, cutoff, q, PFER,
+\method{stabsel}{matrix}(x, y, fitfun = glmnet.lasso,
+        args.fitfun = list(), cutoff, q, PFER,
         folds = cv(rep(1, nrow(x)), type = "subsampling", B = B),
         B = ifelse(sampling.type == "MB", 100, 50),
         assumption = c("unimodal", "r-concave", "none"),
@@ -44,6 +45,9 @@ stabsel(x, ...)
     each model \code{q}. The function then needs to fit the model and to
     return a logical vector that indicates which variable was selected
     (among the \code{q} selected variables).}
+  \item{args.fitfun}{a named list containing additional arguments that are
+    passed to the fitting function; see also argument \code{args} in
+    \code{\link{do.call}}.}
   \item{cutoff}{cutoff between 0.5 and 1. Preferably a value between 0.6
     and 0.9 should be used.}
   \item{q}{number of (unique) selected variables (or groups of variables

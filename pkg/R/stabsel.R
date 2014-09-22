@@ -6,11 +6,10 @@ stabsel <- function(x, ...) {
 
 ### TODO: parallelization ala cvrisk needed! Seems to work?
 ### TODO: Use same arguments for .mboost und .formula
-### TODO: Add args.fitfun = list() that takes additional arguments for the
-### fitter.
 ### TODO: Should y be a matrix? Perhaps we need this for survival data which
 ### might be specified as a matrix?
-stabsel.matrix <- function(x, y, fitfun = glmnet.lasso, cutoff, q, PFER,
+stabsel.matrix <- function(x, y, fitfun = glmnet.lasso, args.fitfun = list(),
+                           cutoff, q, PFER,
                            folds = cv(rep(1, nrow(x)), type = "subsampling", B = B),
                            B = ifelse(sampling.type == "MB", 100, 50),
                            assumption = c("unimodal", "r-concave", "none"),
@@ -39,13 +38,15 @@ stabsel.matrix <- function(x, y, fitfun = glmnet.lasso, cutoff, q, PFER,
 
     ## define fitting function;
     ## the function implicitly knows x and y as it is defined in this environment
-    fit_model <- function(i, folds, q) {
+    fit_model <- function(i, folds, q, args.fitfun) {
         inbag <- as.logical(folds[, i])
-        do.call(fitfun, list(x = x[inbag, ], y = y[inbag, ], q = q))
+        do.call(fitfun, c(list(x = x[inbag, ], y = y[inbag, ], q = q),
+                          args.fitfun))
     }
 
     nms <- colnames(x)
-    ret <- run_stabsel(fitter = fit_model, n = n, p = p, cutoff = cutoff, q = q,
+    ret <- run_stabsel(fitter = fit_model, args.fitter = args.fitfun,
+                n = n, p = p, cutoff = cutoff, q = q,
                 PFER = PFER, folds = folds, B = B, assumption = assumption,
                 sampling.type = sampling.type, papply = papply,
                 verbose = verbose, FWER = FWER, eval = eval, names = nms, ...)
@@ -63,7 +64,54 @@ stabsel.data.frame <- function(x, y, intercept = FALSE, ...) {
     stabsel(x, y, ...)
 }
 
-stabsel.formula <- function(formula, ...) {
+
+### TODO: What about weights?
+### n <- sum(weights)
+stabsel.formula <- function(formula, data, weights = rep(1, nrow(data)), fitfun = glmnet.lasso,
+                            args.fitfun = list(), p = NULL, cutoff, q, PFER,
+                            folds = cv(weights, type = "subsampling", B = B),
+                            B = ifelse(sampling.type == "MB", 100, 50),
+                            assumption = c("unimodal", "r-concave", "none"),
+                            sampling.type = c("SS", "MB"),
+                            papply = mclapply, verbose = TRUE, FWER, eval = TRUE,
+                            ...) {
+
+    warning("This function is very experimental at the moment")
+
+    cll <- match.call()
+    ## TODO: ??? How do I get this for all formulae?
+    ## perhaps one can fit the model once and obtain p <- length(coef)
+
+    ## try to guess p
+    if (is.null(p))
+        p <- length(strsplit(deparse(formula), " \\+ ")[[1]])
+    n <- nrow(data)
+
+    ## needed here to make B and folds happy
+    sampling.type <- match.arg(sampling.type)
+    if (sampling.type == "MB")
+        assumption <- "none"
+    else
+        assumption <- match.arg(assumption)
+
+    ## define fitting function;
+    ## the function implicitly knows formula and data as it is defined in this environment
+    fit_model <- function(i, folds, q, args.fitfun) {
+        inbag <- as.logical(folds[, i])
+        do.call(fitfun, c(list(formula = formula, data = data, q = q),
+                          args.fitfun))
+    }
+
+    nms <- colnames(x)
+    ret <- run_stabsel(fitter = fit_model, args.fitter = args.fitfun,
+                       n = n, p = p, cutoff = cutoff, q = q,
+                       PFER = PFER, folds = folds, B = B, assumption = assumption,
+                       sampling.type = sampling.type, papply = papply,
+                       verbose = verbose, FWER = FWER, eval = eval, names = nms, ...)
+    ret$call <- cll
+    ret$call[[1]] <- as.name("stabsel")
+    return(ret)
+
 }
 
 stabsel.mboost <- function(x, cutoff, q, PFER,
