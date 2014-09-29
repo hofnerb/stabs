@@ -8,9 +8,9 @@ stabsel <- function(x, ...) {
 ### TODO: Use same arguments for .mboost und .formula
 ### TODO: Should y be a matrix? Perhaps we need this for survival data which
 ### might be specified as a matrix?
-stabsel.matrix <- function(x, y, fitfun = glmnet.lasso, args.fitfun = list(),
+stabsel.matrix <- function(x, y, fitfun = lars.lasso, args.fitfun = list(),
                            cutoff, q, PFER,
-                           folds = cv(rep(1, nrow(x)), type = "subsampling", B = B),
+                           folds = subsample(rep(1, nrow(x)), B = B),
                            B = ifelse(sampling.type == "MB", 100, 50),
                            assumption = c("unimodal", "r-concave", "none"),
                            sampling.type = c("SS", "MB"),
@@ -67,218 +67,52 @@ stabsel.data.frame <- function(x, y, intercept = FALSE, ...) {
 
 ### TODO: What about weights?
 ### n <- sum(weights)
-stabsel.formula <- function(formula, data, weights = rep(1, nrow(data)), fitfun = glmnet.lasso,
-                            args.fitfun = list(), p = NULL, cutoff, q, PFER,
-                            folds = cv(weights, type = "subsampling", B = B),
-                            B = ifelse(sampling.type == "MB", 100, 50),
-                            assumption = c("unimodal", "r-concave", "none"),
-                            sampling.type = c("SS", "MB"),
-                            papply = mclapply, verbose = TRUE, FWER, eval = TRUE,
-                            ...) {
-
-    warning("This function is very experimental at the moment")
-
-    cll <- match.call()
-    ## TODO: ??? How do I get this for all formulae?
-    ## perhaps one can fit the model once and obtain p <- length(coef)
-
-    ## try to guess p
-    if (is.null(p))
-        p <- length(strsplit(deparse(formula), " \\+ ")[[1]])
-    n <- nrow(data)
-
-    ## needed here to make B and folds happy
-    sampling.type <- match.arg(sampling.type)
-    if (sampling.type == "MB")
-        assumption <- "none"
-    else
-        assumption <- match.arg(assumption)
-
-    ## define fitting function;
-    ## the function implicitly knows formula and data as it is defined in this environment
-    fit_model <- function(i, folds, q, args.fitfun) {
-        inbag <- as.logical(folds[, i])
-        do.call(fitfun, c(list(formula = formula, data = data, q = q),
-                          args.fitfun))
-    }
-
-    nms <- colnames(x)
-    ret <- run_stabsel(fitter = fit_model, args.fitter = args.fitfun,
-                       n = n, p = p, cutoff = cutoff, q = q,
-                       PFER = PFER, folds = folds, B = B, assumption = assumption,
-                       sampling.type = sampling.type, papply = papply,
-                       verbose = verbose, FWER = FWER, eval = eval, names = nms, ...)
-    ret$call <- cll
-    ret$call[[1]] <- as.name("stabsel")
-    return(ret)
-
-}
-
-stabsel.mboost <- function(x, cutoff, q, PFER,
-                    folds = cv(model.weights(x), type = "subsampling", B = B),
-                    B = ifelse(sampling.type == "MB", 100, 50),
-                    assumption = c("unimodal", "r-concave", "none"),
-                    sampling.type = c("SS", "MB"),
-                    papply = mclapply, verbose = TRUE, FWER, eval = TRUE, ...) {
-
-    cll <- match.call()
-    p <- length(variable.names(x))
-    ibase <- 1:p
-
-    sampling.type <- match.arg(sampling.type)
-    if (sampling.type == "MB")
-        assumption <- "none"
-    else
-        assumption <- match.arg(assumption)
-
-    B <- ncol(folds)
-
-    pars <- stabsel_parameters(p = p, cutoff = cutoff, q = q,
-                               PFER = PFER, B = B,
-                               verbose = verbose, sampling.type = sampling.type,
-                               assumption = assumption, FWER = FWER)
-    ## return parameter combination only if eval == FALSE
-    if (!eval)
-        return(pars)
-
-    cutoff <- pars$cutoff
-    q <- pars$q
-    PFER <- pars$PFER
-
-    fun <- function(model) {
-        xs <- selected(model)
-        qq <- sapply(1:length(xs), function(x) length(unique(xs[1:x])))
-        xs[qq > q] <- xs[1]
-        xs
-    }
-    if (sampling.type == "SS") {
-        ## use complementary pairs
-        folds <- cbind(folds, model.weights(x) - folds)
-    }
-    ss <- cvrisk(x, fun = fun,
-                 folds = folds,
-                 papply = papply, ...)
-
-    if (verbose){
-        qq <- sapply(ss, function(x) length(unique(x)))
-        sum_of_violations <- sum(qq < q)
-        if (sum_of_violations > 0)
-            warning(sQuote("mstop"), " too small in ",
-                    sum_of_violations, " of the ", ncol(folds),
-                    " subsampling replicates to select ", sQuote("q"),
-                    " base-learners; Increase ", sQuote("mstop"),
-                    " bevor applying ", sQuote("stabsel"))
-    }
-
-
-    ## if grid specified in '...'
-    if (length(list(...)) >= 1 && "grid" %in% names(list(...))) {
-        m <- max(list(...)$grid)
-    } else {
-        m <- mstop(x)
-    }
-    ret <- matrix(0, nrow = length(ibase), ncol = m)
-    for (i in 1:length(ss)) {
-        tmp <- sapply(ibase, function(x)
-            ifelse(x %in% ss[[i]], which(ss[[i]] == x)[1], m + 1))
-        ret <- ret + t(sapply(tmp, function(x) c(rep(0, x - 1), rep(1, m - x + 1))))
-    }
-
-    phat <- ret / length(ss)
-    rownames(phat) <- names(variable.names(x))
-    if (extends(class(x), "glmboost"))
-        rownames(phat) <- variable.names(x)
-    ret <- list(phat = phat, selected = which((mm <- apply(phat, 1, max)) >= cutoff),
-                max = mm, cutoff = cutoff, q = q, PFER = PFER,
-                sampling.type = sampling.type, assumption = assumption,
-                call = cll)
-    ret$call[[1]] <- as.name("stabsel")
-    class(ret) <- "stabsel"
-    ret
-}
-
-## stabsel.default <- function(x, cutoff, q, PFER,
-##                     folds = cv(model.weights(object), type = "subsampling",
-##                                B = ifelse(sampling.type == "MB", 100, 50)),
-##                     assumption = c("unimodal", "r-concave", "none"),
-##                     sampling.type = c("SS", "MB"),
-##                     papply = mclapply, verbose = TRUE, FWER, eval = TRUE, ...) {
+##    stabsel.formula <- function(formula, data, weights = rep(1, nrow(data)), fitfun = glmnet.lasso,
+##                                args.fitfun = list(), p = NULL, cutoff, q, PFER,
+##                                folds = subsample(rep(1, nrow(x)), B = B),
+##                                B = ifelse(sampling.type == "MB", 100, 50),
+##                                assumption = c("unimodal", "r-concave", "none"),
+##                                sampling.type = c("SS", "MB"),
+##                                papply = mclapply, verbose = TRUE, FWER, eval = TRUE,
+##                                ...) {
 ##
-##     call <- match.call()
-##     p <- length(variable.names(object))
-##     ibase <- 1:p
+##        warning("This function is very experimental at the moment")
 ##
-##     sampling.type <- match.arg(sampling.type)
-##     if (sampling.type == "MB")
-##         assumption <- "none"
-##     else
-##         assumption <- match.arg(assumption)
+##        cll <- match.call()
+##        ## TODO: ??? How do I get this for all formulae?
+##        ## perhaps one can fit the model once and obtain p <- length(coef)
 ##
-##     B <- ncol(folds)
+##        ## try to guess p
+##        if (is.null(p))
+##            p <- length(strsplit(deparse(formula), " \\+ ")[[1]])
+##        n <- nrow(data)
 ##
-##     pars <- stabsel_parameters(p = p, cutoff = cutoff, q = q,
-##                                PFER = PFER, B = B,
-##                                verbose = verbose, sampling.type = sampling.type,
-##                                assumption = assumption, FWER = FWER)
+##        ## needed here to make B and folds happy
+##        sampling.type <- match.arg(sampling.type)
+##        if (sampling.type == "MB")
+##            assumption <- "none"
+##        else
+##            assumption <- match.arg(assumption)
 ##
-##     ## return parameter combination only if eval == FALSE
-##     if (!eval)
-##         return(pars)
+##        ## define fitting function;
+##        ## the function implicitly knows formula and data as it is defined in this environment
+##        fit_model <- function(i, folds, q, args.fitfun) {
+##            inbag <- as.logical(folds[, i])
+##            do.call(fitfun, c(list(formula = formula, data = data, q = q),
+##                              args.fitfun))
+##        }
 ##
-##     cutoff <- pars$cutoff
-##     q <- pars$q
-##     PFER <- pars$PFER
+##        nms <- colnames(x)
+##        ret <- run_stabsel(fitter = fit_model, args.fitter = args.fitfun,
+##                           n = n, p = p, cutoff = cutoff, q = q,
+##                           PFER = PFER, folds = folds, B = B, assumption = assumption,
+##                           sampling.type = sampling.type, papply = papply,
+##                           verbose = verbose, FWER = FWER, eval = eval, names = nms, ...)
+##        ret$call <- cll
+##        ret$call[[1]] <- as.name("stabsel")
+##        return(ret)
 ##
-##     fun <- function(model) {
-##         xs <- selected(model)
-##         qq <- sapply(1:length(xs), function(x) length(unique(xs[1:x])))
-##         xs[qq > q] <- xs[1]
-##         xs
-##     }
-##     if (sampling.type == "SS") {
-##         ## use complementary pairs
-##         folds <- cbind(folds, model.weights(object) - folds)
-##     }
-##     ss <- cvrisk(object, fun = fun,
-##                  folds = folds,
-##                  papply = papply, ...)
-##
-##     if (verbose){
-##         qq <- sapply(ss, function(x) length(unique(x)))
-##         sum_of_violations <- sum(qq < q)
-##         if (sum_of_violations > 0)
-##             warning(sQuote("mstop"), " too small in ",
-##                     sum_of_violations, " of the ", ncol(folds),
-##                     " subsampling replicates to select ", sQuote("q"),
-##                     " base-learners; Increase ", sQuote("mstop"),
-##                     " bevor applying ", sQuote("stabsel"))
-##     }
-##
-##
-##     ## if grid specified in '...'
-##     if (length(list(...)) >= 1 && "grid" %in% names(list(...))) {
-##         m <- max(list(...)$grid)
-##     } else {
-##         m <- mstop(object)
-##     }
-##     ret <- matrix(0, nrow = length(ibase), ncol = m)
-##     for (i in 1:length(ss)) {
-##         tmp <- sapply(ibase, function(x)
-##             ifelse(x %in% ss[[i]], which(ss[[i]] == x)[1], m + 1))
-##         ret <- ret + t(sapply(tmp, function(x) c(rep(0, x - 1), rep(1, m - x + 1))))
-##     }
-##
-##     phat <- ret / length(ss)
-##     rownames(phat) <- names(variable.names(object))
-##     if (extends(class(object), "glmboost"))
-##         rownames(phat) <- variable.names(object)
-##     ret <- list(phat = phat, selected = which((mm <- apply(phat, 1, max)) >= cutoff),
-##                 max = mm, cutoff = cutoff, q = q, PFER = PFER,
-##                 sampling.type = sampling.type, assumption = assumption,
-##                 call = call)
-##     class(ret) <- "stabsel"
-##     ret
-## }
+##    }
 
 stabsel_parameters <- function(p, ...)
     UseMethod("stabsel_parameters")
@@ -399,6 +233,3 @@ stabsel_parameters.default <- function(p, cutoff, q, PFER,
     res
 }
 
-stabsel_parameters.mboost <- function(p, ...) {
-    stabsel(p, ..., eval = FALSE)
-}

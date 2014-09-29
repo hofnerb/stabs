@@ -13,12 +13,12 @@
   that returns the indices (and names) of the selected variables.
 }
 \usage{
-## package glmnet:
-glmnet.lasso(x, y, q, ...)
-
 ## package lars:
 lars.lasso(x, y, q, ...)
 lars.stepwise(x, y, q, ...)
+
+## package glmnet:
+glmnet.lasso(x, y, q, ...)
 }
 \arguments{
   \item{x}{a matrix containing the predictors or an object of class
@@ -34,12 +34,22 @@ lars.stepwise(x, y, q, ...)
   \code{glmnet.lasso} stands for a lasso model that is fitted using the
   package \pkg{glmnet}.
 }
+\value{
+  A named list with elements
+  \itemize{
+    \item \code{selected} logical. A vector that indicates which variable was
+    selected.
+    \item \code{path} logical. A matrix that indicates which variabkle was
+    selected in which step. Each row represents one variable, the
+    columns represent the steps.
+  }
+}
 \examples{
 data("bodyfat", package = "TH.data")
 ## selected variables
-lars.lasso(bodyfat[, -2], bodyfat[,2], q = 3)
-lars.stepwise(bodyfat[, -2], bodyfat[,2], q = 3)
-glmnet.lasso(bodyfat[, -2], bodyfat[,2], q = 3)
+lars.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$selected
+lars.stepwise(bodyfat[, -2], bodyfat[,2], q = 3)$selected
+glmnet.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$selected
 }
 \keyword{models}
 \keyword{nonlinear}

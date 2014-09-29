@@ -17,7 +17,7 @@ glmnet.lasso <- function(x, y, q, ...) {
     }
 
     ## fit model
-    fit <- glmnet(x, y, dfmax = q - 1, ...)
+    fit <- glmnet::glmnet(x, y, dfmax = q - 1, ...)
 
     ## which coefficients are non-zero?
     selected <- predict(fit, type = "nonzero")
@@ -25,7 +25,11 @@ glmnet.lasso <- function(x, y, q, ...) {
     ret <- logical(ncol(x))
     ret[selected] <- TRUE
     names(ret) <- colnames(x)
-    ret
+    ## compute selection paths
+    cf <- fit$beta
+    sequence <- as.matrix(cf != 0)
+    ## return both
+    return(list(selected = ret, path = sequence))
 }
 
 lars.lasso <- function(x, y, q, ...) {
@@ -39,14 +43,18 @@ lars.lasso <- function(x, y, q, ...) {
     }
 
     ## fit model
-    fit <- lars(x, y, max.steps = q, ...)
+    fit <- lars::lars(x, y, max.steps = q, ...)
 
     ## which coefficients are non-zero?
     selected <- unlist(fit$actions)
     ret <- logical(ncol(x))
     ret[selected] <- TRUE
     names(ret) <- colnames(x)
-    ret
+    ## compute selection paths
+    cf <- fit$beta
+    sequence <- t(cf != 0)
+    ## return both
+    return(list(selected = ret, path = sequence))
 }
 
 lars.stepwise <- function(x, y, q, ...) {
@@ -60,14 +68,18 @@ lars.stepwise <- function(x, y, q, ...) {
     }
 
     ## fit model
-    fit <- lars(x, y, max.steps = q, type = "stepwise", ...)
+    fit <- lars::lars(x, y, max.steps = q, type = "stepwise", ...)
 
     ## which coefficients are non-zero?
     selected <- unlist(fit$actions)
     ret <- logical(ncol(x))
     ret[selected] <- TRUE
     names(ret) <- colnames(x)
-    ret
+    ## compute selection paths
+    cf <- fit$beta
+    sequence <- t(cf != 0)
+    ## return both
+    return(list(selected = ret, path = sequence))
 }
 
 ## mboost.glmboost <- function(formula, data, weights, ...) {

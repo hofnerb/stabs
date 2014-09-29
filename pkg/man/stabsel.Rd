@@ -2,7 +2,6 @@
 \alias{stabsel}
 \alias{stabsel.matrix}
 \alias{stabsel.data.frame}
-\alias{stabsel.mboost}
 \title{
     Stability Selection
 }
@@ -14,9 +13,9 @@
 stabsel(x, ...)
 
 ## a method to fit models with stability selection
-\method{stabsel}{matrix}(x, y, fitfun = glmnet.lasso,
+\method{stabsel}{matrix}(x, y, fitfun = lars.lasso,
         args.fitfun = list(), cutoff, q, PFER,
-        folds = cv(rep(1, nrow(x)), type = "subsampling", B = B),
+        folds = subsample(rep(1, nrow(x)), B = B),
         B = ifelse(sampling.type == "MB", 100, 50),
         assumption = c("unimodal", "r-concave", "none"),
         sampling.type = c("SS", "MB"),
@@ -24,18 +23,10 @@ stabsel(x, ...)
 
 ## essentially a wrapper for data.frames (see details)
 \method{stabsel}{data.frame}(x,  y, intercept = FALSE, ...)
-
-## a method to compute stability selection paths for fitted mboost models
-\method{stabsel}{mboost}(x, cutoff, q, PFER,
-        folds = cv(model.weights(x), type = "subsampling", B = B),
-        B = ifelse(sampling.type == "MB", 100, 50),
-        assumption = c("unimodal", "r-concave", "none"),
-        sampling.type = c("SS", "MB"),
-        papply = mclapply, verbose = TRUE, FWER, eval = TRUE, ...)
 }
 \arguments{
   \item{x}{a \code{\link{matrix}} or a \code{\link{data.frame}}
-    containing the predictors, or an object of class \code{"mboost"}.}
+    containing the predictors.}
   \item{y}{a vector or matrix containing the outcome.}
   \item{intercept}{logical. If \code{x} is a \code{\link{data.frame}},
     this argument determines if the resulting model matrix should
@@ -56,7 +47,12 @@ stabsel(x, ...)
     specifies the amount of falsely selected base-learners, which is
     tolerated. See details.}
   \item{folds}{ a weight matrix with number of rows equal to the number
-    of observations, see \code{\link{cvrisk}}.}
+    of observations, see \code{\link{subsample}}. Usually one should not
+    change the default here as subsampling with a fraction of \eqn{1/2}
+    is needed for the error bounds to hold. One usage scenario where
+    specifying the folds by hand might be the case when one has
+    dependent data (e.g. clusters) and thus wants to draw clusters
+    (i.e., multiple rows together) not individuals.}
   \item{assumption}{ Defines the type of assumptions on the
     distributions of the selection probabilities and simultaneous
     selection probabilities. Only applicable for
@@ -73,7 +69,7 @@ stabsel(x, ...)
   \item{papply}{ (parallel) apply function, defaults to
     \code{\link[parallel]{mclapply}}. Alternatively, \code{parLapply}
     can be used. In the latter case, usually more setup is needed (see
-    example of \code{\link{cvrisk}} for some details).}
+    example of \code{\link[mboost]{cvrisk}} for some details).}
   \item{verbose}{ logical (default: \code{TRUE}) that determines wether
     \code{warnings} should be issued. }
   \item{FWER}{ deprecated. Only for compatibility with older versions,
@@ -82,8 +78,7 @@ stabsel(x, ...)
     evaluated (\code{eval = TRUE}; default) or if only the parameter
     combination is returned.}
   \item{\dots}{ additional arguments to parallel apply methods such as
-    \code{\link{mclapply}} or (in case \code{x} is an mboost object) to
-    \code{\link{cvrisk}}.}
+    \code{\link{mclapply}}.}
 }
 \details{
 
@@ -154,42 +149,43 @@ stabsel(x, ...)
   ####################################################################
   ### using stability selection with Lasso methods:
 
-  library("lars")
-  (stab.lasso <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
-                         fitfun = lars.lasso, cutoff = 0.75,
-                         PFER = 1))
-  (stab.stepwise <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
-                            fitfun = lars.stepwise, cutoff = 0.75,
-                            PFER = 1))
-  par(mfrow = c(2, 1))
-  plot(stab.lasso, main = "Lasso")
-  plot(stab.stepwise, main = "Stepwise Selection")
-  ## --> stepwise selection seems to be quite unstable even in this low
-  ##     dimensional example!
+  if (require("lars")) {
+      (stab.lasso <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
+                             fitfun = lars.lasso, cutoff = 0.75,
+                             PFER = 1))
+      (stab.stepwise <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
+                                fitfun = lars.stepwise, cutoff = 0.75,
+                                PFER = 1))
+      par(mfrow = c(2, 1))
+      plot(stab.lasso, main = "Lasso")
+      plot(stab.stepwise, main = "Stepwise Selection")
+      ## --> stepwise selection seems to be quite unstable even in this low
+      ##     dimensional example!
+  }
 
   ####################################################################
   ### using stability selection directly on computed boosting models
   ### from mboost
 
-  library("mboost")
+  if (require("mboost")) {
+      ### low-dimensional example
+      mod <- glmboost(DEXfat ~ ., data = bodyfat)
 
-  ### low-dimensional example
-  mod <- glmboost(DEXfat ~ ., data = bodyfat)
+      ## compute cutoff ahead of running stabsel to see if it is a sensible
+      ## parameter choice.
+      ##   p = ncol(bodyfat) - 1 (= Outcome) + 1 ( = Intercept)
+      stabsel_parameters(q = 3, PFER = 1, p = ncol(bodyfat) - 1 + 1,
+                         sampling.type = "MB")
+      ## the same:
+      stabsel(mod, q = 3, PFER = 1, sampling.type = "MB", eval = FALSE)
 
-  ## compute cutoff ahead of running stabsel to see if it is a sensible
-  ## parameter choice.
-  ##   p = ncol(bodyfat) - 1 (= Outcome) + 1 ( = Intercept)
-  stabsel_parameters(q = 3, PFER = 1, p = ncol(bodyfat) - 1 + 1,
-                     sampling.type = "MB")
-  ## the same:
-  stabsel(mod, q = 3, PFER = 1, sampling.type = "MB", eval = FALSE)
+      ## now run stability selection
+      (sbody <- stabsel(mod, q = 3, PFER = 1, sampling.type = "MB"))
+      opar <- par(mai = par("mai") * c(1, 1, 1, 2.7))
+      plot(sbody)
+      par(opar)
 
-  ## now run stability selection
-  (sbody <- stabsel(mod, q = 3, PFER = 1, sampling.type = "MB"))
-  opar <- par(mai = par("mai") * c(1, 1, 1, 2.7))
-  plot(sbody)
-  par(opar)
-
-  plot(sbody, type = "maxsel", ymargin = 6)
+      plot(sbody, type = "maxsel", ymargin = 6)
+  }
 }
 \keyword{nonparametric}

@@ -1,7 +1,6 @@
 \name{stabsel_parameters}
 \alias{stabsel_parameters}
 \alias{stabsel_parameters.default}
-\alias{stabsel_parameters.mboost}
 \title{
   Compute Error Bounds for Stability Selection
 }
@@ -18,9 +17,6 @@ stabsel_parameters(p, ...)
                    assumption = c("unimodal", "r-concave", "none"),
                    sampling.type = c("SS", "MB"),
                    verbose = FALSE, FWER, ...)
-
-## just a wrapper to stabsel(p, ..., eval = FALSE)
-\method{stabsel_parameters}{mboost}(p, ...)
 }
 \arguments{
   \item{p}{ number of possible predictors (including intercept if

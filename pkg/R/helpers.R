@@ -1,24 +1,5 @@
 ## Helper functions
 
-### WHY DO WE NEED THIS FUNCTION?
-## fitsel <- function(object, newdata = NULL, which = NULL, ...) {
-##     fun <- function(model) {
-##         tmp <- predict(model, newdata = newdata,
-##                        which = which, agg = "cumsum")
-##         ret <- c()
-##         for (i in 1:length(tmp))
-##             ret <- rbind(ret, tmp[[i]])
-##         ret
-##     }
-##     ss <- cvrisk(object, fun = fun, ...)
-##     ret <- matrix(0, nrow = nrow(ss[[1]]), ncol = ncol(ss[[1]]))
-##     for (i in 1:length(ss))
-##         ret <- ret + sign(ss[[i]])
-##     ret <- abs(ret) / length(ss)
-##     ret
-## }
-
-
 ################################################################################
 ## Functions for improved error bounds
 ################################################################################
@@ -215,16 +196,74 @@ run_stabsel <- function(fitter, args.fitter,
 
     ## fit model on subsamples;
     ## Depending on papply, this is done sequentially or in parallel
+    res <- papply(1:ncol(folds), fitter, folds = folds, q = q,
+                  args.fitfun = args.fitter, ...)
+
+    ## check results
+    if (!is.list(res[[1]]) && names(res[[1]]) != c("selected", "path"))
+        stop(sQuote("fitfun"), " must return a list with two (named) elements",
+             ", i.e., ", sQuote("selected"), " and ", sQuote("path"))
+
+    phat <- NULL
+    if (!is.null(res[[1]]$path)) {
+        ## extract selection paths
+        paths <- lapply(res, function(x) x$path)
+        # make paths-matrices comparable
+        steps <- sapply(paths, ncol)
+        maxsteps <- max(steps)
+        nms <- colnames(paths[[which.max(steps)]])
+        paths <- lapply(paths, function(x) {
+            if (ncol(x) < maxsteps) {
+                x <- cbind(x, x[, rep(ncol(x), maxsteps - ncol(x))])
+            }
+            return(x)
+        })
+        phat <- paths[[1]]
+        for (i in 2:length(paths))
+            phat <- phat + paths[[i]]
+        phat <- phat/length(paths)
+        colnames(phat) <- nms
+        rownames(phat) <- names
+    }
+
+    ## extract seleced variables
+    res <- lapply(res, function(x) x$selected)
     res <- matrix(nrow = ncol(folds), byrow = TRUE,
-                  unlist(papply(1:ncol(folds), fitter, folds = folds, q = q,
-                                args.fitfun = args.fitter, ...)))
+                  unlist(res))
     colnames(res) <- names
 
-    ### TODO: Currently stability paths "phat" are missing
-    ret <- list(# phat = phat,
+    ret <- list(phat = phat,
                 selected = which(colMeans(res) >= cutoff),
                 max = colMeans(res), cutoff = cutoff, q = q, PFER = PFER,
                 sampling.type = sampling.type, assumption = assumption)
     class(ret) <- "stabsel"
     ret
+}
+
+################################################################################
+## Subsamlpling method
+################################################################################
+
+## modified version of mboost's cv function
+subsample <- function(weights, B = 100, strata = NULL) {
+    n <- length(weights)
+
+    if (is.null(strata)) strata <- gl(1, n)
+    if (!is.factor(strata))
+        stop(sQuote("strata"), " must be a factor")
+    folds <- matrix(0, nrow = n, ncol = B)
+
+    make_subsample <- function(n, B) {
+        k <- floor(n * 0.5)
+        indx <- rep(c(0, 1), c(n - k, k))
+        replicate(B, sample(indx))[sample(1:n),, drop = FALSE]
+    }
+
+    ### <FIXME> handling of weights needs careful documentation </FIXME>
+    for (s in levels(strata)) {
+        indx <- which(strata == s)
+        folds[indx,] <- make_subsample(length(indx), B = B) * weights[indx]
+    }
+    attr(folds, "type") <- paste(B, "-fold subsampling", sep = "")
+    return(folds)
 }

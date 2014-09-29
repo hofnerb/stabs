@@ -33,9 +33,10 @@ plot(sbody)
 ################################################################################
 ### run stability selection with lasso (from glmnet)
 stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
-                cutoff = 0.75, PFER = 1)
+                cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso)
 stab
 plot(stab, type = "maxsel")
+plot(stab, type = "paths")
 
 ### compare results with hdi
 if (require("hdi")) {
@@ -48,6 +49,7 @@ if (require("hdi")) {
 stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
                 cutoff = 0.75, PFER = 1, sampling.type = "MB")
 stab
+plot(stab, type = "path")
 plot(stab, type = "maxsel")
 
 ################################################################################
@@ -103,20 +105,54 @@ length(strsplit(deparse(fm), " \\+ ")[[1]])
 
 
 ################################################################################
-if (FALSE) {
-## Lasso
-library("lars")
 
-lars <- lars(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2], max.steps = 2)
-coef(lars)[10,]
-lars <- update(lars, x = as.matrix(bodyfat[1:10, -2]), y = bodyfat[1:10,2])
+### check if phat and max are OK
 
-library("glmnet")
-mod <- glmnet(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
-              lambda = seq(0, 20, length = 1000))
-plot(mod)
-cf <- coef(mod)[, apply(coef(mod), 2, function(x) sum(x != 0)) == 3]
-selected <- names(cf[cf[, 1] != 0, 1])
+### lasso (from glmnet)
+stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
+                cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso)
+stopifnot(all.equal(stab$max, stab$phat[, ncol(stab$phat)]))
 
-## caret: http://topepo.github.io/caret/modelList.html
+### mboost
+stab <- stabsel(mod, q = 3, PFER = 1, sampling.type = "MB")
+stopifnot(all.equal(stab$max, stab$phat[, ncol(stab$phat)]))
+
+### lasso (from lars)
+stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
+                fitfun = lars.lasso,
+                cutoff = 0.75, PFER = 1, sampling.type = "MB")
+stopifnot(all.equal(stab$max, stab$phat[, ncol(stab$phat)]))
+
+### stepwise (from lars)
+stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
+                fitfun = lars.stepwise,
+                cutoff = 0.75, PFER = 1, sampling.type = "MB")
+stopifnot(all.equal(stab$max, stab$phat[, ncol(stab$phat)]))
+
+## what if phat is not available?
+lars.lasso2 <- function(x, y, q, ...) {
+    if (!require("lars"))
+        stop("Package ", sQuote("lars"), " needed but not available")
+
+    if (is.data.frame(x)) {
+        message("Note: ", sQuote("x"),
+                " is coerced to a model matrix without intercept")
+        x <- model.matrix(~ . - 1, x)
+    }
+
+    ## fit model
+    fit <- lars::lars(x, y, max.steps = q, ...)
+
+    ## which coefficients are non-zero?
+    selected <- unlist(fit$actions)
+    ret <- logical(ncol(x))
+    ret[selected] <- TRUE
+    names(ret) <- colnames(x)
+    ## return both
+    return(list(selected = ret))
 }
+stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
+                fitfun = lars.lasso2,
+                cutoff = 0.75, PFER = 1, sampling.type = "MB")
+plot(stab, type = "paths")
+## works.
