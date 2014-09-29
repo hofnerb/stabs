@@ -1,5 +1,6 @@
 import(methods)
 import(stats)
+import(parallel)
 
 export(stabsel, stabsel.matrix, stabsel.data.frame,
        stabsel_parameters, stabsel_parameters.default,
