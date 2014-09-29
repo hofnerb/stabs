@@ -1,22 +1,27 @@
 \name{plot.stabsel}
 \alias{plot}
 \alias{plot.stabsel}
+\alias{print.stabsel}
 \title{
-    Plotting Method for Stability Selection
+  Plot and Print Methods for Stability Selection
 }
 \description{
   Display results of stability selection.
 }
 \usage{
 \method{plot}{stabsel}(x, main = deparse(x$call), type = c("maxsel", "paths"),
-     col = NULL, ymargin = 10, np = sum(x$max > 0),
+     xlab = NULL, ylab = NULL, col = NULL, ymargin = 10, np = sum(x$max > 0),
      labels = NULL, ...)
+\method{print}{stabsel}(x, decreasing = FALSE, print.all = TRUE, ...)
 }
 \arguments{
   \item{x}{object of class \code{stabsel}.}
   \item{main}{main title for the plot.}
   \item{type}{plot type; either stability paths (\code{"paths"}) or a
     plot of the maximum selection frequency (\code{"maxsel"}).}
+  \item{xlab, ylab}{labels for the x- and y-axis of the plot. Per
+    default, sensible labels are used depending on the \code{type} of
+    the plot.}
   \item{col}{a vector of colors; Typically, one can specify a single
      color or one color for each variable. Per default, colors depend on
      the maximal selection frequency of the variable and range from grey
@@ -29,9 +34,15 @@
   \item{np}{number of variables to plot for the maximum selection
     frequency plot (\code{type = "maxsel"}); the first \code{np}
     variables with highest selection frequency are plotted.}
-  \item{labels}{variable labels for the plot; one label per base-learner
-    must be specified. Per default, names of base-learners are used.}
-  \item{\dots}{additional arguments to plot functions.}
+  \item{labels}{variable labels for the plot; one label per variable / effect
+    must be specified. Per default, the names of \code{x$max} are used.}
+  \item{decreasing}{logical. Should the selection frequencies be printed
+    in descending order (\code{TRUE}) or in ascending order
+    (\code{FALSE})?}
+  \item{print.all}{logical. Should all selection frequencies be
+    displayed or only those that are greater than zero?}
+  \item{\dots}{additional arguments to \code{plot} and \code{print}
+    functions.}
 }
 \details{
 
@@ -80,28 +91,21 @@
   \code{\link{stabsel}}
 }
 \examples{
-
-  library("mboost")
   data("bodyfat", package = "TH.data")
-
-  ### low-dimensional example
-  mod <- glmboost(DEXfat ~ ., data = bodyfat)
-
-  ## compute cutoff ahead of running stabsel to see if it is a sensible
-  ## parameter choice.
-  ##   p = ncol(bodyfat) - 1 (= Outcome) + 1 ( = Intercept)
-  stabsel_parameters(q = 3, PFER = 1, p = ncol(bodyfat) - 1 + 1,
-                     sampling.type = "MB")
-  ## the same:
-  stabsel(mod, q = 3, PFER = 1, sampling.type = "MB", eval = FALSE)
-
-  ## now run stability selection; to make results reproducible
+  ## set seed
   set.seed(1234)
-  (sbody <- stabsel(mod, q = 3, PFER = 1, sampling.type = "MB"))
-  opar <- par(mai = par("mai") * c(1, 1, 1, 2.7))
-  plot(sbody)
-  par(opar)
 
-  plot(sbody, type = "maxsel", ymargin = 6)
+  ####################################################################
+  ### using stability selection with Lasso methods:
+
+  if (require("lars")) {
+      (stab.lasso <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
+                             fitfun = lars.lasso, cutoff = 0.75,
+                             PFER = 1))
+      par(mfrow = c(2, 1))
+      plot(stab.lasso, ymargin = 6)
+      opar <- par(mai = par("mai") * c(1, 1, 1, 2.7))
+      plot(stab.lasso, type = "paths")
+  }
 }
 \keyword{nonparametric}

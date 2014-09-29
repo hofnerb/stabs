@@ -46,6 +46,7 @@ print.stabsel_parameters <- function(x, heading = TRUE, ...) {
 }
 
 plot.stabsel <- function(x, main = deparse(x$call), type = c("maxsel", "paths"),
+                         xlab = NULL, ylab = NULL,
                          col = NULL, ymargin = 10, np = sum(x$max > 0),
                          labels = NULL, ...) {
 
@@ -53,16 +54,30 @@ plot.stabsel <- function(x, main = deparse(x$call), type = c("maxsel", "paths"),
 
     if (is.null(col))
         col <- hcl(h = 40, l = 50, c = x$max / max(x$max) * 490)
-
+    if (type == "paths" && is.null(x$phat)) {
+        warning("Stability paths ", sQuote("x$phat"), " are missing, ",
+                "plot maximum selection frequency instead")
+        type <- "maxsel"
+    }
     if (type == "paths") {
         ## if par(mar) not set by user ahead of plotting
         if (all(par()[["mar"]] == c(5, 4, 4, 2) + 0.1))
             ..old.par <- par(mar = c(5, 4, 4, ymargin) + 0.1)
         h <- x$phat
         h <- h[rowSums(h) > 0, , drop = FALSE]
+
+        if (is.null(xlab)) {
+            if (inherits(x, "stabsel_mboost")) {
+                xlab <- "Number of boosting iterations"
+            } else {
+                xlab <- "Step"
+            }
+        }
+        if (is.null(ylab)) {
+            ylab <- "Selection probability"
+        }
         matplot(t(h), type = "l", lty = 1,
-                xlab = "Number of boosting iterations",
-                ylab = "Selection probability",
+                xlab = xlab, ylab = ylab,
                 main = main, col = col[x$max > 0], ylim = c(0, 1), ...)
         abline(h = x$cutoff, lty = 1, col = "lightgray")
         if (is.null(labels))
@@ -76,9 +91,15 @@ plot.stabsel <- function(x, main = deparse(x$call), type = c("maxsel", "paths"),
         if (np > length(x$max))
             stop(sQuote("np"), "is set too large")
         inc_freq <- x$max  ## inclusion frequency
+        if (is.null(xlab)) {
+            xlab <- expression(hat(pi))
+        }
+        if (is.null(ylab)) {
+            ylab <- ""
+        }
         plot(tail(sort(inc_freq), np), 1:np,
              type = "n", yaxt = "n", xlim = c(0, 1),
-             ylab = "", xlab = expression(hat(pi)),
+             ylab = ylab, xlab = xlab,
              main = main, ...)
         abline(h = 1:np, lty = "dotted", col = "grey")
         points(tail(sort(inc_freq), np), 1:np, pch = 19,

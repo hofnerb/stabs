@@ -1,20 +1,17 @@
 import(methods)
 import(stats)
 
-importFrom(mboost, selected, cv, cvrisk, mstop)
-
-export(stabsel, stabsel.matrix, stabsel.mboost, stabsel.data.frame,
-       stabsel_parameters, stabsel_parameters.default, stabsel_parameters.mboost,
-       plot.stabsel,
-       glmnet.lasso, lars.lasso, lars.stepwise)
+export(stabsel, stabsel.matrix, stabsel.data.frame,
+       stabsel_parameters, stabsel_parameters.default,
+       plot.stabsel, print.stabsel,
+       glmnet.lasso, lars.lasso, lars.stepwise,
+       subsample)
 
 S3method(stabsel, matrix)
 S3method(stabsel, data.frame)
-S3method(stabsel, formula)
-S3method(stabsel, mboost)
+# S3method(stabsel, formula)
 S3method(stabsel_parameters, default)
-S3method(stabsel_parameters, mboost)
 S3method(print, stabsel)
 S3method(print, stabsel_parameters)
 S3method(plot, stabsel)
-S3method(selected, stabsel)
+# S3method(selected, stabsel)

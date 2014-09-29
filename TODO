@@ -11,9 +11,10 @@ Add support for
  - random forests?
  - ... have a look at the machine learning task view
 
-Add support for
-  a) additional arguments in the fitters
-  b) a formula interface
-  c) add computation of phat (i.e. stability paths)
-  d) check in plotting function if phat exists
+TODO
+  a) additional arguments in the fitters (DONE)
+  b) check in plotting function if phat exists (DONE)
+  c) add computation of phat (i.e. stability paths) (DONE)
+  d) a formula interface
+
 
