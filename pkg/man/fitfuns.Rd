@@ -36,13 +36,11 @@ glmnet.lasso(x, y, q, ...)
 }
 \value{
   A named list with elements
-  \itemize{
-    \item \code{selected} logical. A vector that indicates which variable was
-    selected.
-    \item \code{path} logical. A matrix that indicates which variabkle was
+  \item{selected}{logical. A vector that indicates which variable was
+    selected.}
+  \item{path}{logical. A matrix that indicates which variabkle was
     selected in which step. Each row represents one variable, the
-    columns represent the steps.
-  }
+    columns represent the steps.}
 }
 \examples{
 data("bodyfat", package = "TH.data")
