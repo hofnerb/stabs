@@ -18,7 +18,7 @@ Type 'q()' to quit R.
 > library("stabs")
 Loading required package: parallel
 > library("mboost")
-This is mboost 2.3-1. See 'package?mboost' and the NEWS file
+This is mboost 2.4-0. See 'package?mboost' and the NEWS file
 for a complete list of changes.
 
 > library("glmnet")
@@ -79,7 +79,7 @@ Cutoff: 0.95; q: 3; PFER:  1
 > ################################################################################
 > ### run stability selection with lasso (from glmnet)
 > stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
-+                 cutoff = 0.75, PFER = 1)
++                 cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso)
 > stab
 	Stability Selection with unimodality assumption
 
@@ -97,6 +97,7 @@ Cutoff: 0.75; q: 2; PFER(*):  0.454
    (*) or expected number of low selection probability variables
 
 > plot(stab, type = "maxsel")
+> plot(stab, type = "paths")
 > 
 > ### compare results with hdi
 > if (require("hdi")) {
@@ -116,7 +117,8 @@ Loading required package: scalreg
         0.60         0.98         1.00 
 > 
 > stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
-+                 cutoff = 0.75, PFER = 1, sampling.type = "MB")
++                 cutoff = 0.75, PFER = 1, sampling.type = "MB",
++                 fitfun = glmnet.lasso)
 > stab
 	Stability Selection without further assumptions
 
@@ -132,27 +134,29 @@ Selection probabilities:
 
 Cutoff: 0.75; q: 2; PFER:  0.889 
 
+> plot(stab, type = "path")
 > plot(stab, type = "maxsel")
 > 
 > ################################################################################
 > ### with package lars
-> stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
-+                 fitfun = lars.stepwise,
-+                 cutoff = 0.75, PFER = 1, sampling.type = "MB")
-> stab
+> set.seed(1234)
+> stab.stepwise <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
++                          fitfun = lars.stepwise,
++                          cutoff = 0.75, PFER = 1, sampling.type = "MB")
+> stab.stepwise
 	Stability Selection without further assumptions
 
 No base-learner selected
 
 Selection probabilities:
          age elbowbreadth  kneebreadth     anthro3c      anthro4     anthro3a 
-        0.01         0.01         0.06         0.08         0.10         0.13 
-     hipcirc    waistcirc     anthro3b 
-        0.50         0.51         0.60 
+        0.00         0.00         0.03         0.07         0.11         0.14 
+   waistcirc      hipcirc     anthro3b 
+        0.47         0.55         0.63 
 
 Cutoff: 0.75; q: 2; PFER:  0.889 
 
-> plot(stab, type = "maxsel")
+> plot(stab.stepwise, type = "maxsel")
 > 
 > set.seed(1234)
 > stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
@@ -219,24 +223,96 @@ Cutoff: 0.75; q: 2; PFER:  0.8
 > stopifnot(all.equal(stab$max, stab.int$max[-1]))
 > 
 > ################################################################################
-> if (FALSE) {
-+ ## Lasso
-+ library("lars")
+> ### use args.fitfun
+> set.seed(1234)
+> stab.args <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
++                      fitfun = lars.lasso,
++                      args.fitfun = list(type = "stepwise"),
++                      cutoff = 0.75, PFER = 1, sampling.type = "MB")
+> stab.args
+	Stability Selection without further assumptions
+
+No base-learner selected
+
+Selection probabilities:
+         age elbowbreadth  kneebreadth     anthro3c      anthro4     anthro3a 
+        0.00         0.00         0.03         0.07         0.11         0.14 
+   waistcirc      hipcirc     anthro3b 
+        0.47         0.55         0.63 
+
+Cutoff: 0.75; q: 2; PFER:  0.889 
+
+> stopifnot(all.equal(stab.stepwise$max, stab.args$max))
+> 
+> ################################################################################
+> ### get length of formula
+> 
+> fm <- DEXfat ~ bbs(age) + bbs(waistcirc) + bols(hipcirc) + bols(elbowbreath)
+> length(strsplit(deparse(fm), " \\+ ")[[1]])
+[1] 4
+> 
+> ## now this depends on the data...
+> fm <- DEXfat ~ .
+> length(strsplit(deparse(fm), " \\+ ")[[1]])
+[1] 1
+> 
+> 
+> ################################################################################
+> 
+> ### check if phat and max are OK
+> 
+> ### lasso (from glmnet)
+> stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
++                 cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso)
+> stopifnot(all.equal(stab$max, stab$phat[, ncol(stab$phat)]))
+> 
+> ### mboost
+> stab <- stabsel(mod, q = 3, PFER = 1, sampling.type = "MB")
+> stopifnot(all.equal(stab$max, stab$phat[, ncol(stab$phat)]))
+> 
+> ### lasso (from lars)
+> stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
++                 fitfun = lars.lasso,
++                 cutoff = 0.75, PFER = 1, sampling.type = "MB")
+> stopifnot(all.equal(stab$max, stab$phat[, ncol(stab$phat)]))
+> 
+> ### stepwise (from lars)
+> stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
++                 fitfun = lars.stepwise,
++                 cutoff = 0.75, PFER = 1, sampling.type = "MB")
+> stopifnot(all.equal(stab$max, stab$phat[, ncol(stab$phat)]))
+> 
+> ## what if phat is not available?
+> lars.lasso2 <- function(x, y, q, ...) {
++     if (!require("lars"))
++         stop("Package ", sQuote("lars"), " needed but not available")
 + 
-+ lars <- lars(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2], max.steps = 2)
-+ coef(lars)[10,]
-+ lars <- update(lars, x = as.matrix(bodyfat[1:10, -2]), y = bodyfat[1:10,2])
++     if (is.data.frame(x)) {
++         message("Note: ", sQuote("x"),
++                 " is coerced to a model matrix without intercept")
++         x <- model.matrix(~ . - 1, x)
++     }
 + 
-+ library("glmnet")
-+ mod <- glmnet(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
-+               lambda = seq(0, 20, length = 1000))
-+ plot(mod)
-+ cf <- coef(mod)[, apply(coef(mod), 2, function(x) sum(x != 0)) == 3]
-+ selected <- names(cf[cf[, 1] != 0, 1])
++     ## fit model
++     fit <- lars::lars(x, y, max.steps = q, ...)
 + 
-+ ## caret: http://topepo.github.io/caret/modelList.html
++     ## which coefficients are non-zero?
++     selected <- unlist(fit$actions)
++     ret <- logical(ncol(x))
++     ret[selected] <- TRUE
++     names(ret) <- colnames(x)
++     ## return both
++     return(list(selected = ret))
 + }
+> stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
++                 fitfun = lars.lasso2,
++                 cutoff = 0.75, PFER = 1, sampling.type = "MB")
+> plot(stab, type = "paths")
+Warning message:
+In plot.stabsel(stab, type = "paths") :
+  Stability paths 'x$phat' are missing, plot maximum selection frequency instead
+> ## works.
 > 
 > proc.time()
    user  system elapsed 
-  5.887   0.481   5.727 
+  8.425   0.694   6.685 

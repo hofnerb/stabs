@@ -18,18 +18,17 @@ Type 'q()' to quit R.
 > require("mboost")
 Loading required package: mboost
 Loading required package: parallel
-This is mboost 2.3-1. See 'package?mboost' and the NEWS file
+Loading required package: stabs
+This is mboost 2.4-0. See 'package?mboost' and the NEWS file
 for a complete list of changes.
 
 > require("stabs")
-Loading required package: stabs
 > attach(asNamespace("stabs"))
 The following objects are masked from package:stabs:
 
-    glmnet.lasso, lars.lasso, lars.stepwise, plot.stabsel, stabsel,
-    stabsel.data.frame, stabsel.matrix, stabsel.mboost,
-    stabsel_parameters, stabsel_parameters.default,
-    stabsel_parameters.mboost
+    glmnet.lasso, lars.lasso, lars.stepwise, plot.stabsel,
+    print.stabsel, stabsel, stabsel.data.frame, stabsel.matrix,
+    stabsel_parameters, stabsel_parameters.default, subsample
 
 The following object is masked from package:stats:
 
@@ -424,4 +423,4 @@ Cutoff: 0.61; q: 10; PFER(*):  1.01
 > 
 > proc.time()
    user  system elapsed 
- 21.067   0.153  21.280 
+ 21.114   0.355  21.334 

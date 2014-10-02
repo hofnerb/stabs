@@ -47,7 +47,8 @@ if (require("hdi")) {
 }
 
 stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
-                cutoff = 0.75, PFER = 1, sampling.type = "MB")
+                cutoff = 0.75, PFER = 1, sampling.type = "MB",
+                fitfun = glmnet.lasso)
 stab
 plot(stab, type = "path")
 plot(stab, type = "maxsel")
