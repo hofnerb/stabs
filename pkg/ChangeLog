@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+r6 | hofner | 2014-09-29 16:37:42 +0200 (Mo, 29. Sep 2014) | 2 Zeilen
+
+- added parallel to NAMESPACE
+
+------------------------------------------------------------------------
+r5 | hofner | 2014-09-29 13:02:44 +0200 (Mo, 29. Sep 2014) | 2 Zeilen
+
+-updated manual
+
+------------------------------------------------------------------------
+r4 | hofner | 2014-09-29 13:00:05 +0200 (Mo, 29. Sep 2014) | 8 Zeilen
+
+- added stability paths to fitted model
+- added subsampling method (no longer rely on mboost)
+- added x- and y-labs to plot plot function
+- changed default fitting function to lars.lasso
+- explicitly specify packages for fit function via pkg::function
+- moved all packages that can be used with stabs to "Enhances:"
+- export print.stabsel
+
+------------------------------------------------------------------------
+r3 | hofner | 2014-09-22 18:48:07 +0200 (Mo, 22. Sep 2014) | 3 Zeilen
+
+- added args.fitfun to specify further arguments to the fitter
+- started formula interface
+
+------------------------------------------------------------------------
+r2 | hofner | 2014-09-18 17:32:56 +0200 (Do, 18. Sep 2014) | 7 Zeilen
+
+Initial version of package "stabs" which currently implements:
+- a function stabsel.matrix() to fit Lasso and stepwise models directly with stability selection
+- a function stabsel.mboost() to apply stability selection to a fitted boosting model
+- a function stabsel_parameters() to compute the error bounds of stability selection
+Additionally, print and plot functions are implemented.
+
+
+------------------------------------------------------------------------
