@@ -1,0 +1,4 @@
+^\..*
+.*/auto
+inst/NEWS.html
+inst/NEWS.pdf
