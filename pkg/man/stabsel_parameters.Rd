@@ -5,11 +5,10 @@
   Compute Error Bounds for Stability Selection
 }
 \description{
-  Compute
+  Compute the missing parameter from the two given parameters
+  in order to assess suitability of the parameter constellation
 }
 \usage{
-## generic function to compute missing parameter from the other two parameters;
-## (internally used within stabsel)
 stabsel_parameters(p, ...)
 
 \method{stabsel_parameters}{default}(p, cutoff, q, PFER,

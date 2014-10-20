@@ -315,4 +315,4 @@ In plot.stabsel(stab, type = "paths") :
 > 
 > proc.time()
    user  system elapsed 
-  8.425   0.694   6.685 
+  8.489   0.794   6.619 

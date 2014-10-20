@@ -23,12 +23,15 @@ This is mboost 2.4-0. See 'package?mboost' and the NEWS file
 for a complete list of changes.
 
 > require("stabs")
+> require("TH.data")
+Loading required package: TH.data
 > attach(asNamespace("stabs"))
 The following objects are masked from package:stabs:
 
     glmnet.lasso, lars.lasso, lars.stepwise, plot.stabsel,
-    print.stabsel, stabsel, stabsel.data.frame, stabsel.matrix,
-    stabsel_parameters, stabsel_parameters.default, subsample
+    print.stabsel, run_stabsel, stabsel, stabsel.data.frame,
+    stabsel.matrix, stabsel_parameters, stabsel_parameters.default,
+    subsample
 
 The following object is masked from package:stats:
 
@@ -192,9 +195,17 @@ The following object is masked from package:stats:
 [1] 0.81
 > 
 > ### check stabsel interface
-> data("bodyfat", package = "TH.data")
-> mod <- glmboost(DEXfat ~ ., data = bodyfat)
-> (sbody <- stabsel(mod, q = 3, PFER = 0.2, sampling.type = "MB"))
+> if (require("mboost") && require("TH.data")) {
++     data("bodyfat", package = "TH.data")
++     mod <- glmboost(DEXfat ~ ., data = bodyfat)
++     print(sbody <- stabsel(mod, q = 3, PFER = 0.2, sampling.type = "MB"))
++     dim(sbody$phat)
++     print(sbody <- stabsel(mod, q = 3, PFER = 0.2, sampling.type = "SS"))
++     dim(sbody$phat)
++ 
++     ## check interface of stabsel_parameters
++     stabsel(mod, q = 3, PFER = 0.2, sampling.type = "SS", eval = FALSE)
++ }
 	Stability Selection without further assumptions
 
 No base-learner selected
@@ -207,12 +218,6 @@ Selection probabilities:
 
 Cutoff: 1; q: 3; PFER:  0.9 
 
-Warning message:
-In stabsel_parameters.default(p = p, cutoff = cutoff, q = q, PFER = PFER,  :
-  Upper bound for PFER > 0.2 for the given value of 'q' (true upper bound = 0.9)
-> dim(sbody$phat)
-[1]  10 100
-> (sbody <- stabsel(mod, q = 3, PFER = 0.2, sampling.type = "SS"))
 	Stability Selection with unimodality assumption
 
 Selected base-learners:
@@ -228,15 +233,12 @@ Selection probabilities:
 Cutoff: 0.96; q: 3; PFER(*):  0.176 
    (*) or expected number of low selection probability variables
 
-> dim(sbody$phat)
-[1]  10 100
-> 
-> ## check interface of stabsel_parameters
-> stabsel(mod, q = 3, PFER = 0.2, sampling.type = "SS", eval = FALSE)
 Stability Selection with unimodality assumption
 Cutoff: 0.96; q: 3; PFER(*):  0.176 
    (*) or expected number of low selection probability variables
-> 
+Warning message:
+In stabsel_parameters.default(p = p, cutoff = cutoff, q = q, PFER = PFER,  :
+  Upper bound for PFER > 0.2 for the given value of 'q' (true upper bound = 0.9)
 > 
 > ## check stabsel_parameters and (theoretical) error control
 > cutoff <- 0.6
@@ -423,4 +425,4 @@ Cutoff: 0.61; q: 10; PFER(*):  1.01
 > 
 > proc.time()
    user  system elapsed 
- 21.114   0.355  21.334 
+ 20.934   0.230  20.602 
