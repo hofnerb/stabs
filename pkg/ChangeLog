@@ -1,4 +1,18 @@
 ------------------------------------------------------------------------
+r8 | hofner | 2014-10-02 15:25:50 +0200 (Do, 02. Okt 2014) | 3 Zeilen
+
+- Release Version 0.1-0
+- added .Rbuildignore and .RbuildignoreCRAN
+
+------------------------------------------------------------------------
+r7 | hofner | 2014-10-02 15:13:18 +0200 (Do, 02. Okt 2014) | 5 Zeilen
+
+- added manual for subsample()
+- added inst/NEWS.Rd and ChangeLog
+- updated DESCRIPTION
+- add Release SOPs and some helper files
+
+------------------------------------------------------------------------
 r6 | hofner | 2014-09-29 16:37:42 +0200 (Mo, 29. Sep 2014) | 2 Zeilen
 
 - added parallel to NAMESPACE

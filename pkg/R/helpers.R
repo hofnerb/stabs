@@ -177,69 +177,6 @@ check_folds <- function(folds, B, n, sampling.type) {
     folds
 }
 
-run_stabsel <- function(fitter, args.fitter,
-                        n, p, cutoff, q, PFER, folds, B, assumption,
-                        sampling.type, papply, verbose, FWER, eval, names, ...) {
-
-    folds <- check_folds(folds, B = B, n = n, sampling.type = sampling.type)
-    pars <- stabsel_parameters(p = p, cutoff = cutoff, q = q,
-                               PFER = PFER, B = B,
-                               verbose = verbose, sampling.type = sampling.type,
-                               assumption = assumption, FWER = FWER)
-    cutoff <- pars$cutoff
-    q <- pars$q
-    PFER <- pars$PFER
-
-    ## return parameter combination only if eval == FALSE
-    if (!eval)
-        return(pars)
-
-    ## fit model on subsamples;
-    ## Depending on papply, this is done sequentially or in parallel
-    res <- papply(1:ncol(folds), fitter, folds = folds, q = q,
-                  args.fitfun = args.fitter, ...)
-
-    ## check results
-    if (!is.list(res[[1]]) && names(res[[1]]) != c("selected", "path"))
-        stop(sQuote("fitfun"), " must return a list with two (named) elements",
-             ", i.e., ", sQuote("selected"), " and ", sQuote("path"))
-
-    phat <- NULL
-    if (!is.null(res[[1]]$path)) {
-        ## extract selection paths
-        paths <- lapply(res, function(x) x$path)
-        # make paths-matrices comparable
-        steps <- sapply(paths, ncol)
-        maxsteps <- max(steps)
-        nms <- colnames(paths[[which.max(steps)]])
-        paths <- lapply(paths, function(x) {
-            if (ncol(x) < maxsteps) {
-                x <- cbind(x, x[, rep(ncol(x), maxsteps - ncol(x))])
-            }
-            return(x)
-        })
-        phat <- paths[[1]]
-        for (i in 2:length(paths))
-            phat <- phat + paths[[i]]
-        phat <- phat/length(paths)
-        colnames(phat) <- nms
-        rownames(phat) <- names
-    }
-
-    ## extract seleced variables
-    res <- lapply(res, function(x) x$selected)
-    res <- matrix(nrow = ncol(folds), byrow = TRUE,
-                  unlist(res))
-    colnames(res) <- names
-
-    ret <- list(phat = phat,
-                selected = which(colMeans(res) >= cutoff),
-                max = colMeans(res), cutoff = cutoff, q = q, PFER = PFER,
-                sampling.type = sampling.type, assumption = assumption)
-    class(ret) <- "stabsel"
-    ret
-}
-
 ################################################################################
 ## Subsamlpling method
 ################################################################################
