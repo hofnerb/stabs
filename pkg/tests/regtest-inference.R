@@ -1,5 +1,6 @@
 require("mboost")
 require("stabs")
+require("TH.data")
 attach(asNamespace("stabs"))
 
 set.seed(1907)
@@ -151,16 +152,17 @@ stopifnot(a < PFER && b > PFER)
                           assumption = "unimodal"))
 
 ### check stabsel interface
-data("bodyfat", package = "TH.data")
-mod <- glmboost(DEXfat ~ ., data = bodyfat)
-(sbody <- stabsel(mod, q = 3, PFER = 0.2, sampling.type = "MB"))
-dim(sbody$phat)
-(sbody <- stabsel(mod, q = 3, PFER = 0.2, sampling.type = "SS"))
-dim(sbody$phat)
+if (require("mboost") && require("TH.data")) {
+    data("bodyfat", package = "TH.data")
+    mod <- glmboost(DEXfat ~ ., data = bodyfat)
+    print(sbody <- stabsel(mod, q = 3, PFER = 0.2, sampling.type = "MB"))
+    dim(sbody$phat)
+    print(sbody <- stabsel(mod, q = 3, PFER = 0.2, sampling.type = "SS"))
+    dim(sbody$phat)
 
-## check interface of stabsel_parameters
-stabsel(mod, q = 3, PFER = 0.2, sampling.type = "SS", eval = FALSE)
-
+    ## check interface of stabsel_parameters
+    stabsel(mod, q = 3, PFER = 0.2, sampling.type = "SS", eval = FALSE)
+}
 
 ## check stabsel_parameters and (theoretical) error control
 cutoff <- 0.6
