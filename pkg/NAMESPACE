@@ -2,7 +2,7 @@ import(methods)
 import(stats)
 import(parallel)
 
-export(stabsel, stabsel.matrix, stabsel.data.frame,
+export(stabsel, stabsel.matrix, stabsel.data.frame, run_stabsel,
        stabsel_parameters, stabsel_parameters.default,
        plot.stabsel, print.stabsel,
        glmnet.lasso, lars.lasso, lars.stepwise,
