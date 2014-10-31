@@ -8,10 +8,10 @@ print.stabsel <- function(x, decreasing = FALSE, print.all = TRUE, ...) {
     if (x$assumption == "r-concave")
         cat(" with r-concavity assumption\n")
     if (length(x$selected) > 0) {
-        cat("\nSelected base-learners:\n")
+        cat("\nSelected variables:\n")
         print(x$selected)
     } else {
-        cat("\nNo base-learner selected\n")
+        cat("\nNo variables selected\n")
     }
     cat("\nSelection probabilities:\n")
     if (print.all) {
