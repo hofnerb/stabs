@@ -2,6 +2,7 @@
 \alias{fitfun}
 \alias{fitfuns}
 \alias{glmnet.lasso}
+\alias{glmnet.lasso_maxCoef}
 \alias{lars.lasso}
 \alias{lars.stepwise}
 
@@ -19,6 +20,7 @@ lars.stepwise(x, y, q, ...)
 
 ## package glmnet:
 glmnet.lasso(x, y, q, ...)
+glmnet.lasso_maxCoef(x, y, q, ...)
 }
 \arguments{
   \item{x}{a matrix containing the predictors or an object of class
@@ -33,6 +35,10 @@ glmnet.lasso(x, y, q, ...)
   model that is fitted: \code{package_name.model}, e.g.,
   \code{glmnet.lasso} stands for a lasso model that is fitted using the
   package \pkg{glmnet}.
+
+  If one wants to use \code{glmnet.lasso_maxCoef}, one must specify the
+  penalty parameter \code{lambda} (via the \code{\dots} argument) or in
+  \code{\link{stabsel}} via \code{args.fitfun(lambda = )}.
 }
 \value{
   A named list with elements

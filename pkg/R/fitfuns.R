@@ -82,6 +82,35 @@ lars.stepwise <- function(x, y, q, ...) {
     return(list(selected = ret, path = sequence))
 }
 
+glmnet.lasso_maxCoef <- function(x, y, q, ...) {
+    if (!require("glmnet"))
+        stop("Package ", sQuote("glmnet"), " needed but not available")
+
+    if (is.data.frame(x)) {
+        message("Note: ", sQuote("x"),
+                " is coerced to a model matrix without intercept")
+        x <- model.matrix(~ . - 1, x)
+    }
+
+    args <- list(...)
+    if (!("lambda" %in% names(args)) && length(args$lambda) != 1)
+        stop("Please specify a fixed (!) value of ", sQuote("lambda"),
+             ", which is small enough that at least ", sQuote("q"),
+             " variables can be selected.")
+
+    ## fit model
+    fit <- glmnet::glmnet(x, y, ...)
+
+    ## which coefficients are the q biggest
+    selected <- order(coef(fit)[-1])[1:q]
+    ret <- logical(ncol(x))
+    ret[selected] <- TRUE
+    names(ret) <- colnames(x)
+    ## return selection
+    return(list(selected = ret, path = NULL))
+}
+
+
 ## mboost.glmboost <- function(formula, data, weights, ...) {
 ##     if (!require("mboost"))
 ##         stop("Package ", sQuote("mboost"), " needed but not available")
