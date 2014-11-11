@@ -19,7 +19,7 @@ print.stabsel <- function(x, decreasing = FALSE, print.all = TRUE, ...) {
     } else {
         print(sort(x$max[x$max > 0], decreasing = decreasing))
     }
-    cat("\n")
+    cat("\n---\n")
     print.stabsel_parameters(x, heading = FALSE)
     cat("\n")
     invisible(x)
@@ -42,6 +42,17 @@ print.stabsel_parameters <- function(x, heading = TRUE, ...) {
     else
         cat("PFER(*): ", x$PFER,
             "\n   (*) or expected number of low selection probability variables\n")
+    p <- NULL
+    if (!is.null(x$p)) {
+        p <- x$p
+    } else {
+        if (!is.null(x$max))
+            p <- length(x$max)
+    }
+    if (!is.null(p))
+        cat("PFER corresponds to signif. level ",
+            signif(x$PFER / p, 3), " (without multiplicity adjustment)\n",
+            sep = "")
     invisible(x)
 }
 
