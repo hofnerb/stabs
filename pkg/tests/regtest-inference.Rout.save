@@ -19,7 +19,7 @@ Type 'q()' to quit R.
 Loading required package: mboost
 Loading required package: parallel
 Loading required package: stabs
-This is mboost 2.4-0. See 'package?mboost' and the NEWS file
+This is mboost 2.4-1. See 'package?mboost' and the NEWS file
 for a complete list of changes.
 
 > require("stabs")
@@ -28,10 +28,10 @@ Loading required package: TH.data
 > attach(asNamespace("stabs"))
 The following objects are masked from package:stabs:
 
-    glmnet.lasso, lars.lasso, lars.stepwise, plot.stabsel,
-    print.stabsel, run_stabsel, stabsel, stabsel.data.frame,
-    stabsel.matrix, stabsel_parameters, stabsel_parameters.default,
-    subsample
+    glmnet.lasso, glmnet.lasso_maxCoef, lars.lasso, lars.stepwise,
+    plot.stabsel, print.stabsel, run_stabsel, stabsel,
+    stabsel.data.frame, stabsel.matrix, stabsel_parameters,
+    stabsel_parameters.default, subsample
 
 The following object is masked from package:stats:
 
@@ -208,7 +208,7 @@ The following object is masked from package:stats:
 + }
 	Stability Selection without further assumptions
 
-No base-learner selected
+No variables selected
 
 Selection probabilities:
          age elbowbreadth  (Intercept)  kneebreadth      anthro4     anthro3c 
@@ -216,11 +216,13 @@ Selection probabilities:
     anthro3b     anthro3a    waistcirc      hipcirc 
         0.16         0.61         0.97         0.99 
 
+---
 Cutoff: 1; q: 3; PFER:  0.9 
+PFER corresponds to signif. level 0.09 (without multiplicity adjustment)
 
 	Stability Selection with unimodality assumption
 
-Selected base-learners:
+Selected variables:
 waistcirc   hipcirc 
         3         4 
 
@@ -230,12 +232,15 @@ Selection probabilities:
     anthro3c     anthro3a    waistcirc      hipcirc 
         0.22         0.52         0.96         0.97 
 
+---
 Cutoff: 0.96; q: 3; PFER(*):  0.176 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.0176 (without multiplicity adjustment)
 
 Stability Selection with unimodality assumption
 Cutoff: 0.96; q: 3; PFER(*):  0.176 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.0176 (without multiplicity adjustment)
 Warning message:
 In stabsel_parameters.default(p = p, cutoff = cutoff, q = q, PFER = PFER,  :
   Upper bound for PFER > 0.2 for the given value of 'q' (true upper bound = 0.9)
@@ -247,24 +252,34 @@ In stabsel_parameters.default(p = p, cutoff = cutoff, q = q, PFER = PFER,  :
 + }
 Stability Selection without further assumptions
 Cutoff: 0.6; q: 1; PFER:  0.05 
+PFER corresponds to signif. level 5e-04 (without multiplicity adjustment)
 Stability Selection without further assumptions
 Cutoff: 0.6; q: 2; PFER:  0.2 
+PFER corresponds to signif. level 0.002 (without multiplicity adjustment)
 Stability Selection without further assumptions
 Cutoff: 0.6; q: 3; PFER:  0.45 
+PFER corresponds to signif. level 0.0045 (without multiplicity adjustment)
 Stability Selection without further assumptions
 Cutoff: 0.6; q: 4; PFER:  0.8 
+PFER corresponds to signif. level 0.008 (without multiplicity adjustment)
 Stability Selection without further assumptions
 Cutoff: 0.6; q: 5; PFER:  1.25 
+PFER corresponds to signif. level 0.0125 (without multiplicity adjustment)
 Stability Selection without further assumptions
 Cutoff: 0.6; q: 6; PFER:  1.8 
+PFER corresponds to signif. level 0.018 (without multiplicity adjustment)
 Stability Selection without further assumptions
 Cutoff: 0.6; q: 7; PFER:  2.45 
+PFER corresponds to signif. level 0.0245 (without multiplicity adjustment)
 Stability Selection without further assumptions
 Cutoff: 0.6; q: 8; PFER:  3.2 
+PFER corresponds to signif. level 0.032 (without multiplicity adjustment)
 Stability Selection without further assumptions
 Cutoff: 0.6; q: 9; PFER:  4.05 
+PFER corresponds to signif. level 0.0405 (without multiplicity adjustment)
 Stability Selection without further assumptions
 Cutoff: 0.6; q: 10; PFER:  5 
+PFER corresponds to signif. level 0.05 (without multiplicity adjustment)
 > for (i in 1:10) {
 +     print(stabsel_parameters(cutoff = cutoff, q = i, p = 100, sampling.type = "SS",
 +                              assumption = "unimodal"))
@@ -274,63 +289,83 @@ Cutoff: 0.6; q: 10; PFER:  5
 Stability Selection with unimodality assumption
 Cutoff: 0.6; q: 1; PFER(*):  0.0263 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.000263 (without multiplicity adjustment)
 Stability Selection with r-concavity assumption
 Cutoff: 0.6; q: 1; PFER(*):  0.00697 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 6.97e-05 (without multiplicity adjustment)
 Stability Selection with unimodality assumption
 Cutoff: 0.6; q: 2; PFER(*):  0.105 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.00105 (without multiplicity adjustment)
 Stability Selection with r-concavity assumption
 Cutoff: 0.6; q: 2; PFER(*):  0.0334 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.000334 (without multiplicity adjustment)
 Stability Selection with unimodality assumption
 Cutoff: 0.6; q: 3; PFER(*):  0.237 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.00237 (without multiplicity adjustment)
 Stability Selection with r-concavity assumption
 Cutoff: 0.6; q: 3; PFER(*):  0.0869 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.000869 (without multiplicity adjustment)
 Stability Selection with unimodality assumption
 Cutoff: 0.6; q: 4; PFER(*):  0.421 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.00421 (without multiplicity adjustment)
 Stability Selection with r-concavity assumption
 Cutoff: 0.6; q: 4; PFER(*):  0.164 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.00164 (without multiplicity adjustment)
 Stability Selection with unimodality assumption
 Cutoff: 0.6; q: 5; PFER(*):  0.658 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.00658 (without multiplicity adjustment)
 Stability Selection with r-concavity assumption
 Cutoff: 0.6; q: 5; PFER(*):  0.261 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.00261 (without multiplicity adjustment)
 Stability Selection with unimodality assumption
 Cutoff: 0.6; q: 6; PFER(*):  0.947 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.00947 (without multiplicity adjustment)
 Stability Selection with r-concavity assumption
 Cutoff: 0.6; q: 6; PFER(*):  0.382 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.00382 (without multiplicity adjustment)
 Stability Selection with unimodality assumption
 Cutoff: 0.6; q: 7; PFER(*):  1.29 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.0129 (without multiplicity adjustment)
 Stability Selection with r-concavity assumption
 Cutoff: 0.6; q: 7; PFER(*):  0.53 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.0053 (without multiplicity adjustment)
 Stability Selection with unimodality assumption
 Cutoff: 0.6; q: 8; PFER(*):  1.68 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.0168 (without multiplicity adjustment)
 Stability Selection with r-concavity assumption
 Cutoff: 0.6; q: 8; PFER(*):  0.704 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.00704 (without multiplicity adjustment)
 Stability Selection with unimodality assumption
 Cutoff: 0.6; q: 9; PFER(*):  2.13 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.0213 (without multiplicity adjustment)
 Stability Selection with r-concavity assumption
 Cutoff: 0.6; q: 9; PFER(*):  0.908 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.00908 (without multiplicity adjustment)
 Stability Selection with unimodality assumption
 Cutoff: 0.6; q: 10; PFER(*):  2.63 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.0263 (without multiplicity adjustment)
 Stability Selection with r-concavity assumption
 Cutoff: 0.6; q: 10; PFER(*):  1.14 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.0114 (without multiplicity adjustment)
 > 
 > ## check if missing values are determined correctly (especially at the extreme values)
 > p <- 100
@@ -343,11 +378,13 @@ Cutoff: 0.6; q: 10; PFER(*):  1.14
 Stability Selection with r-concavity assumption
 Cutoff: 0.6; q: 1; PFER(*):  0.00697 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 6.97e-05 (without multiplicity adjustment)
 > stabsel_parameters(p = p, cutoff = cutoff, q = res$q, B = B,
 +                    sampling.type = "SS", assumption = "r-concave")
 Stability Selection with r-concavity assumption
 Cutoff: 0.6; q: 1; PFER(*):  0.00697 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 6.97e-05 (without multiplicity adjustment)
 > # high PFER
 > PFER <- 50
 > (res <- stabsel_parameters(p = p, cutoff = cutoff, PFER = PFER, B = B,
@@ -355,11 +392,13 @@ Cutoff: 0.6; q: 1; PFER(*):  0.00697
 Stability Selection with r-concavity assumption
 Cutoff: 0.6; q: 30; PFER(*):  16.2 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.162 (without multiplicity adjustment)
 > stabsel_parameters(p = p, cutoff = cutoff, q = res$q, B = B,
 +                    sampling.type = "SS", assumption = "r-concave")
 Stability Selection with r-concavity assumption
 Cutoff: 0.6; q: 30; PFER(*):  16.2 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.162 (without multiplicity adjustment)
 > # medium PFER
 > PFER <- 1
 > (res <- stabsel_parameters(p = p, cutoff = cutoff, PFER = PFER, B = B,
@@ -367,16 +406,19 @@ Cutoff: 0.6; q: 30; PFER(*):  16.2
 Stability Selection with r-concavity assumption
 Cutoff: 0.6; q: 9; PFER(*):  0.908 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.00908 (without multiplicity adjustment)
 > stabsel_parameters(p = p, cutoff = cutoff, q = res$q, B = B,
 +                    sampling.type = "SS", assumption = "r-concave")
 Stability Selection with r-concavity assumption
 Cutoff: 0.6; q: 9; PFER(*):  0.908 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.00908 (without multiplicity adjustment)
 > stabsel_parameters(p = p, cutoff = cutoff, q = res$q + 1, B = B,
 +                    sampling.type = "SS", assumption = "r-concave")
 Stability Selection with r-concavity assumption
 Cutoff: 0.6; q: 10; PFER(*):  1.14 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.0114 (without multiplicity adjustment)
 > 
 > 
 > q <- 10
@@ -387,11 +429,13 @@ Cutoff: 0.6; q: 10; PFER(*):  1.14
 Stability Selection with r-concavity assumption
 Cutoff: 0.5; q: 10; PFER(*):  2.48 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.0248 (without multiplicity adjustment)
 > stabsel_parameters(p = p, cutoff = res$cutoff, q = q, B = B,
 +                    sampling.type = "SS", assumption = "r-concave")
 Stability Selection with r-concavity assumption
 Cutoff: 0.5; q: 10; PFER(*):  2.48 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.0248 (without multiplicity adjustment)
 > # low PFER
 > PFER <- 0.001
 > (res <- stabsel_parameters(p = p, q = q, PFER = PFER, B = B,
@@ -399,11 +443,13 @@ Cutoff: 0.5; q: 10; PFER(*):  2.48
 Stability Selection with r-concavity assumption
 Cutoff: 1; q: 10; PFER(*):  0.00518 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 5.18e-05 (without multiplicity adjustment)
 > stabsel_parameters(p = p, cutoff = res$cutoff, q = q, B = B,
 +                    sampling.type = "SS", assumption = "r-concave")
 Stability Selection with r-concavity assumption
 Cutoff: 1; q: 10; PFER(*):  0.00518 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 5.18e-05 (without multiplicity adjustment)
 > # medium PFER
 > PFER <- 1
 > (res <- stabsel_parameters(p = p, q = q, PFER = PFER, B = B,
@@ -411,18 +457,21 @@ Cutoff: 1; q: 10; PFER(*):  0.00518
 Stability Selection with r-concavity assumption
 Cutoff: 0.62; q: 10; PFER(*):  0.897 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.00897 (without multiplicity adjustment)
 > stabsel_parameters(p = p, cutoff = res$cutoff, q = q, B = B,
 +                    sampling.type = "SS", assumption = "r-concave")
 Stability Selection with r-concavity assumption
 Cutoff: 0.62; q: 10; PFER(*):  0.897 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.00897 (without multiplicity adjustment)
 > stabsel_parameters(p = p, cutoff = res$cutoff - 0.01, q = q, B = B,
 +                    sampling.type = "SS", assumption = "r-concave")
 Stability Selection with r-concavity assumption
 Cutoff: 0.61; q: 10; PFER(*):  1.01 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.0101 (without multiplicity adjustment)
 > 
 > 
 > proc.time()
    user  system elapsed 
- 20.934   0.230  20.602 
+ 20.851   0.163  20.472 

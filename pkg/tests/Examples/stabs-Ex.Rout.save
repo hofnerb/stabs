@@ -20,6 +20,18 @@ Type 'q()' to quit R.
 > pkgname <- "stabs"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
+> base::assign(".ExTimings", "stabs-Ex.timings", pos = 'CheckExEnv')
+> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+> base::assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   options(OutDec = '.')
++   format(x[1L:3L], digits = 7L)
++ },
++ pos = 'CheckExEnv')
+> 
+> ### * </HEADER>
 > library('stabs')
 Loading required package: parallel
 > 
@@ -30,9 +42,11 @@ Loading required package: parallel
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: Fitting Functions
 > ### Title: Fit Functions for Stability Selection
-> ### Aliases: fitfun fitfuns glmnet.lasso lars.lasso lars.stepwise
+> ### Aliases: fitfun fitfuns glmnet.lasso glmnet.lasso_maxCoef lars.lasso
+> ###   lars.stepwise
 > ### Keywords: models nonlinear nonparametric
 > 
 > ### ** Examples
@@ -67,6 +81,8 @@ Note: ‘x’ is coerced to a model matrix without intercept
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("fitfuns", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 
 detaching ‘package:glmnet’, ‘package:Matrix’, ‘package:lars’
@@ -76,6 +92,7 @@ detaching ‘package:glmnet’, ‘package:Matrix’, ‘package:lars’
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: plot.stabsel
 > ### Title: Plot and Print Methods for Stability Selection
 > ### Aliases: plot plot.stabsel print.stabsel
@@ -105,6 +122,8 @@ Loaded lars 1.2
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("plot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 
@@ -115,6 +134,7 @@ detaching ‘package:lars’
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: stabsel
 > ### Title: Stability Selection
 > ### Aliases: stabsel stabsel.matrix stabsel.data.frame
@@ -172,12 +192,14 @@ Loaded lars 1.2
 +       plot(sbody, type = "maxsel", ymargin = 6)
 +   }
 Loading required package: mboost
-This is mboost 2.4-0. See ‘package?mboost’ and the NEWS file
+This is mboost 2.4-1. See ‘package?mboost’ and the NEWS file
 for a complete list of changes.
 
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("stabsel", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 
@@ -188,6 +210,7 @@ detaching ‘package:mboost’, ‘package:lars’
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: subsample
 > ### Title: Draw Random Subsamples
 > ### Aliases: subsample
@@ -257,11 +280,13 @@ attr(,"type")
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("subsample", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > ### * <FOOTER>
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.041 0.113 3.386 1.141 0.091 
+Time elapsed:  2.07 0.092 3.44 1.089 0.149 
 > grDevices::dev.off()
 null device 
           1 

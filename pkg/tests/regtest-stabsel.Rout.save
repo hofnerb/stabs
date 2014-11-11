@@ -18,7 +18,7 @@ Type 'q()' to quit R.
 > library("stabs")
 Loading required package: parallel
 > library("mboost")
-This is mboost 2.4-0. See 'package?mboost' and the NEWS file
+This is mboost 2.4-1. See 'package?mboost' and the NEWS file
 for a complete list of changes.
 
 > library("glmnet")
@@ -46,20 +46,23 @@ Loaded lars 1.2
 +                    sampling.type = "MB")
 Stability Selection without further assumptions
 Cutoff: 0.95; q: 3; PFER:  1 
+PFER corresponds to signif. level 0.1 (without multiplicity adjustment)
 > ## the same:
 > stabsel_parameters(mod, q = 3, PFER = 1, sampling.type = "MB")
 Stability Selection without further assumptions
 Cutoff: 0.95; q: 3; PFER:  1 
+PFER corresponds to signif. level 0.1 (without multiplicity adjustment)
 > ## the same:
 > stabsel(mod, q = 3, PFER = 1, sampling.type = "MB", eval = FALSE)
 Stability Selection without further assumptions
 Cutoff: 0.95; q: 3; PFER:  1 
+PFER corresponds to signif. level 0.1 (without multiplicity adjustment)
 > 
 > ## now run stability selection
 > (sbody <- stabsel(mod, q = 3, PFER = 1, sampling.type = "MB"))
 	Stability Selection without further assumptions
 
-Selected base-learners:
+Selected variables:
 waistcirc   hipcirc 
         3         4 
 
@@ -69,7 +72,9 @@ Selection probabilities:
      anthro4     anthro3a    waistcirc      hipcirc 
         0.12         0.66         0.99         1.00 
 
+---
 Cutoff: 0.95; q: 3; PFER:  1 
+PFER corresponds to signif. level 0.1 (without multiplicity adjustment)
 
 > opar <- par(mai = par("mai") * c(1, 1, 1, 2.7))
 > plot(sbody, type = "paths", ymargin = 6)
@@ -83,7 +88,7 @@ Cutoff: 0.95; q: 3; PFER:  1
 > stab
 	Stability Selection with unimodality assumption
 
-Selected base-learners:
+Selected variables:
 waistcirc   hipcirc 
         2         3 
 
@@ -93,8 +98,10 @@ Selection probabilities:
     anthro3a    waistcirc      hipcirc 
         0.33         0.94         0.97 
 
+---
 Cutoff: 0.75; q: 2; PFER(*):  0.454 
    (*) or expected number of low selection probability variables
+PFER corresponds to signif. level 0.0504 (without multiplicity adjustment)
 
 > plot(stab, type = "maxsel")
 > plot(stab, type = "paths")
@@ -122,7 +129,7 @@ Loading required package: scalreg
 > stab
 	Stability Selection without further assumptions
 
-Selected base-learners:
+Selected variables:
 waistcirc   hipcirc 
         2         3 
 
@@ -132,7 +139,9 @@ Selection probabilities:
     anthro3a    waistcirc      hipcirc 
         0.38         0.90         0.95 
 
+---
 Cutoff: 0.75; q: 2; PFER:  0.889 
+PFER corresponds to signif. level 0.0988 (without multiplicity adjustment)
 
 > plot(stab, type = "path")
 > plot(stab, type = "maxsel")
@@ -146,7 +155,7 @@ Cutoff: 0.75; q: 2; PFER:  0.889
 > stab.stepwise
 	Stability Selection without further assumptions
 
-No base-learner selected
+No variables selected
 
 Selection probabilities:
          age elbowbreadth  kneebreadth     anthro3c      anthro4     anthro3a 
@@ -154,7 +163,9 @@ Selection probabilities:
    waistcirc      hipcirc     anthro3b 
         0.47         0.55         0.63 
 
+---
 Cutoff: 0.75; q: 2; PFER:  0.889 
+PFER corresponds to signif. level 0.0988 (without multiplicity adjustment)
 
 > plot(stab.stepwise, type = "maxsel")
 > 
@@ -165,7 +176,7 @@ Cutoff: 0.75; q: 2; PFER:  0.889
 > stab
 	Stability Selection without further assumptions
 
-Selected base-learners:
+Selected variables:
 waistcirc   hipcirc 
         2         3 
 
@@ -175,7 +186,9 @@ Selection probabilities:
     anthro3a    waistcirc      hipcirc 
         0.11         0.92         0.92 
 
+---
 Cutoff: 0.75; q: 2; PFER:  0.889 
+PFER corresponds to signif. level 0.0988 (without multiplicity adjustment)
 
 > plot(stab, type = "maxsel")
 > 
@@ -187,7 +200,7 @@ Cutoff: 0.75; q: 2; PFER:  0.889
 > stab.df
 	Stability Selection without further assumptions
 
-Selected base-learners:
+Selected variables:
 waistcirc   hipcirc 
         2         3 
 
@@ -197,7 +210,9 @@ Selection probabilities:
     anthro3a    waistcirc      hipcirc 
         0.11         0.92         0.92 
 
+---
 Cutoff: 0.75; q: 2; PFER:  0.889 
+PFER corresponds to signif. level 0.0988 (without multiplicity adjustment)
 
 > stopifnot(all.equal(stab$max, stab.df$max))
 > ## and with explicit intercept?
@@ -208,7 +223,7 @@ Cutoff: 0.75; q: 2; PFER:  0.889
 > stab.int
 	Stability Selection without further assumptions
 
-Selected base-learners:
+Selected variables:
 waistcirc   hipcirc 
         3         4 
 
@@ -218,7 +233,9 @@ Selection probabilities:
      anthro4     anthro3a    waistcirc      hipcirc 
         0.03         0.11         0.92         0.92 
 
+---
 Cutoff: 0.75; q: 2; PFER:  0.8 
+PFER corresponds to signif. level 0.08 (without multiplicity adjustment)
 
 > stopifnot(all.equal(stab$max, stab.int$max[-1]))
 > 
@@ -232,7 +249,7 @@ Cutoff: 0.75; q: 2; PFER:  0.8
 > stab.args
 	Stability Selection without further assumptions
 
-No base-learner selected
+No variables selected
 
 Selection probabilities:
          age elbowbreadth  kneebreadth     anthro3c      anthro4     anthro3a 
@@ -240,7 +257,9 @@ Selection probabilities:
    waistcirc      hipcirc     anthro3b 
         0.47         0.55         0.63 
 
+---
 Cutoff: 0.75; q: 2; PFER:  0.889 
+PFER corresponds to signif. level 0.0988 (without multiplicity adjustment)
 
 > stopifnot(all.equal(stab.stepwise$max, stab.args$max))
 > 
@@ -315,4 +334,4 @@ In plot.stabsel(stab, type = "paths") :
 > 
 > proc.time()
    user  system elapsed 
-  8.489   0.794   6.619 
+  8.329   0.791   6.264 
