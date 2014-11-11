@@ -60,19 +60,17 @@ run_stabsel(fitter, args.fitter, n, p, cutoff, q, PFER, folds, B, assumption,
   \item{cutoff}{cutoff used.}
   \item{q}{average number of selected variables used.}
   \item{PFER}{per-family error rate.}
+  \item{p}{the number of effects subject to selection.}
   \item{sampling.type}{the sampling type used for stability selection.}
   \item{assumption}{the assumptions made on the selection
     probabilities.}
 }
 \references{
 
-  N. Meinshausen and P. Buehlmann (2010), Stability selection.
-  \emph{Journal of the Royal Statistical Society, Series B},
-  \bold{72}, 417--473.
-
-  R.D. Shah and R.J. Samworth (2013), Variable selection with error
-  control: another look at stability selection. \emph{Journal of the Royal
-  Statistical Society, Series B}, \bold{75}, 55--80.
+  B. Hofner, L. Boccuto and M. Goeker (2014), Controlling false
+  discoveries in high-dimensional situations: Boosting with stability
+  selection. \emph{Technical Report}, arXiv:1411.1285.\cr
+  \url{http://arxiv.org/abs/1411.1285}.
 
 }
 \seealso{

@@ -50,7 +50,7 @@ stabsel_parameters(p, ...)
 
   This function implements the error bounds for stability selection
   by Meinshausen and Buehlmann (2010) and the improved error bounds by
-  Shah and Samworth (2013).
+  Shah and Samworth (2013). For details see also Hofner et al. (2014).
 
   Two of the three arguments \code{cutoff}, \code{q} and \code{PFER}
   \emph{must} be specified. The per-family error rate (PFER), i.e., the
@@ -70,6 +70,11 @@ stabsel_parameters(p, ...)
     probabilities.}
 }
 \references{
+
+  B. Hofner, L. Boccuto and M. Goeker (2014),
+  Controlling false discoveries in high-dimensional situations: Boosting
+  with stability selection. \emph{Technical Report}, arXiv:1411.1285.\cr
+  \url{http://arxiv.org/abs/1411.1285}.
 
   N. Meinshausen and P. Buehlmann (2010), Stability selection.
   \emph{Journal of the Royal Statistical Society, Series B},
