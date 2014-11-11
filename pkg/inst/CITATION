@@ -1,0 +1,37 @@
+
+     citHeader("To cite package 'stabs' in publications use:")
+
+     desc <- packageDescription("stabs")
+     year <- sub("(2[[:digit:]]{3})-.*-.*", "\\1", desc$Date)
+     vers <- desc$Version
+
+     citEntry(entry="Manual",
+              key = paste0("Hofner:pkg_stabs:", year),
+              title = "{stabs}: Stability Selection with Error Control",
+              author = personList(as.person("Benjamin Hofner"),
+                                  as.person("Torsten Hothorn")),
+              year = year,
+              note = paste("{R} package version", vers),
+              url = "http://CRAN.R-project.org/package=stabs",
+              textVersion =
+              paste("Benjamin Hofner and Torsten Hothorn (", year,
+                    "). stabs: Stability Selection with Error Control, ",
+                    paste("R package version", vers),
+                    ", http://CRAN.R-project.org/package=stabs", ".",
+                    sep=""))
+
+    citEntry(entry="techreport",
+             key = "Hofner:StabSel:2014",
+             title = "Controlling false discoveries in high-dimensional situations: Boosting with stability selection",
+             author = personList(as.person("Benjamin Hofner"),
+                                 as.person("Luigi Boccuto"),
+                                 as.person('Markus G\\"oker')),
+             institution = "{arXiv:1411.1285}",
+             year        = "2014",
+             url         = "http://arxiv.org/abs/1411.1285",
+             textVersion = paste("Benjamin Hofner, Luigi Boccuto and Markus Goeker (2014).",
+                                  "Controlling false discoveries in high-dimensional situations:",
+                                  "Boosting with stability selection.",
+                                  "arXiv:1411.1285. http://arxiv.org/abs/1411.1285."))
+
+     citFooter('Use ', sQuote('toBibtex(citation("stabs"))'), ' to extract BibTeX references.')
