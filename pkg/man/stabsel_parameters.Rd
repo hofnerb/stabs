@@ -1,6 +1,7 @@
 \name{stabsel_parameters}
 \alias{stabsel_parameters}
 \alias{stabsel_parameters.default}
+\alias{print.stabsel_parameters}
 \title{
   Compute Error Bounds for Stability Selection
 }
@@ -16,6 +17,8 @@ stabsel_parameters(p, ...)
                    assumption = c("unimodal", "r-concave", "none"),
                    sampling.type = c("SS", "MB"),
                    verbose = FALSE, FWER, ...)
+
+\method{print}{stabsel_parameters}(x, heading = TRUE, ...)
 }
 \arguments{
   \item{p}{ number of possible predictors (including intercept if
@@ -44,6 +47,8 @@ stabsel_parameters(p, ...)
     \code{warnings} should be issued. }
   \item{FWER}{ deprecated. Only for compatibility with older versions,
     use PFER instead.}
+  \item{x}{ an object of class \code{"stabsel_parameters"}.}
+  \item{heading}{ logical. Specifies if a heading line should be printed.}
   \item{\dots}{ additional arguments to be passed to next function.}
 }
 \details{
@@ -64,7 +69,10 @@ stabsel_parameters(p, ...)
   The object has the following elements:
   \item{cutoff}{cutoff used.}
   \item{q}{average number of selected variables used.}
-  \item{PFER}{per-family error rate.}
+  \item{PFER}{(realized) upper bound for the per-family error rate.}
+  \item{specifiedPFER}{specified upper bound for the per-family error rate.}
+  \item{p}{the number of effects subject to selection.}
+  \item{B}{the number of subsamples.}
   \item{sampling.type}{the sampling type used for stability selection.}
   \item{assumption}{the assumptions made on the selection
     probabilities.}

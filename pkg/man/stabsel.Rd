@@ -119,7 +119,8 @@ stabsel(x, ...)
   \item{max}{maximum of selection probabilities.}
   \item{cutoff}{cutoff used.}
   \item{q}{average number of selected variables used.}
-  \item{PFER}{per-family error rate.}
+  \item{PFER}{(realized) upper bound for the per-family error rate.}
+  \item{specifiedPFER}{specified upper bound for the per-family error rate.}
   \item{p}{the number of effects subject to selection.}
   \item{B}{the number of subsamples.}
   \item{sampling.type}{the sampling type used for stability selection.}

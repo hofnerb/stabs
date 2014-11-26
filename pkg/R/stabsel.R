@@ -227,8 +227,9 @@ stabsel_parameters.default <- function(p, cutoff, q, PFER,
     if (verbose && PFER >= p)
         warning("Upper bound for PFER larger than the number of base-learners.")
 
-    res <- list(cutoff = cutoff, q = q, PFER = upperbound, p = p,
-                sampling.type = sampling.type, assumption = assumption)
+    res <- list(cutoff = cutoff, q = q, PFER = upperbound,
+                specifiedPFER = PFER, p = p,
+                B = B, sampling.type = sampling.type, assumption = assumption)
     class(res) <- "stabsel_parameters"
     res
 }
@@ -293,9 +294,8 @@ run_stabsel <- function(fitter, args.fitter,
 
     ret <- list(phat = phat,
                 selected = which(colMeans(res) >= cutoff),
-                max = colMeans(res), cutoff = cutoff, q = q, PFER = PFER,
-                p = p, B = B, sampling.type = sampling.type,
-                assumption = assumption)
+                max = colMeans(res))
+    ret <- c(ret, pars)
     class(ret) <- "stabsel"
     ret
 }
