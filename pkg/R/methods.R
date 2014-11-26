@@ -125,5 +125,8 @@ plot.stabsel <- function(x, main = deparse(x$call), type = c("maxsel", "paths"),
         par(..old.par) # reset plotting settings
 }
 
+selected <- function(object, ...)
+    UseMethod("selected", object)
+
 selected.stabsel <- function(object, ...)
     object$selected
