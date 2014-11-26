@@ -3,10 +3,11 @@ import(stats)
 import(parallel)
 
 export(stabsel, stabsel.matrix, stabsel.data.frame, stabsel.stabsel,
-	   run_stabsel, 
+       run_stabsel,
        stabsel_parameters, stabsel_parameters.default,
-       selected, selected.stabsel, 
-       plot.stabsel, print.stabsel,
+       stabsel_parameters.stabsel, parameters,
+       selected, selected.stabsel,
+       plot.stabsel, print.stabsel, print.stabsel_parameters,
        glmnet.lasso, glmnet.lasso_maxCoef, lars.lasso, lars.stepwise,
        subsample)
 
@@ -15,6 +16,7 @@ S3method(stabsel, data.frame)
 S3method(stabsel, stabsel)
 # S3method(stabsel, formula)
 S3method(stabsel_parameters, default)
+S3method(stabsel_parameters, stabsel)
 S3method(print, stabsel)
 S3method(print, stabsel_parameters)
 S3method(plot, stabsel)
