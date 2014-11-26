@@ -121,6 +121,7 @@ stabsel(x, ...)
   \item{q}{average number of selected variables used.}
   \item{PFER}{per-family error rate.}
   \item{p}{the number of effects subject to selection.}
+  \item{B}{the number of subsamples.}
   \item{sampling.type}{the sampling type used for stability selection.}
   \item{assumption}{the assumptions made on the selection
     probabilities.}
@@ -144,6 +145,8 @@ stabsel(x, ...)
 }
 \seealso{
   \code{\link{stabsel_parameters}} for the computation of error bounds,
+  \code{\link{stabsel.stabsel}} for the fast re-computation of
+  parameters of a fitted \code{stabsel} object,
   \code{\link{fitfun}} for available fitting functions and
   \code{\link{plot.stabsel}} for available plot functions
 }

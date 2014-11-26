@@ -294,7 +294,65 @@ run_stabsel <- function(fitter, args.fitter,
     ret <- list(phat = phat,
                 selected = which(colMeans(res) >= cutoff),
                 max = colMeans(res), cutoff = cutoff, q = q, PFER = PFER,
-                p = p, sampling.type = sampling.type, assumption = assumption)
+                p = p, B = B, sampling.type = sampling.type,
+                assumption = assumption)
     class(ret) <- "stabsel"
     ret
+}
+
+
+## function to change PFER, cutoff or the assumption for a given stabsel object
+stabsel.stabsel <- function(x, cutoff, PFER, assumption = x$assumption, ...) {
+
+    assumption <- match.arg(assumption,
+                            choices = c("unimodal", "r-concave", "none"))
+
+    if (x$sampling.type == "MB" && assumption != "none")
+        warning(sQuote('sampling.type == "MB"'), " but ",
+                sQuote('assumption != "none"'))
+
+    if (sum(missing(cutoff), missing(PFER)) == 0)
+        stop("Only one of the two argumnets ",
+             sQuote("PFER"), " and ", sQuote("cutoff"),
+             " can be specifed")
+
+    ## if nothing changed: nothing to do
+    if (assumption == x$assumption) {
+        if (sum(missing(cutoff), missing(PFER)) == 2)
+            return(x)
+        if (!missing(cutoff) && x$cutoff == cutoff)
+            return(x)
+        if (!missing(PFER) && x$PFER == PFER)
+            return(x)
+    } else {
+        if (sum(missing(cutoff), missing(PFER)) == 2)
+            stop("Specify one of ", sQuote("PFER"), " and ", sQuote("cutoff"))
+    }
+    if (!missing(cutoff)) {
+        x$call[["cutoff"]] <- cutoff
+        x$call[["q"]] <- x$q
+        x$call[["PFER"]] <- NULL
+    }
+    if (!missing(PFER)) {
+        x$call[["PFER"]] <- PFER
+        x$call[["q"]] <- x$q
+        x$call[["cutoff"]] <- NULL
+    }
+    if (x$assumption != assumption)
+        x$call[["assumption"]] <- assumption
+
+    pars <- stabsel_parameters(p = x$p, cutoff, q = x$q, PFER = PFER,
+                       B = x$B, assumption = assumption,
+                       sampling.type = x$sampling.type,
+                       verbose = FALSE)
+
+    cutoff <- pars$cutoff
+    PFER <- pars$PFER
+
+    ### now change results (by using new cutoff)
+    x$selected <- which(x$max >= pars$cutoff)
+    x$cutoff <- pars$cutoff
+    x$PFER <- pars$PFER
+    x$assumption <- assumption
+    return(x)
 }
