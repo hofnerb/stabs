@@ -331,12 +331,14 @@ stabsel.stabsel <- function(x, cutoff, PFER, assumption = x$assumption, ...) {
     if (!missing(cutoff)) {
         x$call[["cutoff"]] <- cutoff
         x$call[["q"]] <- x$q
-        x$call[["PFER"]] <- NULL
+        if (!is.null(x$call[["PFER"]]))
+            x$call[["PFER"]] <- NULL
     }
     if (!missing(PFER)) {
         x$call[["PFER"]] <- PFER
         x$call[["q"]] <- x$q
-        x$call[["cutoff"]] <- NULL
+        if (!is.null(x$call[["cutoff"]]))
+            x$call[["cutoff"]] <- NULL
     }
     if (x$assumption != assumption)
         x$call[["assumption"]] <- assumption
