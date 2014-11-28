@@ -4,3 +4,6 @@
 ^\.travis\.yml$
 inst/NEWS.html
 inst/NEWS.pdf
+^TODO$
+^copy_Rout_to_Routsave.R$
+^SOP_release.txt$
