@@ -1,4 +1,6 @@
 ^\..*
 .*/auto
+^README.md$
+^\.travis\.yml$
 inst/NEWS.html
 inst/NEWS.pdf

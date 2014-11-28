@@ -1,6 +1,8 @@
 test
 ^\..*
 .*/auto
+^README.md$
+^\.travis\.yml$
 vignettes/.*\.Rout\.save$
 inst/NEWS.html
 inst/NEWS.pdf
