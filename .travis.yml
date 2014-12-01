@@ -13,7 +13,7 @@ before_install:
   
 install:
   - ./travis-tool.sh install_deps
-  - Rscript -e 'library("devtools"); library(methods); options(repos=c(RForge="http://r-forge.r-project.com")); install_deps(dependencies = "Enhances")'
+  - Rscript -e 'library("devtools"); library(methods); options(repos=c(RForge="http://r-forge.r-project.org")); install_deps(dependencies = "Enhances")'
   
 script: ./travis-tool.sh run_tests
 
