@@ -1,6 +1,4 @@
-require("mboost")
-require("stabs")
-require("TH.data")
+library("stabs")
 attach(asNamespace("stabs"))
 
 set.seed(1907)
