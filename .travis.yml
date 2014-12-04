@@ -13,7 +13,11 @@ before_install:
   
 install:
   - ./travis-tool.sh install_deps
-  - Rscript -e 'library("devtools"); library(methods); options(repos=c(RForge="http://r-forge.r-project.org")); install_deps(dependencies = "Enhances")'
+  ## install enhances
+  - Rscript -e 'library("devtools"); library("methods"); options(repos=c(RForge="http://cran.rstudio.com")); install_deps(dependencies = "Enhances")'
+  ## install newer versions of mboost and gamboostLSS
+  # - Rscript -e 'library("devtools"); library(methods); options(repos=c(RForge="http://r-forge.r-project.org")); install_deps(dependencies = "Enhances")'
+  - Rscript -e 'library("methods"); install.packages(c("mboost", "gamboostLSS"), repos= "http://r-forge.r-project.org")'
   
 script: ./travis-tool.sh run_tests
 
