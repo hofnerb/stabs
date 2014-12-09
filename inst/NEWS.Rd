@@ -1,10 +1,44 @@
 \name{NEWS}
 \title{News for Package 'stabs'}
 
-\section{Changes in stabs version 0.2-0 (2014-10-17)}{
-  \itemize{
-    \item Export \code{run_stabsel} to make the actual \dQuote{fit}
-    function accessible for other packages.
+\section{Changes in stabs version 0.5-0 (2014-12-09)}{
+  \subsection{User-visible changes}{  
+    \itemize{
+      \item Added a function \code{stabsel.stabsel()} to compute (new)
+      parameter combinations for a fitted \code{stabsel} object
+      \item Included \code{selected()} method (originally from
+      \pkg{mboost}); \code{selected()} can now be used on stability
+      selection results to extract selected effects
+      \item Added functionality to extract parameters from fitted
+      \code{stabsel} objects:
+      use \code{parameters()} or \code{stabsel_parameters()}
+      \item Export \code{run_stabsel} to make the actual \dQuote{fit}
+      function accessible for other packages.
+      \item Tweaked \code{print} methods a bit
+      \item Added output that states the significance level.
+      \item Added new lasso based fit (\code{glmnet.lasso_maxCoef})
+      function where the \code{q} strongest predictors (according to the
+      coefficient size) are selected (feature request from Rajen Shah
+      <R.Shah _at_ statslab.cam.ac.uk>)
+    }
+  }
+  \subsection{Miscellaneous}{
+    \itemize{
+      \item Package development moved from
+      \url{http://r-forge.r-project.org/projects/stabsel/}
+      to \url{http://github.com/hofnerb/stabs}
+
+      \item Added \code{specifiedPFER} to \code{stabsel} and
+      \code{stabsel_parameter} objects (needed for better outputs)
+      \item Added \file{inst/CITATION}
+      \item Added reference to stability selection paper
+      \item \pkg{stabs} now enhances \pkg{gamboostLSS}
+    }
+  }
+  \subsection{Bug-fixes}{
+    \itemize{
+      \item Made tests conditional on availability of packages
+    }
   }
 }
 

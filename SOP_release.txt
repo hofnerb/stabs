@@ -9,7 +9,7 @@
 
   Go to root directory of project:
 
-    svn log -rHEAD:2 > pkg/ChangeLog
+    git log 809c..HEAD --pretty=short > ChangeLog
 
 
   Checking the package with latest development verstion of R
@@ -24,7 +24,7 @@
     ../relative/path/to/R-devel/bin/R
 
   Run
-    install.packages(c("parallel", "TH.data", "hdi", "glmnet", "lars", "mboost"))
+    install.packages(c("parallel", "TH.data", "hdi", "glmnet", "lars", "mboost", "gamboostLSS"))
 
   Quit R and run
    ../relative/path/to/R-devel/bin/R CMD check --as-cran stabs_XXX.tar.gz

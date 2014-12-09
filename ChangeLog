@@ -1,52 +1,168 @@
-------------------------------------------------------------------------
-r8 | hofner | 2014-10-02 15:25:50 +0200 (Do, 02. Okt 2014) | 3 Zeilen
+commit f4ce7282e23301c7ec37b501d1ce2fe8eae3783c
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
 
-- Release Version 0.1-0
-- added .Rbuildignore and .RbuildignoreCRAN
+    Updated to stabs 0.5-0
+    - updated NEWS.Rd to incorporate latest changes
 
-------------------------------------------------------------------------
-r7 | hofner | 2014-10-02 15:13:18 +0200 (Do, 02. Okt 2014) | 5 Zeilen
+commit 2033d0a7ffb4e1635c8852800d004589dafe0477
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
 
-- added manual for subsample()
-- added inst/NEWS.Rd and ChangeLog
-- updated DESCRIPTION
-- add Release SOPs and some helper files
+    updated .Rbuildignore
 
-------------------------------------------------------------------------
-r6 | hofner | 2014-09-29 16:37:42 +0200 (Mo, 29. Sep 2014) | 2 Zeilen
+commit 776a09d358971e7697443e0678f95bc43945cb0e
+Merge: eaaff61 af789f8
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
 
-- added parallel to NAMESPACE
+    Merge branch 'master' of github.com:hofnerb/stabs
 
-------------------------------------------------------------------------
-r5 | hofner | 2014-09-29 13:02:44 +0200 (Mo, 29. Sep 2014) | 2 Zeilen
+commit eaaff618706f006c3b23ec087a58607ac26524db
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
 
--updated manual
+    make tests conditional on availability of packages
 
-------------------------------------------------------------------------
-r4 | hofner | 2014-09-29 13:00:05 +0200 (Mo, 29. Sep 2014) | 8 Zeilen
+commit af789f84a615ec0e353f7814ba53bdd857dac127
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
 
-- added stability paths to fitted model
-- added subsampling method (no longer rely on mboost)
-- added x- and y-labs to plot plot function
-- changed default fitting function to lars.lasso
-- explicitly specify packages for fit function via pkg::function
-- moved all packages that can be used with stabs to "Enhances:"
-- export print.stabsel
+    Update .travis.yml
 
-------------------------------------------------------------------------
-r3 | hofner | 2014-09-22 18:48:07 +0200 (Mo, 22. Sep 2014) | 3 Zeilen
+commit 14dab048a34fd5821a95eb6706f3e1bc69208b05
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
 
-- added args.fitfun to specify further arguments to the fitter
-- started formula interface
+    Update .travis.yml
 
-------------------------------------------------------------------------
-r2 | hofner | 2014-09-18 17:32:56 +0200 (Do, 18. Sep 2014) | 7 Zeilen
+commit 53f6fed009f57cdfa0aa0678d8d40553bf28ead4
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
 
-Initial version of package "stabs" which currently implements:
-- a function stabsel.matrix() to fit Lasso and stepwise models directly with stability selection
-- a function stabsel.mboost() to apply stability selection to a fitted boosting model
-- a function stabsel_parameters() to compute the error bounds of stability selection
-Additionally, print and plot functions are implemented.
+    updated .Rbuildignore
 
+commit a22c9e644d3b70b21af6d8d097c8d910d3e4f8d8
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
 
-------------------------------------------------------------------------
+    added README.md
+
+commit 40b090a5851d754fee3ec32c8cbe6cf9b42684b5
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+
+    use Travis-CI
+    - added travis.yml
+    - modified .Rbuildignore
+
+commit d97570a5fb52b285b3deb4db88d4ae0b9c02beb4
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+
+    moved pkg/ to root folder
+
+commit 764a0e5bcb367b920a14805eb68838b0d9b044b4
+Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+
+    - added functionality to extract parameters from fitted stabsel object:
+      use parameters() or stabsel_parameters()
+    - tweaked print methods a bit
+    - added specifiedPFER to stabsel and stabsel_parameter objects
+
+commit 7177021c4291994ee1e8ccead0815482ebc33819
+Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+
+    - fixed bug in stabsel.stabsel (call was not properly corrected)
+
+commit 2d4a6439aa8d6ebe58cc014d13be2c9b1129a7fa
+Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+
+    - added the function stabsel.stabsel to compute (new) parameter combinations
+      for a fitted stabsel object
+
+commit c84111adabb28df4c232dbfe8f4867e8c8b3729a
+Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+
+    - moved selected method from mboost to stabs
+    - added method selected.stabsel
+
+commit 8f1f35d3291d15cf7b0a9813b271179d412fcd24
+Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+
+    updated .Rout.save files
+
+commit 21b18f6884f4c05734abddc0a7c46e05ce6a6b78
+Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+
+    - added reference to stability selection paper
+    - added CITATION file
+
+commit f5761b259ebe4699fd3cf00b74005c397cfa7c4e
+Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+
+    Added output that states the significance level
+
+commit b12ed7a037fdc55caf5f969fc9c480e096982346
+Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+
+    - added new lasso based fit function where the q strongest predictors
+      (according to the coefficient size) are selected.
+
+commit 9efc6d915feead904286477fc0989025b55df350
+Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+
+    - changed output from "base-learner" to "variable"
+
+commit 3103fe80b35b4ccd860bcb7de6bd660de1a8525f
+Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+
+    - added manual for run_stabsel()
+    - changed regtest-inference.R
+    - fixed manual of stabsel_parameters()
+
+commit dbd6cd2caf68550c5192b62af3eecbdb546259ac
+Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+
+    - exported run_stabsel to make it accessible by other packages
+    - stabs now supports gamboostLSS
+
+commit 36b94379f3ef1acde2341f648115068b7da599da
+Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+
+    - Release Version 0.1-0
+    - added .Rbuildignore and .RbuildignoreCRAN
+
+commit 8faed3ba18fc720ce2be56090114752973997a08
+Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+
+    - added manual for subsample()
+    - added inst/NEWS.Rd and ChangeLog
+    - updated DESCRIPTION
+    - add Release SOPs and some helper files
+
+commit 22a7392a9ccc49e2fbdbd36239815f4ec99bdb1c
+Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+
+    - added parallel to NAMESPACE
+
+commit f5d61b4bfbed0e28d262cb6cd9ea21f7aef29017
+Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+
+    -updated manual
+
+commit 7e885b839220c67715621dc85862b71e1b203215
+Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+
+    - added stability paths to fitted model
+    - added subsampling method (no longer rely on mboost)
+    - added x- and y-labs to plot plot function
+    - changed default fitting function to lars.lasso
+    - explicitly specify packages for fit function via pkg::function
+    - moved all packages that can be used with stabs to "Enhances:"
+    - export print.stabsel
+
+commit 19d2fb9b73eea6c38a5ece5ec3ffe1620fd7a6ed
+Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+
+    - added args.fitfun to specify further arguments to the fitter
+    - started formula interface
+
+commit 1ac5eb756acdecc587fd3eaec768b746ce7e6219
+Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+
+    Initial version of package "stabs" which currently implements:
+    - a function stabsel.matrix() to fit Lasso and stepwise models directly with stability selection
+    - a function stabsel.mboost() to apply stability selection to a fitted boosting model
+    - a function stabsel_parameters() to compute the error bounds of stability selection
+    Additionally, print and plot functions are implemented.
