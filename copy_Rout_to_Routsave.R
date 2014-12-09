@@ -31,7 +31,7 @@ if (length(args) == 0) {
 if (is.null(vignettes))
     vignettes <- FALSE
 
-path <- "pkg"
+path <- "."
 check_path <- "stabs.Rcheck/"
 
 ################################################################################
@@ -44,6 +44,8 @@ if (vignettes == FALSE) {
     ROUT2 <- paste(check_path, ROUT, sep ="")
 
     ROUT.SAVE <- list.files(path = path, pattern = ".Rout.save$", recursive = TRUE)
+    ## remove new Routs from checks
+    ROUT.SAVE <- ROUT.SAVE[!grepl(check_path, ROUT.SAVE)]
     ROUT.SAVE <- paste(path, "/", ROUT.SAVE, sep ="")
     ROUT.SAVE <- ROUT.SAVE[grep("test", ROUT.SAVE)]
 
@@ -63,20 +65,20 @@ if (vignettes == FALSE) {
 
         cat("#########################################################################",
             "# To revert changes simply use:",
-            "#   svn revert --recursive pkg/tests",
+            "#   git checkout -- tests",
             "#########################################################################",
             sep = "\n")
     } else {
         which_missing <- !(ROUT %in% ROUT.SAVE)
         ROUT <- paste0(path, "/", ROUT[which_missing], ".save")
         file.create(ROUT)
-        ## add to svn
+        ## add to git
         for (file in ROUT)
-            system(paste0("svn add ", file))
+            system(paste0("git add ", file))
 
         cat("#########################################################################",
             "# To revert changes simply use:",
-            "#   svn revert --recursive pkg/tests",
+            "#   git checkout -- tests",
             "#########################################################################",
             sep = "\n")
     }
@@ -113,7 +115,7 @@ if (vignettes == TRUE) {
 
         cat("#########################################################################",
             "# To revert changes simply use:",
-            "#   svn revert --recursive pkg/vignettes",
+            "#   git checkout -- vignettes",
             "#########################################################################",
             sep = "\n")
     } else {
