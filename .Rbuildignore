@@ -8,3 +8,4 @@ inst/NEWS.pdf
 ^copy_Rout_to_Routsave.R$
 ^SOP_release.txt$
 .*\.tar\.gz
+buildCRAN
