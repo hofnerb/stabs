@@ -7,7 +7,7 @@
 ################################################################################
 
 glmnet.lasso <- function(x, y, q, ...) {
-    if (!require("glmnet"))
+    if (!requireNamespace("glmnet"))
         stop("Package ", sQuote("glmnet"), " needed but not available")
 
     if (is.data.frame(x)) {
@@ -33,7 +33,7 @@ glmnet.lasso <- function(x, y, q, ...) {
 }
 
 lars.lasso <- function(x, y, q, ...) {
-    if (!require("lars"))
+    if (!requireNamespace("lars"))
         stop("Package ", sQuote("lars"), " needed but not available")
 
     if (is.data.frame(x)) {
@@ -58,7 +58,7 @@ lars.lasso <- function(x, y, q, ...) {
 }
 
 lars.stepwise <- function(x, y, q, ...) {
-    if (!require("lars"))
+    if (!requireNamespace("lars"))
         stop("Package ", sQuote("lars"), " needed but not available")
 
     if (is.data.frame(x)) {
@@ -83,7 +83,7 @@ lars.stepwise <- function(x, y, q, ...) {
 }
 
 glmnet.lasso_maxCoef <- function(x, y, q, ...) {
-    if (!require("glmnet"))
+    if (!requireNamespace("glmnet"))
         stop("Package ", sQuote("glmnet"), " needed but not available")
 
     if (is.data.frame(x)) {
