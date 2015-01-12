@@ -5,7 +5,9 @@
   \subsection{Bug-fixes}{
     \itemize{
       \item Changes in \file{inst/CITATION} to make CRAN happy:
-      Citations can now be extracted without the need to install the package.
+      Citations can now be extracted without the need to install the
+      package.
+      \item Changed \code{require} to \code{requireNamespace}
     }
   }
 }

@@ -1,13 +1,46 @@
-commit f4ce7282e23301c7ec37b501d1ce2fe8eae3783c
+commit 75f8092d418328b87c23d89a0172ca52f7ae5de2
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+
+    use requireNamespace instead of require
+
+commit 82a0287b56d8e9dc185b8ee5a6ca4f8a6944e91a
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+
+    updated NEWS.Rd
+
+commit 7f5e2246cb170293fe3a7b5acb283bfa00d0ebb5
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+
+    changed CITATION to make CRAN happy
+
+commit 5964fe07b3426ac4df12f2aa14e5a45b12960b07
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+
+    Updated SOPs to reflect changed project structure
+    Updated .Rbuildignore and .RbuildignoreCRAN
+
+commit 7e6de04ab60ea543ffa57f4086cc735cd4b4f06f
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+
+    Updated check results (.Rout.save)
+
+commit 6a41a675d9dfe88cb27a84c71d04cedd295bf61a
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
 
     Updated to stabs 0.5-0
     - updated NEWS.Rd to incorporate latest changes
+    - updated ChangeLog
+    - updated SOPs for package release
 
-commit 2033d0a7ffb4e1635c8852800d004589dafe0477
+commit d2f52806c51cebc30269c100f24a5b3b2a778b2d
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
 
     updated .Rbuildignore
+
+commit 5ba43d90a2a7bc75d72d22af2ac835f79fd22bfb
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+
+    Update .travis.yml
 
 commit 776a09d358971e7697443e0678f95bc43945cb0e
 Merge: eaaff61 af789f8
