@@ -38,7 +38,7 @@
     Update inst/NEWS.Rd
     Update ChangeLog
 
-    R CMD build --resave-data --compact-vignettes pkg && R CMD check --as-cran stabs_XXX.tar.gz
+    R CMD build --resave-data --compact-vignettes . && R CMD check --as-cran stabs_XXX.tar.gz
 
     Run check with R-devel
     (see section "Checking the package with latest development version of R")
