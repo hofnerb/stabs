@@ -1,8 +1,17 @@
 \name{NEWS}
 \title{News for Package 'stabs'}
 
+\section{Changes in stabs version 0.5-1 (2015-01-12)}{
+  \subsection{Bug-fixes}{
+    \itemize{
+      \item Changes in \file{inst/CITATION} to make CRAN happy:
+      Citations can now be extracted without the need to install the package.
+    }
+  }
+}
+
 \section{Changes in stabs version 0.5-0 (2014-12-09)}{
-  \subsection{User-visible changes}{  
+  \subsection{User-visible changes}{
     \itemize{
       \item Added a function \code{stabsel.stabsel()} to compute (new)
       parameter combinations for a fitted \code{stabsel} object
