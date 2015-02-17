@@ -44,7 +44,7 @@ glmnet.lasso_maxCoef(x, y, q, ...)
   A named list with elements
   \item{selected}{logical. A vector that indicates which variable was
     selected.}
-  \item{path}{logical. A matrix that indicates which variabkle was
+  \item{path}{logical. A matrix that indicates which variable was
     selected in which step. Each row represents one variable, the
     columns represent the steps.}
 }
@@ -54,6 +54,8 @@ data("bodyfat", package = "TH.data")
 lars.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$selected
 lars.stepwise(bodyfat[, -2], bodyfat[,2], q = 3)$selected
 glmnet.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$selected
+## selection path
+glmnet.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$path
 }
 \keyword{models}
 \keyword{nonlinear}
