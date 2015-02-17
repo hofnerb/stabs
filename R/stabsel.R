@@ -324,26 +324,42 @@ stabsel.stabsel <- function(x, cutoff, PFER, assumption = x$assumption, ...) {
             return(x)
         if (!missing(PFER) && x$PFER == PFER)
             return(x)
-    } else {
-        if (sum(missing(cutoff), missing(PFER)) == 2)
-            stop("Specify one of ", sQuote("PFER"), " and ", sQuote("cutoff"))
+    }
+    else {
+        if (sum(missing(cutoff), missing(PFER)) == 2) {
+            ## If both parameters PFER and cutoff were originally specified stop!
+            if (!is.null(x$call[["PFER"]]) && !is.null(x$call[["cutoff"]]))
+                stop("Specify one of ", sQuote("PFER"), " and ",
+                     sQuote("cutoff"))
+
+            ## If originally only one of PFER and cutoff was specified use this
+            ## parameter
+            if (is.null(x$call[["PFER"]])) {
+                cutoff <- x$cutoff
+            }
+            if (is.null(x$call[["cutoff"]])) {
+                PFER <- x$specifiedPFER
+            }
+        }
     }
     if (!missing(cutoff)) {
         x$call[["cutoff"]] <- cutoff
         x$call[["q"]] <- x$q
         if (!is.null(x$call[["PFER"]]))
             x$call[["PFER"]] <- NULL
+        x$specifiedPFER <- NULL
     }
     if (!missing(PFER)) {
         x$call[["PFER"]] <- PFER
         x$call[["q"]] <- x$q
         if (!is.null(x$call[["cutoff"]]))
             x$call[["cutoff"]] <- NULL
+        x$specifiedPFER <- PFER
     }
     if (x$assumption != assumption)
         x$call[["assumption"]] <- assumption
 
-    pars <- stabsel_parameters(p = x$p, cutoff, q = x$q, PFER = PFER,
+    pars <- stabsel_parameters(p = x$p, cutoff = cutoff, q = x$q, PFER = PFER,
                        B = x$B, assumption = assumption,
                        sampling.type = x$sampling.type,
                        verbose = FALSE)
