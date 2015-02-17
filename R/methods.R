@@ -60,7 +60,8 @@ print.stabsel_parameters <- function(x, heading = TRUE, ...) {
         cat("PFER (specified upper bound): ", x$specifiedPFER, "\n")
     } else {
         if (!!is.null(x$call) && !is.null(x$call[["PFER"]])) {
-            cat("PFER (specified upper bound): ", x$call[["PFER"]], "\n")
+            if (is.numeric(x$call[["PFER"]]))
+                cat("PFER (specified upper bound): ", x$call[["PFER"]], "\n")
         }
     }
     p <- NULL
