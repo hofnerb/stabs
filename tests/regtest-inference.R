@@ -221,4 +221,3 @@ stabsel_parameters(p = p, cutoff = res$cutoff, q = q, B = B,
                    sampling.type = "SS", assumption = "r-concave")
 stabsel_parameters(p = p, cutoff = res$cutoff - 0.01, q = q, B = B,
                    sampling.type = "SS", assumption = "r-concave")
-

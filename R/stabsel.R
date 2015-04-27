@@ -41,8 +41,8 @@ stabsel.matrix <- function(x, y, fitfun = lars.lasso, args.fitfun = list(),
     ## the function implicitly knows x and y as it is defined in this environment
     fit_model <- function(i, folds, q, args.fitfun) {
         inbag <- as.logical(folds[, i])
-        do.call(fitfun, c(list(x = x[inbag, ], y = y[inbag, ], q = q),
-                          args.fitfun))
+        try(do.call(fitfun, c(list(x = x[inbag, ], y = y[inbag, ], q = q),
+                              args.fitfun)), silent = TRUE)
     }
 
     nms <- colnames(x)
@@ -262,12 +262,23 @@ run_stabsel <- function(fitter, args.fitter,
 
     ## if mclappy is used consider mc.preschedule
     if (all.equal(papply, mclapply) == TRUE) {
-        res <- papply(1:ncol(folds), fitter, folds = folds, q = q,
-                      args.fitfun = args.fitter, mc.preschedule =
-                      mc.preschedule, ...)
+        res <- suppressWarnings(
+                 papply(1:ncol(folds), fitter, folds = folds, q = q,
+                        args.fitfun = args.fitter, mc.preschedule =
+                        mc.preschedule, ...))
     } else {
         res <- papply(1:ncol(folds), fitter, folds = folds, q = q,
                       args.fitfun = args.fitter, ...)
+    }
+
+    ## if any errors occured remove results and issue a warning
+    if (any(idx <- sapply(res, is.character))) {
+        warning(sum(idx), " fold(s) encountered an error. ",
+                "Results are based on ", ncol(folds) - sum(idx),
+                " folds only.\n",
+                "Original error message(s):\n",
+                sapply(res[idx], function(x) x))
+        res[idx] <- NULL
     }
     ## check results
     if (!is.list(res[[1]]) && names(res[[1]]) != c("selected", "path"))
@@ -298,7 +309,7 @@ run_stabsel <- function(fitter, args.fitter,
 
     ## extract selected variables
     res <- lapply(res, function(x) x$selected)
-    res <- matrix(nrow = ncol(folds), byrow = TRUE,
+    res <- matrix(nrow = length(res), byrow = TRUE,
                   unlist(res))
     colnames(res) <- names
 
