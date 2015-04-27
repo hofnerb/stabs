@@ -10,7 +10,8 @@
 }
 \usage{
 run_stabsel(fitter, args.fitter, n, p, cutoff, q, PFER, folds, B, assumption,
-            sampling.type, papply, verbose, FWER, eval, names, ...)
+            sampling.type, papply, verbose, FWER, eval, names,
+            mc.preschedule = FALSE, ...)
 }
 \arguments{
   \item{fitter}{a function to fit the model on subsamples. See argument
@@ -31,12 +32,13 @@ run_stabsel(fitter, args.fitter, n, p, cutoff, q, PFER, folds, B, assumption,
   \item{sampling.type}{ sampling type to be used.}
   \item{papply}{ (parallel) apply function.}
   \item{verbose}{ logical (default: \code{TRUE}) that determines wether
-    \code{warnings} should be issued. }
+    \code{warnings} should be issued.}
   \item{FWER}{ deprecated. Only for compatibility with older versions,
     use PFER instead.}
   \item{eval}{ logical. Determines whether stability selection is
     evaluated.}
   \item{names}{ variable names that are used to label the results.}
+  \item{mc.preschedule}{ preschedule tasks?}
   \item{\dots}{ additional arguments to be passed to next function.}
 }
 \details{

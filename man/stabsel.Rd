@@ -19,7 +19,8 @@ stabsel(x, ...)
         B = ifelse(sampling.type == "MB", 100, 50),
         assumption = c("unimodal", "r-concave", "none"),
         sampling.type = c("SS", "MB"),
-        papply = mclapply, verbose = TRUE, FWER, eval = TRUE, ...)
+        papply = mclapply, mc.preschedule = FALSE,
+        verbose = TRUE, FWER, eval = TRUE, ...)
 
 ## essentially a wrapper for data.frames (see details)
 \method{stabsel}{data.frame}(x,  y, intercept = FALSE, ...)
@@ -70,6 +71,9 @@ stabsel(x, ...)
     \code{\link[parallel]{mclapply}}. Alternatively, \code{parLapply}
     can be used. In the latter case, usually more setup is needed (see
     example of \code{\link[mboost]{cvrisk}} for some details).}
+  \item{mc.preschedule}{
+    preschedule tasks if \code{papply = \link{mclapply}} (default:
+    \code{mc.preschedule = FALSE})? For details see \code{\link{mclapply}}.}
   \item{verbose}{ logical (default: \code{TRUE}) that determines wether
     \code{warnings} should be issued. }
   \item{FWER}{ deprecated. Only for compatibility with older versions,

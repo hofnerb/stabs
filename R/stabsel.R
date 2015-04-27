@@ -14,7 +14,8 @@ stabsel.matrix <- function(x, y, fitfun = lars.lasso, args.fitfun = list(),
                            B = ifelse(sampling.type == "MB", 100, 50),
                            assumption = c("unimodal", "r-concave", "none"),
                            sampling.type = c("SS", "MB"),
-                           papply = mclapply, verbose = TRUE, FWER, eval = TRUE,
+                           papply = mclapply, mc.preschedule = FALSE,
+                           verbose = TRUE, FWER, eval = TRUE,
                            ...) {
 
     cll <- match.call()
@@ -49,7 +50,8 @@ stabsel.matrix <- function(x, y, fitfun = lars.lasso, args.fitfun = list(),
                 n = n, p = p, cutoff = cutoff, q = q,
                 PFER = PFER, folds = folds, B = B, assumption = assumption,
                 sampling.type = sampling.type, papply = papply,
-                verbose = verbose, FWER = FWER, eval = eval, names = nms, ...)
+                verbose = verbose, FWER = FWER, eval = eval, names = nms,
+                mc.preschedule = mc.preschedule, ...)
     ret$call <- cll
     ret$call[[1]] <- as.name("stabsel")
     return(ret)
@@ -239,7 +241,8 @@ stabsel_parameters.default <- function(p, cutoff, q, PFER,
 ### generic stabsel function)
 run_stabsel <- function(fitter, args.fitter,
                         n, p, cutoff, q, PFER, folds, B, assumption,
-                        sampling.type, papply, verbose, FWER, eval, names, ...) {
+                        sampling.type, papply, verbose, FWER, eval, names,
+                        mc.preschedule = FALSE, ...) {
 
     folds <- check_folds(folds, B = B, n = n, sampling.type = sampling.type)
     pars <- stabsel_parameters(p = p, cutoff = cutoff, q = q,
@@ -256,9 +259,16 @@ run_stabsel <- function(fitter, args.fitter,
 
     ## fit model on subsamples;
     ## Depending on papply, this is done sequentially or in parallel
-    res <- papply(1:ncol(folds), fitter, folds = folds, q = q,
-                  args.fitfun = args.fitter, ...)
 
+    ## if mclappy is used consider mc.preschedule
+    if (all.equal(papply, mclapply) == TRUE) {
+        res <- papply(1:ncol(folds), fitter, folds = folds, q = q,
+                      args.fitfun = args.fitter, mc.preschedule =
+                      mc.preschedule, ...)
+    } else {
+        res <- papply(1:ncol(folds), fitter, folds = folds, q = q,
+                      args.fitfun = args.fitter, ...)
+    }
     ## check results
     if (!is.list(res[[1]]) && names(res[[1]]) != c("selected", "path"))
         stop(sQuote("fitfun"), " must return a list with two (named) elements",
