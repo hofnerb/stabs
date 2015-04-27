@@ -1,6 +1,18 @@
 \name{NEWS}
 \title{News for Package 'stabs'}
 
+\section{Changes in stabs version 0.5-2 (2015-0x-xx)}{
+  \subsection{User-visible changes}{
+    \itemize{
+      \item Better handling of errors in (single) folds of \code{stabsel}:
+      results of folds without errors are used and a \code{warning} is
+      issued.
+      \item Parallel computing via \code{mclapply}: Set
+      \code{mc.preschedule = FALSE} per default.
+    }
+  }
+}
+
 \section{Changes in stabs version 0.5-1 (2015-01-12)}{
   \subsection{Bug-fixes}{
     \itemize{
