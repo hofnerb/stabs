@@ -3,7 +3,7 @@ import(stats)
 import(parallel)
 
 export(stabsel, stabsel.matrix, stabsel.data.frame, stabsel.stabsel,
-       run_stabsel,
+       run_stabsel, check_folds,
        stabsel_parameters, stabsel_parameters.default,
        stabsel_parameters.stabsel, parameters,
        selected, selected.stabsel,
