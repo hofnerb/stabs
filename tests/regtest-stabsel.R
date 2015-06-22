@@ -190,8 +190,6 @@ if (require("lars")) {
     unlockBinding("check_folds", env2)
     env[["check_folds"]] <- check_folds
     env2[["check_folds"]] <- check_folds
-    # env[["check_folds"]]
-    # env2[["check_folds"]]
 
     set.seed(1234)
     ## define folds that produce an error

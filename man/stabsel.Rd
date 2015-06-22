@@ -134,10 +134,10 @@ stabsel(x, ...)
 }
 \references{
 
-  B. Hofner, L. Boccuto and M. Goeker (2014), Controlling false
+  B. Hofner, L. Boccuto and M. Goeker (2015), Controlling false
   discoveries in high-dimensional situations: Boosting with stability
-  selection. \emph{Technical Report}, arXiv:1411.1285.\cr
-  \url{http://arxiv.org/abs/1411.1285}.
+  selection. \emph{BMC Bioinformatics}, 16:144.\cr
+  doi:10.1186/s12859-015-0575-3.
 
   N. Meinshausen and P. Buehlmann (2010), Stability selection.
   \emph{Journal of the Royal Statistical Society, Series B},
