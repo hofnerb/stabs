@@ -307,6 +307,10 @@ run_stabsel <- function(fitter, args.fitter,
         rownames(phat) <- names
     }
 
+    ## extract violations (only needed for boosting models)
+    violations <- sapply(res, function(x)
+        !is.null(attr(x, "violations")) && attr(x, "violations"))
+
     ## extract selected variables
     res <- lapply(res, function(x) x$selected)
     res <- matrix(nrow = length(res), byrow = TRUE,
@@ -317,6 +321,11 @@ run_stabsel <- function(fitter, args.fitter,
                 selected = which(colMeans(res) >= cutoff),
                 max = colMeans(res))
     ret <- c(ret, pars)
+
+    ## return violations as attribute
+    if (any(violations))
+        attr(ret, "violations") <- violations
+
     class(ret) <- "stabsel"
     ret
 }
