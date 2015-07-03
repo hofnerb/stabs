@@ -1,6 +1,10 @@
-import(methods)
-import(stats)
-import(parallel)
+import("methods")
+import("stats")
+import("parallel")
+importFrom("graphics", "abline", "axis", "matplot", "par", "plot", "points")
+importFrom("grDevices", "hcl")
+importFrom("utils", "tail")
+
 
 export(stabsel, stabsel.matrix, stabsel.data.frame, stabsel.stabsel,
        run_stabsel, check_folds,

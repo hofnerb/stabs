@@ -9,6 +9,7 @@ Description: Resampling procedures to assess the stability of selected variables
     with additional finite sample error control for high-dimensional variable
     selection procedures such as Lasso or boosting.
 Depends: R (>= 2.14.0), methods, stats, parallel
+Imports: graphics, grDevices, utils
 Suggests: TH.data, hdi
 Enhances: glmnet, lars, mboost (> 2.3-0), gamboostLSS (>= 1.2-0)
 LazyData: yes
