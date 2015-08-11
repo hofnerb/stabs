@@ -68,12 +68,9 @@ to `args.fitfun`.
 
 The `fitfun` function then needs to return a named list with two elements
 `selected` and `path`:
-
 * `selected` is a vector that indicates which variable was selected.
-
 * `path` is a matrix that indicates which variable was selected in which step.
     Each row represents one variable, the columns represent the steps.
-
 The latter is optional and only needed to draw the complete selection paths.
 
 The following example shows how `lars.lasso` is implemented:
@@ -137,3 +134,32 @@ par(opar)
 plot(sbody, type = "maxsel", ymargin = 6)
 ```
 
+## Citation
+
+To cite the package in publications please use 
+```
+citation("stabs")
+```
+
+which will currently give you
+
+```
+To cite package 'stabs' in publications use:
+
+  Benjamin Hofner and Torsten Hothorn (2015). stabs: Stability
+  Selection with Error Control, R package version R package version
+  0.5-1, http://CRAN.R-project.org/package=stabs.
+
+  Benjamin Hofner, Luigi Boccuto and Markus Goeker (2015). Controlling
+  false discoveries in high-dimensional situations: Boosting with
+  stability selection. BMC Bioinformatics, 16:144.
+  doi:10.1186/s12859-015-0575-3
+
+Use ‘toBibtex(citation("stabs"))’ to extract BibTeX references.
+```
+
+To obtain BibTeX references use
+
+```
+toBibtex(citation("stabs"))
+```
