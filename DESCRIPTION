@@ -5,7 +5,6 @@ Date: 2015-01-12
 Authors@R: c(person("Benjamin", "Hofner", role = c("aut", "cre"),
 	            email = "benjamin.hofner@fau.de"),
        	     person("Torsten", "Hothorn", role = c("aut")))
-
 Description: Resampling procedures to assess the stability of selected variables
     with additional finite sample error control for high-dimensional variable
     selection procedures such as Lasso or boosting. Both, standard stability
@@ -13,7 +12,6 @@ Description: Resampling procedures to assess the stability of selected variables
     selection with improved error bounds (Shah & Samworth, 2013) are
     implemented. The package can be combined with arbitrary user specified
     variable selection approaches.
-
 Depends: R (>= 2.14.0), methods, stats, parallel
 Imports: graphics, grDevices, utils
 Suggests: TH.data, hdi
