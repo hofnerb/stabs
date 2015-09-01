@@ -6,11 +6,27 @@
     \itemize{
       \item Better handling of errors in (single) folds of \code{stabsel}:
       results of folds without errors are used and a \code{warning} is
-      issued.
+      issued  (closes
+      \href{https://github.com/hofnerb/stabs/issues/2}{#2}). 
       \item Parallel computing via \code{mclapply}: Set
-      \code{mc.preschedule = FALSE} per default.
+      \code{mc.preschedule = FALSE} per default (closes
+      \href{https://github.com/hofnerb/stabs/issues/1}{#1}).
+      \item Boosting specific changes: warn if \code{mstop} is to small.
     }
   }
+  \subsection{Miscellaneous}{
+    \itemize{
+      \item Updated references: Hofner et al (2015) now available at BMC
+      Bioinformatics. See \code{citations("stabs")} for details.
+      \item Updated \file{DESCRIPTION} to be more informative.
+    }
+  }
+  \subsection{Bug-fixes}{
+    \itemize{
+      \item Adhere to CRAN policies regarding import of base packages
+      (closes \href{https://github.com/hofnerb/stabs/issues/3}{#3}). 
+    }
+  } 
 }
 
 \section{Changes in stabs version 0.5-1 (2015-01-12)}{
