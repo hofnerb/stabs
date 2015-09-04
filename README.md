@@ -1,7 +1,9 @@
 stabs
 =====
 
-[![Build Status](https://travis-ci.org/hofnerb/stabs.svg)](https://travis-ci.org/hofnerb/stabs) [![](http://cranlogs.r-pkg.org/badges/stabs)](http://cran.rstudio.com/web/packages/stabs/index.html)
+[![Build Status](https://travis-ci.org/hofnerb/stabs.svg)](https://travis-ci.org/hofnerb/stabs)
+[![CRAN Status Badge](http://www.r-pkg.org/badges/version/stabs)](http://cran.r-project.org/package=stabs)
+[![](http://cranlogs.r-pkg.org/badges/stabs)](http://cran.rstudio.com/web/packages/stabs/index.html)
 
 `stabs` implements resampling procedures to assess the stability of selected
 variables with additional finite sample error control for high-dimensional
