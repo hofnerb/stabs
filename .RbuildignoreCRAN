@@ -3,6 +3,7 @@ test
 .*/auto
 ^README.md$
 ^\.travis\.yml$
+^appveyor\.yml$
 vignettes/.*\.Rout\.save$
 inst/NEWS.html
 inst/NEWS.pdf
