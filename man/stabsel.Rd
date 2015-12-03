@@ -178,6 +178,19 @@ stabsel(x, ...)
       ##     dimensional example!
   }
 
+  ## set seed (again to make results comparable)
+  set.seed(1234)
+  if (require("glmnet")) {
+      (stab.glmnet <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
+                              fitfun = glmnet.lasso, cutoff = 0.75,
+                              PFER = 1))
+      par(mfrow = c(2, 1))
+      plot(stab.glmnet, main = "Lasso (glmnet)")
+      if (exists("stab.lasso"))
+          plot(stab.lasso, main = "Lasso (lars)")    
+  }
+
+
   ####################################################################
   ### using stability selection directly on computed boosting models
   ### from mboost
