@@ -36,8 +36,10 @@ glmnet.lasso_maxCoef(x, y, q, ...)
   \code{glmnet.lasso} stands for a lasso model that is fitted using the
   package \pkg{glmnet}.
 
-  If one wants to use \code{glmnet.lasso_maxCoef}, one must specify the
-  penalty parameter \code{lambda} (via the \code{\dots} argument) or in
+  \code{glmnet.lasso_maxCoef} fites a lasso model and returns the
+  \code{q} largest coefficients. If one wants to use
+  \code{glmnet.lasso_maxCoef}, one must specify the penalty parameter
+  \code{lambda} (via the \code{\dots} argument) or in
   \code{\link{stabsel}} via \code{args.fitfun(lambda = )}.
 }
 \value{
