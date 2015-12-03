@@ -3,6 +3,7 @@ stabs
 
 [![Build Status](https://travis-ci.org/hofnerb/stabs.svg)](https://travis-ci.org/hofnerb/stabs)
 [![Build status](https://ci.appveyor.com/api/projects/status/tlo7dbrevje1f2du?svg=true)](https://ci.appveyor.com/project/hofnerb/stabs)
+[![Coverage Status](https://coveralls.io/repos/hofnerb/stabs/badge.svg?branch=master&service=github)](https://coveralls.io/github/hofnerb/stabs?branch=master)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/stabs)](http://cran.r-project.org/package=stabs)
 [![](http://cranlogs.r-pkg.org/badges/stabs)](http://cran.rstudio.com/web/packages/stabs/index.html)
 
@@ -139,7 +140,7 @@ plot(sbody, type = "maxsel", ymargin = 6)
 
 ## Citation
 
-To cite the package in publications please use 
+To cite the package in publications please use
 ```
 citation("stabs")
 ```
