@@ -13,6 +13,7 @@ before_install:
 
 install:
   - ./travis-tool.sh install_deps
+  - ./travis-tool.sh github_package jimhester/covr
   ## install enhances
   - Rscript -e 'library("devtools"); library("methods"); options(repos=c(RForge="http://cran.rstudio.com")); install_deps(dependencies = "Enhances")'
   ## install newer versions of mboost and gamboostLSS
