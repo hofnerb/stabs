@@ -91,6 +91,9 @@ lars.lasso <- function(x, y, q, ...) {
 
     ## fit model
     fit <- lars::lars(x, y, max.steps = q, ...)
+
+    ## which coefficients are non-zero?
+    selected <- unlist(fit$actions)
 	## check if variables are removed again from the active set
     ## and remove these from selected
     if (any(selected < 0)) {
@@ -99,8 +102,6 @@ lars.lasso <- function(x, y, q, ...) {
         selected <- selected[-idx]
     }
 
-    ## which coefficients are non-zero?
-    selected <- unlist(fit$actions)
     ret <- logical(ncol(x))
     ret[selected] <- TRUE
     names(ret) <- colnames(x)
