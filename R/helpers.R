@@ -67,7 +67,7 @@ minD <- function(q, p, pi, B, r = c(-1/2, -1/4)) {
     which <- ceiling(signif(pi / (1/(2* B)), 10))
     maxQ <- maxQ(p, B)
     if (q > maxQ)
-        stop(sQuote("q"), " must be <= ", maxQ)
+        stop(sQuote("q"), " must be <= ", maxQ,  call. = FALSE)
     min(c(1, D(q^2 / p^2, which - B, B, r[1]), D(q / p, which , 2*B, r[2])))
 }
 
@@ -83,6 +83,13 @@ optimal_cutoff <- function(p, q, PFER, B, assumption = "unimodal") {
         cutoffgrid <- 1/2 + (2:B)/(2*B)
         c_min <- min(0.5 + (q/p)^2, 0.5 + 1/(2*B) + 0.75 * (q/p)^2)
         cutoffgrid <- cutoffgrid[cutoffgrid > c_min]
+
+        if (length(cutoffgrid) == 0) {
+            maxQ <- max(floor(p * sqrt(0.5)),
+                        floor(p * sqrt((0.5 - 1/(2*B)) * 4/3)))
+            stop(sQuote("q"), " must be <= ", maxQ,  call. = FALSE)
+        }
+
         upperbound <- rep(NA, length(cutoffgrid))
         for (i in 1:length(cutoffgrid))
             upperbound[i] <- q^2 / p / um_const(cutoffgrid[i], B, theta = q/p)
@@ -134,7 +141,7 @@ optimal_q <- function(p, cutoff, PFER, B, assumption = "unimodal") {
 ## obtain maximal value possible for q
 maxQ <- function(p, B) {
     if(B <= 1)
-        stop("B must be at least 2")
+        stop("B must be at least 2", call. = FALSE)
 
     fact_1 <- 4 * B / p
     tmpfct <- function(q)
@@ -148,11 +155,11 @@ maxQ <- function(p, B) {
 um_const <- function(cutoff, B, theta) {
     if (cutoff <= 3/4) {
         if (cutoff < 1/2 + min(theta^2, 1 / (2*B) + 3/4 * theta^2))
-            stop ("cutoff out of bounds")
+            stop ("cutoff out of bounds", call. = FALSE)
         return( 2 * (2 * cutoff - 1 - 1/(2*B)) )
     } else {
         if (cutoff > 1)
-            stop ("cutoff out of bounds")
+            stop ("cutoff out of bounds", call. = FALSE)
         return( (1 + 1/B)/(4 * (1 - cutoff + 1 / (2*B))) )
     }
 }
@@ -167,9 +174,11 @@ check_folds <- function(folds, B, n, sampling.type) {
     if (!is.matrix(folds) || ncol(folds) != B || nrow(folds) != n ||
         !all(folds %in% c(0, 1)))
         stop(sQuote("folds"),
-             " must be a binary or logical matrix with dimension nrow(x) times B")
+             " must be a binary or logical matrix with dimension nrow(x) times B",
+             call. = FALSE)
     if (!all(colMeans(folds) %in% c(floor(n * 0.5) / n, ceiling(n * 0.5) / n)))
-        warning("Subsamples are not of size n/2; results might be wrong")
+        warning("Subsamples are not of size n/2; results might be wrong",
+                call. = FALSE)
     ## use complementary pairs?
     if (sampling.type == "SS") {
         folds <- cbind(folds, rep(1, n) - folds)
