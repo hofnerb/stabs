@@ -47,6 +47,14 @@ lars.lasso <- function(x, y, q, ...) {
 
     ## which coefficients are non-zero?
     selected <- unlist(fit$actions)
+    ## check if variables are removed again from the active set
+    ## and remove these from selected
+    if (any(selected < 0)) {
+        idx <- which(selected < 0)
+        idx <- c(idx, which(selected %in% abs(selected[idx])))
+        selected <- selected[-idx]
+    }
+
     ret <- logical(ncol(x))
     ret[selected] <- TRUE
     names(ret) <- colnames(x)
@@ -69,6 +77,13 @@ lars.stepwise <- function(x, y, q, ...) {
 
     ## fit model
     fit <- lars::lars(x, y, max.steps = q, type = "stepwise", ...)
+    ## check if variables are removed again from the active set
+    ## and remove these from selected
+    if (any(selected < 0)) {
+        idx <- which(selected < 0)
+        idx <- c(idx, which(selected %in% abs(selected[idx])))
+        selected <- selected[-idx]
+    }
 
     ## which coefficients are non-zero?
     selected <- unlist(fit$actions)
