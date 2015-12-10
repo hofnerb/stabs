@@ -22,6 +22,9 @@ stabsel.matrix <- function(x, y, fitfun = lars.lasso, args.fitfun = list(),
     p <- ncol(x) ## TODO: what about intercept?
     n <- nrow(x)
 
+    if (is.null(colnames(x)))
+        colnames(x) <- 1:ncol(x)
+
     ## needed here to make B and folds happy
     sampling.type <- match.arg(sampling.type)
     if (sampling.type == "MB")
