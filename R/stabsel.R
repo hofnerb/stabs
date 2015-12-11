@@ -44,8 +44,8 @@ stabsel.matrix <- function(x, y, fitfun = lars.lasso, args.fitfun = list(),
     ## the function implicitly knows x and y as it is defined in this environment
     fit_model <- function(i, folds, q, args.fitfun) {
         inbag <- as.logical(folds[, i])
-        try(do.call(fitfun, c(list(x = x[inbag, ], y = y[inbag, ], q = q),
-                              args.fitfun)), silent = TRUE)
+        do.call(fitfun, c(list(x = x[inbag, ], y = y[inbag, ], q = q),
+                          args.fitfun))
     }
 
     nms <- colnames(x)
@@ -266,11 +266,11 @@ run_stabsel <- function(fitter, args.fitter,
     ## if mclappy is used consider mc.preschedule
     if (all.equal(papply, mclapply) == TRUE) {
         res <- suppressWarnings(
-                 papply(1:ncol(folds), fitter, folds = folds, q = q,
+                 papply(1:ncol(folds), function(...) try(fitter(...), silent = TRUE), folds = folds, q = q,
                         args.fitfun = args.fitter, mc.preschedule =
                         mc.preschedule, ...))
     } else {
-        res <- papply(1:ncol(folds), fitter, folds = folds, q = q,
+        res <- papply(1:ncol(folds), function(...) try(fitter(...), silent = TRUE), folds = folds, q = q,
                       args.fitfun = args.fitter, ...)
     }
 
