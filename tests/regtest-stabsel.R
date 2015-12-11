@@ -217,3 +217,47 @@ if (require("lars")) {
     env[["check_folds"]] <- check_folds_orig
     env2[["check_folds"]] <- check_folds_orig
 }
+
+if (require("mboost")) {
+    ############################################################################
+    ### with package lars
+
+    check_folds <- function(folds, B, n, sampling.type) {
+        if (sampling.type == "SS") {
+            folds <- cbind(folds, rep(1, n) - folds)
+        }
+        folds
+    }
+
+    ## set modified check_folds function as function in stabs
+    env <- as.environment("package:stabs")
+    env2 <- getNamespace("stabs")
+    ## store original function
+    check_folds_orig <- env[["check_folds"]]
+    ## reset it in namespace and package
+    unlockBinding("check_folds", env)
+    unlockBinding("check_folds", env2)
+    env[["check_folds"]] <- check_folds
+    env2[["check_folds"]] <- check_folds
+
+    set.seed(1234)
+    ## define folds that produce an error
+    folds_cc <- folds <- subsample(rep(1, nrow(bodyfat)), B = 50)
+    folds[1, 1] <- NA
+
+    mod <- glmboost(DEXfat ~ ., data = bodyfat)
+    stab1 <- stabsel(mod, cutoff = 0.75, PFER = 1, sampling.type = "SS",
+                     folds = folds)
+
+    stab2 <- stabsel(mod, cutoff = 0.75, PFER = 1, sampling.type = "SS",
+                     folds = folds, papply = lapply)
+
+    stab <- stabsel(mod, cutoff = 0.75, PFER = 1, sampling.type = "SS",
+                    folds = folds_cc, papply = lapply)
+    stab1
+    stab2
+    stab
+
+    env[["check_folds"]] <- check_folds_orig
+    env2[["check_folds"]] <- check_folds_orig
+}
