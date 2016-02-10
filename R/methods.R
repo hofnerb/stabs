@@ -116,7 +116,7 @@ plot.stabsel <- function(x, main = deparse(x$call), type = c("maxsel", "paths"),
         if (is.null(labels))
             labels <- rownames(x$phat)
         axis(4, at = x$phat[rowSums(x$phat) > 0, ncol(x$phat)],
-             labels = labels[rowSums(x$phat) > 0], las = 1)
+             labels = labels[rowSums(x$phat) > 0], las = 1, ...)
     } else {
         ## if par(mar) not set by user ahead of plotting
         if (all(par()[["mar"]] == c(5, 4, 4, 2) + 0.1))
@@ -139,7 +139,7 @@ plot.stabsel <- function(x, main = deparse(x$call), type = c("maxsel", "paths"),
                col = col[tail(order(inc_freq), np)])
         if (is.null(labels))
             labels <- names(x$max)
-        axis(2, at = 1:np, labels[tail(order(inc_freq), np)], las = 2)
+        axis(2, at = 1:np, labels[tail(order(inc_freq), np)], las = 2, ...)
         ## add cutoff
         abline(v = x$cutoff, col = "grey")
     }
