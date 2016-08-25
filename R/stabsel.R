@@ -165,11 +165,11 @@ stabsel_parameters.default <- function(p, cutoff, q, PFER,
 
     if (!missing(q)) {
         if (p < q)
-            stop("Average number of selected base-learners ", sQuote("q"),
-                 " must be smaller \n  than the number of base-learners",
+            stop("Average number of selected effects ", sQuote("q"),
+                 " must be smaller \n  than the number of effects",
                  " specified in the model ", sQuote("object"))
         if (q < 0)
-            stop("Average number of selected base-learners ", sQuote("q"),
+            stop("Average number of selected effects ", sQuote("q"),
                  " must be greater 0")
     }
 
@@ -230,7 +230,7 @@ stabsel_parameters.default <- function(p, cutoff, q, PFER,
     }
 
     if (verbose && PFER >= p)
-        warning("Upper bound for PFER larger than the number of base-learners.")
+        warning("Upper bound for PFER larger than the number of effects.")
 
     res <- list(cutoff = cutoff, q = q, PFER = upperbound,
                 specifiedPFER = PFER, p = p,
