@@ -1,0 +1,77 @@
+---
+title: "Graphical networks with stabs"
+author: "Richard Beare"
+date: "20 September 2016"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{stabs - graphical networks}
+output:
+  knitr:::html_vignette:
+    toc: yes
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+read_chunk(system.file("vignettes/stabs_graphs.R", package="stabs"))
+```
+
+# Introduction
+
+Tests of modifications to stabs to support graphical networks.
+
+Some minor modifications to the stabs internals to support estimation of inverse covariance
+structures. Here are some tests:
+
+```{r, Setup, echo=FALSE, message=FALSE}
+
+```
+
+## Generate some test data using _huge_
+
+```{r, PlotHubs}
+
+```
+```{r, PlotClust}
+
+```
+```{r, PlotRand}
+
+```
+
+## Create wrappers for graphical lasso functions (QUIC)
+
+```{r, StabsFunction}
+
+```
+
+## Run stabs
+Note that we don't supply a "y" argument, and that we are using a graphical model fitfun. 
+```{r, StabsRun}
+
+```
+If you want to supply your own fitfun for graphical models then you need to set the function class as follows:
+```{r, eval=FALSE}
+class(my.graphical_model) <- c(class(my.graphical_model), "graphical_model")
+```
+
+## Plot comparisons
+```{r,StabsPlot,echo=FALSE}
+
+```
+
+```{r, StabsPlotHubs}
+
+```
+```{r, StabsPlotCluster}
+
+```
+```{r, StabsPlotRand}
+
+```
+
+
+
+
+
