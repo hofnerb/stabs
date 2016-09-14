@@ -307,7 +307,9 @@ run_stabsel <- function(fitter, args.fitter,
             phat <- phat + paths[[i]]
         phat <- phat/length(paths)
         colnames(phat) <- nms
-        rownames(phat) <- names
+        if (nrow(phat) == length(names)) {
+          rownames(phat) <- names
+        }
     }
 
     ## extract violations (only needed for boosting models)
@@ -318,8 +320,10 @@ run_stabsel <- function(fitter, args.fitter,
     res <- lapply(res, function(x) x$selected)
     res <- matrix(nrow = length(res), byrow = TRUE,
                   unlist(res))
-    colnames(res) <- names
-
+    if (length(names) == ncol(res)) {
+      colnames(res) <- names
+    }
+    
     ret <- list(phat = phat,
                 selected = which(colMeans(res) >= cutoff),
                 max = colMeans(res))
