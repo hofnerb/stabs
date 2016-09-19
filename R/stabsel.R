@@ -52,11 +52,15 @@ stabsel.matrix <- function(x, y, fitfun = lars.lasso, args.fitfun = list(),
     }
 
     nms <- colnames(x)
+    if (graphical) {
+      allnms <- outer(nms, nms, paste, sep=" : ")
+      nms <- allnms[upper.tri(allnms)]
+    }
     ret <- run_stabsel(fitter = fit_model, args.fitter = args.fitfun,
                 n = n, p = p, cutoff = cutoff, q = q,
                 PFER = PFER, folds = folds, B = B, assumption = assumption,
                 sampling.type = sampling.type, papply = papply,
-                verbose = verbose, FWER = FWER, eval = eval, names = nms,
+                verbose = verbose, FWER = FWER, eval = eval, outnames = nms,
                 mc.preschedule = mc.preschedule, graphical=graphical, ...)
     ret$call <- cll
     ret$call[[1]] <- as.name("stabsel")
