@@ -15,13 +15,19 @@ stabsel.matrix <- function(x, y, fitfun = lars.lasso, args.fitfun = list(),
                            assumption = c("unimodal", "r-concave", "none"),
                            sampling.type = c("SS", "MB"),
                            papply = mclapply, mc.preschedule = FALSE,
-                           verbose = TRUE, FWER, eval = TRUE, graphical = FALSE,
+                           verbose = TRUE, FWER, eval = TRUE,
                            ...) {
 
     cll <- match.call()
     p <- ncol(x) ## TODO: what about intercept?
-    if (graphical) {
+    if (missing(y)) {
+      ## Must be a graphical model
+      y <- x
       p <- p * (p-1)/2
+      graphical <- TRUE
+      if (verbose) {
+        warning("No y (outcome) provided - assuming graphical model")
+      }
     }
     n <- nrow(x)
 
@@ -61,7 +67,7 @@ stabsel.matrix <- function(x, y, fitfun = lars.lasso, args.fitfun = list(),
                 PFER = PFER, folds = folds, B = B, assumption = assumption,
                 sampling.type = sampling.type, papply = papply,
                 verbose = verbose, FWER = FWER, eval = eval, outnames = nms,
-                mc.preschedule = mc.preschedule, graphical=graphical, ...)
+                mc.preschedule = mc.preschedule, ...)
     ret$call <- cll
     ret$call[[1]] <- as.name("stabsel")
     return(ret)
@@ -252,7 +258,7 @@ stabsel_parameters.default <- function(p, cutoff, q, PFER,
 run_stabsel <- function(fitter, args.fitter,
                         n, p, cutoff, q, PFER, folds, B, assumption,
                         sampling.type, papply, verbose, FWER, eval, outnames,
-                        mc.preschedule = FALSE, graphical=FALSE, ...) {
+                        mc.preschedule = FALSE, ...) {
 
     folds <- check_folds(folds, B = B, n = n, sampling.type = sampling.type)
     pars <- stabsel_parameters(p = p, cutoff = cutoff, q = q,

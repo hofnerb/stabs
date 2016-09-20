@@ -74,12 +74,12 @@ stabs.quic <- function(x, y, q, ...)
 ## ---- StabsRun ----
 pcutoff <- 0.75
 PFER <- 10
-s.hubs <- stabsel(x=dat.hubs$data, y=dat.hubs$data, fitfun=stabs.quic, 
-                  cutoff=pcutoff, PFER=PFER, B=200, graphical=TRUE)
-s.cluster <- stabsel(x=dat.cluster$data, y=dat.cluster$data, fitfun=stabs.quic, 
-                  cutoff=pcutoff, PFER=PFER, B=200, graphical=TRUE)
-s.rand <- stabsel(x=dat.rand$data, y=dat.rand$data, fitfun=stabs.quic, 
-                  cutoff=pcutoff, PFER=PFER, B=200, graphical=TRUE)
+s.hubs <- stabsel(x=dat.hubs$data, fitfun=stabs.quic, 
+                  cutoff=pcutoff, PFER=PFER)
+s.cluster <- stabsel(x=dat.cluster$data, fitfun=stabs.quic, 
+                  cutoff=pcutoff, PFER=PFER)
+s.rand <- stabsel(x=dat.rand$data, fitfun=stabs.quic, 
+                  cutoff=pcutoff, PFER=PFER)
 
 ## ---- StabsPlot ----
 p1 <- function(stabsout, orig)
