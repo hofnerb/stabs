@@ -26,7 +26,7 @@ stabsel.matrix <- function(x, y, fitfun = lars.lasso, args.fitfun = list(),
       p <- p * (p-1)/2
       graphical <- TRUE
       if (verbose) {
-        warning("No y (outcome) provided - assuming graphical model")
+        message("No y (outcome) provided - assuming graphical model")
       }
     }
     n <- nrow(x)
