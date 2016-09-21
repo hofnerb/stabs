@@ -1,4 +1,4 @@
-#' Create a regularization path
+#' Create a regularization path - copied from pulsar.
 #' @export
 #' @param max maximum value for regularization (lambda)
 #' @param min min value for lambda
