@@ -1,0 +1,73 @@
+---
+title: "Graphical networks with stabs"
+author: "Richard Beare"
+date: "20 September 2016"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{stabs - graphical networks}
+output:
+  knitr:::html_vignette:
+    toc: yes
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+read_chunk("stabs_graphs.R")
+```
+
+# Introduction
+
+Tests of modifications to stabs to support graphical networks.
+
+Some minor modifications to the stabs internals to support estimation of inverse covariance
+structures. Here are some tests:
+
+```{r, Setup, echo=FALSE, message=FALSE}
+
+```
+
+## Generate some test data using _huge_
+
+```{r, PlotHubs}
+
+```
+```{r, PlotClust}
+
+```
+```{r, PlotRand}
+
+```
+
+## Create wrappers for graphical lasso functions (QUIC)
+
+```{r, StabsFunction}
+
+```
+
+## Run stabs
+
+Note the graphical=TRUE argument and same data to x and y arguments.
+```{r, StabsRun}
+
+```
+## Plot comparisons
+```{r,StabsPlot,echo=FALSE}
+
+```
+
+```{r, StabsPlotHubs}
+
+```
+```{r, StabsPlotCluster}
+
+```
+```{r, StabsPlotRand}
+
+```
+
+
+
+
+

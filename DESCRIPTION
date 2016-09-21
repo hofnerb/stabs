@@ -12,10 +12,12 @@ Description: Resampling procedures to assess the stability of selected variables
     selection with improved error bounds (Shah & Samworth, 2013) are
     implemented. The package can be combined with arbitrary user specified
     variable selection approaches.
+VignetteBuilder: knitr
 Depends: R (>= 2.14.0), methods, stats, parallel
 Imports: graphics, grDevices, utils
-Suggests: TH.data, hdi
+Suggests: TH.data, hdi, knitr, QUIC, igraph, testthat
 Enhances: glmnet, lars, mboost (> 2.3-0), gamboostLSS (>= 1.2-0)
 LazyData: yes
 License: GPL-2
 URL: https://github.com/hofnerb/stabs
+

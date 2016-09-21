@@ -20,6 +20,15 @@ stabsel.matrix <- function(x, y, fitfun = lars.lasso, args.fitfun = list(),
 
     cll <- match.call()
     p <- ncol(x) ## TODO: what about intercept?
+    if (missing(y)) {
+      ## Must be a graphical model
+      y <- x
+      p <- p * (p-1)/2
+      graphical <- TRUE
+      if (verbose) {
+        message("No y (outcome) provided - assuming graphical model")
+      }
+    }
     n <- nrow(x)
 
     if (is.null(colnames(x)))
@@ -49,11 +58,15 @@ stabsel.matrix <- function(x, y, fitfun = lars.lasso, args.fitfun = list(),
     }
 
     nms <- colnames(x)
+    if (graphical) {
+      allnms <- outer(nms, nms, paste, sep=" : ")
+      nms <- allnms[upper.tri(allnms)]
+    }
     ret <- run_stabsel(fitter = fit_model, args.fitter = args.fitfun,
                 n = n, p = p, cutoff = cutoff, q = q,
                 PFER = PFER, folds = folds, B = B, assumption = assumption,
                 sampling.type = sampling.type, papply = papply,
-                verbose = verbose, FWER = FWER, eval = eval, names = nms,
+                verbose = verbose, FWER = FWER, eval = eval, outnames = nms,
                 mc.preschedule = mc.preschedule, ...)
     ret$call <- cll
     ret$call[[1]] <- as.name("stabsel")
@@ -244,7 +257,7 @@ stabsel_parameters.default <- function(p, cutoff, q, PFER,
 ### generic stabsel function)
 run_stabsel <- function(fitter, args.fitter,
                         n, p, cutoff, q, PFER, folds, B, assumption,
-                        sampling.type, papply, verbose, FWER, eval, names,
+                        sampling.type, papply, verbose, FWER, eval, outnames,
                         mc.preschedule = FALSE, ...) {
 
     folds <- check_folds(folds, B = B, n = n, sampling.type = sampling.type)
@@ -307,7 +320,8 @@ run_stabsel <- function(fitter, args.fitter,
             phat <- phat + paths[[i]]
         phat <- phat/length(paths)
         colnames(phat) <- nms
-        rownames(phat) <- names
+        rownames(phat) <- outnames
+        
     }
 
     ## extract violations (only needed for boosting models)
@@ -318,8 +332,9 @@ run_stabsel <- function(fitter, args.fitter,
     res <- lapply(res, function(x) x$selected)
     res <- matrix(nrow = length(res), byrow = TRUE,
                   unlist(res))
-    colnames(res) <- names
-
+    colnames(res) <- outnames
+    
+    
     ret <- list(phat = phat,
                 selected = which(colMeans(res) >= cutoff),
                 max = colMeans(res))
