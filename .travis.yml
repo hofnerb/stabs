@@ -15,6 +15,7 @@ r_packages:
   - mboost
   - gamboostLSS
   - QUIC
+  - rmarkdown
   
 after_failure:
   - ./travis-tool.sh dump_logs
