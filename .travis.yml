@@ -14,6 +14,7 @@ r_packages:
   - lars
   - mboost
   - gamboostLSS
+  - QUIC
   
 after_failure:
   - ./travis-tool.sh dump_logs

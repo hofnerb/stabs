@@ -14,7 +14,7 @@ install:
 
 build_script:
   - travis-tool.sh install_deps
-  - travis-tool.sh r_install glmnet lars mboost gamboostLSS
+  - travis-tool.sh r_install glmnet lars mboost gamboostLSS QUIC
 
 test_script:
   - travis-tool.sh run_tests
