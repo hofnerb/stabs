@@ -1,7 +1,9 @@
 ## Regression test for stability selection with QUIC
 context("QUIC stability selection regression test")
-library(stabs)
-library(huge)
+library("stabs")
+library("huge")
+library("QUIC")
+
 set.seed(10010)
 dat.hubs <- huge.generator(n=1000, d=40, graph="hub")
 pcutoff <- 0.75
