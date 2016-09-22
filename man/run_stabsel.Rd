@@ -10,7 +10,7 @@
 }
 \usage{
 run_stabsel(fitter, args.fitter, n, p, cutoff, q, PFER, folds, B, assumption,
-            sampling.type, papply, verbose, FWER, eval, outnames,
+            sampling.type, papply, verbose, FWER, eval, names,
             mc.preschedule = FALSE, ...)
 }
 \arguments{
@@ -37,7 +37,7 @@ run_stabsel(fitter, args.fitter, n, p, cutoff, q, PFER, folds, B, assumption,
     use PFER instead.}
   \item{eval}{ logical. Determines whether stability selection is
     evaluated.}
-  \item{outnames}{ variable names that are used to label the results.}
+  \item{names}{ variable names that are used to label the results.}
   \item{mc.preschedule}{ preschedule tasks?}
   \item{\dots}{ additional arguments to be passed to next function.}
 }
