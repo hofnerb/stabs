@@ -1,27 +1,21 @@
-# Sample .travis.yml for R projects.
-#
-# See README.md for instructions, or for more configuration options,
-# see the wiki:
-#   https://github.com/craigcitro/r-travis/wiki
+## check development version of mboost
+## see http://docs.travis-ci.com/user/languages/r/
 
-language: c
+language: r
 
-before_install:
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
-  - ./travis-tool.sh bootstrap
-
-install:
-  - ./travis-tool.sh install_deps
-  - ./travis-tool.sh github_package jimhester/covr
-  ## install enhances
-  - Rscript -e 'library("devtools"); library("methods"); options(repos=c(RForge="http://cran.rstudio.com")); install_deps(dependencies = "Enhances")'
-  ## install newer versions of mboost and gamboostLSS
-  # - Rscript -e 'library("devtools"); library(methods); options(repos=c(RForge="http://r-forge.r-project.org")); install_deps(dependencies = "Enhances")'
-  - Rscript -e 'library("methods"); install.packages(c("mboost", "gamboostLSS"), repos= "http://r-forge.r-project.org")'
-
-script: ./travis-tool.sh run_tests
-
+r_github_packages:
+  - boost-R/mboost
+  - boost-R/gamboostLSS
+  - jimhester/covr
+  
+r_packages:
+  - TH.data
+  - hdi
+  - glmnet
+  - lars
+  - mboost
+  - gamboostLSS
+  
 after_failure:
   - ./travis-tool.sh dump_logs
 
