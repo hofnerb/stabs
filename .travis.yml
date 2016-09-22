@@ -7,10 +7,9 @@ r_github_packages:
   - boost-R/mboost
   - boost-R/gamboostLSS
   - jimhester/covr
-  
+
+# installing packages in Enhances  
 r_packages:
-  - TH.data
-  - hdi
   - glmnet
   - lars
   - mboost
