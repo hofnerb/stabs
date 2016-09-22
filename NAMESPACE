@@ -13,7 +13,7 @@ export(stabsel, stabsel.matrix, stabsel.data.frame, stabsel.stabsel,
        selected, selected.stabsel,
        plot.stabsel, print.stabsel, print.stabsel_parameters,
        glmnet.lasso, glmnet.lasso_maxCoef, lars.lasso, lars.stepwise,
-       subsample)
+       subsample, quic.graphical_model, getLamPath)
 
 S3method(stabsel, matrix)
 S3method(stabsel, data.frame)

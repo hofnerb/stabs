@@ -17,9 +17,30 @@ stabsel.matrix <- function(x, y, fitfun = lars.lasso, args.fitfun = list(),
                            papply = mclapply, mc.preschedule = FALSE,
                            verbose = TRUE, FWER, eval = TRUE,
                            ...) {
-
     cll <- match.call()
     p <- ncol(x) ## TODO: what about intercept?
+    
+    ## use graphical model structure if fitfun is the right class
+    graphical <- inherits(fitfun, "graphical_model")
+    if (missing(y)) {
+        if (!graphical) {
+            ## probably meant to be a graphical model - here we issue warnings
+            ## and set the function class if the function isn't a tagged as a 
+            ## graphical model
+            warning("No ", sQuote("y"), " supplied and ", sQuote("fitfun"), 
+                    " is not of class ", dQuote("graphical_model"),"\n",
+                    "however proceeding with graphical model analysis")
+            graphical <- TRUE
+            class(fitfun) <- c(class(fitfun), "graphical_model")
+        }
+        # set p and y for the graphical case
+        y <- x
+        p <- p * (p-1)/2
+    } else {
+        if (graphical) {
+            stop("Both ", sQuote("y"), " and a graphical_model ", sQuote("fitfun"), " supplied")
+        }
+    }
     n <- nrow(x)
 
     if (is.null(colnames(x)))
@@ -49,6 +70,13 @@ stabsel.matrix <- function(x, y, fitfun = lars.lasso, args.fitfun = list(),
     }
 
     nms <- colnames(x)
+    
+    if (graphical) {
+        ## graphical models need different names
+        allnms <- outer(nms, nms, paste, sep=" : ")
+        nms <- allnms[upper.tri(allnms)]
+    }
+    
     ret <- run_stabsel(fitter = fit_model, args.fitter = args.fitfun,
                 n = n, p = p, cutoff = cutoff, q = q,
                 PFER = PFER, folds = folds, B = B, assumption = assumption,
@@ -308,6 +336,7 @@ run_stabsel <- function(fitter, args.fitter,
         phat <- phat/length(paths)
         colnames(phat) <- nms
         rownames(phat) <- names
+        
     }
 
     ## extract violations (only needed for boosting models)
@@ -319,7 +348,8 @@ run_stabsel <- function(fitter, args.fitter,
     res <- matrix(nrow = length(res), byrow = TRUE,
                   unlist(res))
     colnames(res) <- names
-
+    
+    
     ret <- list(phat = phat,
                 selected = which(colMeans(res) >= cutoff),
                 max = colMeans(res))
