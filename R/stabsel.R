@@ -352,7 +352,8 @@ run_stabsel <- function(fitter, args.fitter,
     
     ret <- list(phat = phat,
                 selected = which(colMeans(res) >= cutoff),
-                max = colMeans(res))
+                max = colMeans(res),
+                subsample.selected=res)
     ret <- c(ret, pars)
 
     ## return violations as attribute
