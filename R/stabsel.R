@@ -15,6 +15,7 @@ stabsel.matrix <- function(x, y, fitfun = lars.lasso, args.fitfun = list(),
                            assumption = c("unimodal", "r-concave", "none"),
                            sampling.type = c("SS", "MB"),
                            papply = mclapply, mc.preschedule = FALSE,
+                           keep.subsampling = FALSE,
                            verbose = TRUE, FWER, eval = TRUE,
                            ...) {
     cll <- match.call()
@@ -82,7 +83,8 @@ stabsel.matrix <- function(x, y, fitfun = lars.lasso, args.fitfun = list(),
                 PFER = PFER, folds = folds, B = B, assumption = assumption,
                 sampling.type = sampling.type, papply = papply,
                 verbose = verbose, FWER = FWER, eval = eval, names = nms,
-                mc.preschedule = mc.preschedule, ...)
+                mc.preschedule = mc.preschedule,
+                keep.subsampling = keep.subsampling,...)
     ret$call <- cll
     ret$call[[1]] <- as.name("stabsel")
     return(ret)
@@ -273,7 +275,7 @@ stabsel_parameters.default <- function(p, cutoff, q, PFER,
 run_stabsel <- function(fitter, args.fitter,
                         n, p, cutoff, q, PFER, folds, B, assumption,
                         sampling.type, papply, verbose, FWER, eval, names,
-                        mc.preschedule = FALSE, ...) {
+                        mc.preschedule = FALSE, keep.subsampling = FALSE, ...) {
 
     folds <- check_folds(folds, B = B, n = n, sampling.type = sampling.type)
     pars <- stabsel_parameters(p = p, cutoff = cutoff, q = q,
@@ -353,7 +355,11 @@ run_stabsel <- function(fitter, args.fitter,
     ret <- list(phat = phat,
                 selected = which(colMeans(res) >= cutoff),
                 max = colMeans(res),
-                subsample.selected=res)
+
+    if (keep.subsampling) {
+      ret$subsample.selected=res
+    }
+
     ret <- c(ret, pars)
 
     ## return violations as attribute
