@@ -133,7 +133,7 @@ plot.stabsel <- function(x, main = deparse(x$call),
       heat <- heat[apply(heat, 1, sd) > .Machine$double.eps, ]
       heat <- heat[, apply(heat, 2, sd) > .Machine$double.eps]
       pheatmap::pheatmap(heat, color = c('white', 'lightblue'),
-                         cluster_rows = FALSE, show_rownames = FALSE)
+                         treeheight_row = 0, show_rownames = FALSE)
     } else {
         ## if par(mar) not set by user ahead of plotting
         if (all(par()[["mar"]] == c(5, 4, 4, 2) + 0.1))
