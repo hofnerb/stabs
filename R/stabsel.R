@@ -357,7 +357,7 @@ run_stabsel <- function(fitter, args.fitter,
                 max = colMeans(res),
 
     if (keep.subsampling) {
-      ret$subsample.selected=res
+      ret$selected.per.subsample=res
     }
 
     ret <- c(ret, pars)
