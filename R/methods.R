@@ -95,7 +95,7 @@ plot.stabsel <- function(x, main = deparse(x$call),
     }
     if (type == "subsamples" && is.null(x$selection.per.subsample)) {
         warning("Subsample selections ", sQuote("x$selection.per.subsample"), " are missing, ",
-                "use keep.subsampling=T in stansel call. Plotting maximum selection frequency instead")
+                "use keep.subsampling=T in stabsel call. Plotting maximum selection frequency instead")
         type <- "maxsel"
     }
     if (type == "paths") {
