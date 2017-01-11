@@ -28,7 +28,9 @@ glmnet.lasso_maxCoef(x, y, q, ...)
   \item{y}{a vector or matrix containing the outcome.}
   \item{q}{number of (unique) selected variables (or groups of variables
     depending on the model) that are selected on each subsample.}
-  \item{\dots}{ additional arguments to the underlying fitting function.}
+  \item{\dots}{ additional arguments passed to the underlying fitting function.
+    See the example on \code{glmnet.lasso_maxCoef} in \code{\link{stabsel}} for 
+    the specification of additional arguments via \code{\link{stabsel}}.
 }
 \details{
   All fitting functions are named after the package and the type of
@@ -36,11 +38,15 @@ glmnet.lasso_maxCoef(x, y, q, ...)
   \code{glmnet.lasso} stands for a lasso model that is fitted using the
   package \pkg{glmnet}.
 
-  \code{glmnet.lasso_maxCoef} fites a lasso model and returns the
-  \code{q} largest coefficients. If one wants to use
+  \code{glmnet.lasso_maxCoef} fits a lasso model with a given penalty parameter 
+  and returns the \code{q} largest coefficients. If one wants to use
   \code{glmnet.lasso_maxCoef}, one must specify the penalty parameter
   \code{lambda} (via the \code{\dots} argument) or in
-  \code{\link{stabsel}} via \code{args.fitfun(lambda = )}.
+  \code{\link{stabsel}} via \code{args.fitfun(lambda = )}. Note that usually, 
+  the penalty parameter cannot be specified but is chosen such that \code{q}
+  variables are selected. For an example on how to use 
+  \code{glmnet.lasso_maxCoef} see \code{\link{stabsel}}.
+  
 }
 \value{
   A named list with elements
@@ -49,6 +55,9 @@ glmnet.lasso_maxCoef(x, y, q, ...)
   \item{path}{logical. A matrix that indicates which variable was
     selected in which step. Each row represents one variable, the
     columns represent the steps.}
+}
+\seealso{
+\code{\link{stabsel}} for stability selection itself, and \code{\link{quic.graphical_model}} for stability selection for graphical models.
 }
 \examples{
 data("bodyfat", package = "TH.data")

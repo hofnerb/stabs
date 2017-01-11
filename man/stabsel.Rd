@@ -189,7 +189,29 @@ stabsel(x, ...)
       if (exists("stab.lasso"))
           plot(stab.lasso, main = "Lasso (lars)")    
   }
-
+  
+  
+  ## Select variables with maximum coefficients based on lasso estimate
+  
+  set.seed(1234) # reset seed
+  if (require("glmnet")) {
+      ## use cross-validated lambda 
+      lambda.min <- cv.glmnet(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2])$lambda.min
+      (stab.maxCoef <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
+                               fitfun = glmnet.lasso_maxCoef, 
+                               # specify additional parameters to fitfun
+                               args.fitfun = list(lambda = lambda.min),
+                               cutoff = 0.75, PFER = 1))
+                               
+      ## WARNING: Using a fixed penalty (lambda) is usually not permitted and 
+      ##          not sensible. See ?fitfun for details.
+      
+      ## now compare standard lasso with "maximal parameter estimates" from lasso
+      par(mfrow = c(2, 1))
+      plot(stab.maxCoef, main = "Lasso (glmnet; Maximum Coefficients)")
+      plot(stab.glmnet, main = "Lasso (glmnet)")
+      ## --> very different results.
+  }
 
   ####################################################################
   ### using stability selection directly on computed boosting models
