@@ -15,7 +15,11 @@ glmnet.lasso <- function(x, y, q, ...) {
                 " is coerced to a model matrix without intercept")
         x <- model.matrix(~ . - 1, x)
     }
-
+    
+    if ("lambda" %in% names(list(...)))
+        stop("It is not permitted to specify the penalty parameter ", sQuote("lambda"),
+             " for lasso when used with stability selection.")
+    
     ## fit model
     fit <- glmnet::glmnet(x, y, dfmax = q - 1, ...)
 
