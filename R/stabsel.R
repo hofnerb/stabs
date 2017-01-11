@@ -312,9 +312,9 @@ run_stabsel <- function(fitter, args.fitter,
         res[idx] <- NULL
     }
     ## check results
-    if (!is.list(res[[1]]) || !all(c("selected", "path") %in% names(res[[1]])))
-        stop(sQuote("fitfun"), " must return a list with two (named) elements",
-             ", i.e., ", sQuote("selected"), " and ", sQuote("path"))
+    if (!is.list(res[[1]]) || !"selected" %in% names(res[[1]]))
+        stop(sQuote("fitfun"), " must return a list with a named element called ",
+             sQuote("selected"), ", and an optional second element called ", sQuote("path"))
 
     phat <- NULL
     if (!is.null(res[[1]]$path)) {
