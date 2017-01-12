@@ -30,7 +30,7 @@ glmnet.lasso_maxCoef(x, y, q, ...)
     depending on the model) that are selected on each subsample.}
   \item{\dots}{ additional arguments passed to the underlying fitting function.
     See the example on \code{glmnet.lasso_maxCoef} in \code{\link{stabsel}} for 
-    the specification of additional arguments via \code{\link{stabsel}}.
+    the specification of additional arguments via \code{\link{stabsel}}.}
 }
 \details{
   All fitting functions are named after the package and the type of
