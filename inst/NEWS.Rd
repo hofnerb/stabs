@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'stabs'}
 
-\section{Changes in stabs version 0.5-2 (2015-0x-xx)}{
+\section{Changes in stabs version 0.6-0 (2017-01-27)}{
   \subsection{User-visible changes}{
     \itemize{
       \item Added support for graphical models via package \pkg{QUIC}
