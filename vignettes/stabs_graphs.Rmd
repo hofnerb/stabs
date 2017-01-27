@@ -1,16 +1,13 @@
 ---
 title: "Graphical networks with stabs"
-author: "Richard Beare"
-date: "20 September 2016"
-output:
-  html_document:
-    keep_md: yes
----
-
-<!--
+author: "Richard Beare & Benjamin Hofner"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Graphical networks with stabs}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Using stability selection for graphical models}
--->
+  \usepackage[utf8]{inputenc}
+---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -20,22 +17,18 @@ read_chunk(system.file("stabs_graphs.R", package="stabs"))
 
 # Introduction
 
-Tests of modifications to stabs to support graphical networks.
-
-Some minor modifications to the stabs internals to support estimation of inverse covariance
-structures. Here are some tests:
-
-```{r, Setup, echo=TRUE, message=FALSE}
+This is a short introduction and test for graphical models with stability 
+selection. We first load the relevant packages. We use package **QUIC** to
+fit graphical networks:
+```{r, Setup, echo=TRUE, message=FALSE, results='hide'}
 library(stabs)
-if (!require(huge)) {
-  stop("Need package huge for generating test data")
-}
-if (!require(QUIC)) {
-  stop("Need package QUIC")
-}
-if (!require(igraph)) {
-  stop("Need package igraph")
-}
+library(huge) # Need package huge for generating test data
+library(QUIC)
+library(igraph)
+```
+
+## Generate some test data using _huge_
+```{r, echo=TRUE, message=FALSE, results='hide'}
 N <- 200
 set.seed(10010)
 dat.hubs <- huge.generator(n=N, d=40, graph="hub")
@@ -45,72 +38,83 @@ set.seed(10010)
 dat.rand <- huge.generator(n=N, d=40, graph="random")
 ```
 
-## Generate some test data using _huge_
-
-```{r, PlotHubs}
+Next, we can visualize the test data
+```{r, PlotHubs, fig.width = 8, fig.height = 8, out.width = "80%"}
 plot(dat.hubs)
 ```
-```{r, PlotClust}
+```{r, PlotClust, fig.width = 8, fig.height = 8, out.width = "80%"}
 plot(dat.cluster)
 ```
-```{r, PlotRand}
+```{r, PlotRand, fig.width = 8, fig.height = 8, out.width = "80%"}
 plot(dat.rand)
 ```
 
-## Create wrappers for graphical lasso functions (QUIC)
+# Stability selection
 
-```{r, StabsFunction}
-## this is the wrapper function for QUIC
-quic.graphical_model
-```
-
-## Run stabs
-Note that we don't supply a "y" argument, and that we are using a graphical model fitfun. 
+To run stability selection on a graphical model, we can simply use the dedicated
+`fitfun` called `quic.graphical_model`. Note that we don't supply a `y` argument
+to stabsel. 
 ```{r, StabsRun}
-pcutoff <- 0.75
-PFER <- 10
-s.hubs <- stabsel(x=dat.hubs$data, fitfun=quic.graphical_model, 
-                  cutoff=pcutoff, PFER=PFER)
-s.cluster <- stabsel(x=dat.cluster$data, fitfun=quic.graphical_model, 
-                  cutoff=pcutoff, PFER=PFER)
-s.rand <- stabsel(x=dat.rand$data, fitfun=quic.graphical_model, 
-                  cutoff=pcutoff, PFER=PFER)
-```
-If you want to supply your own fitfun for graphical models then you need to set the function class as follows:
-```{r, eval=FALSE}
-class(my.graphical_model) <- c(class(my.graphical_model), "graphical_model")
+s.hubs <- stabsel(x = dat.hubs$data, fitfun = quic.graphical_model, 
+                  cutoff = 0.75, PFER = 10)
+s.cluster <- stabsel(x = dat.cluster$data, fitfun = quic.graphical_model, 
+                     cutoff = 0.75, PFER = 10)
+s.rand <- stabsel(x = dat.rand$data, fitfun = quic.graphical_model, 
+                  cutoff = 0.75, PFER = 10)
 ```
 
 ## Plot comparisons
-```{r,StabsPlot,echo=FALSE}
-p1 <- function(stabsout, orig)
-{
-  ## display comparison of original graph and stabs estimation
-  j<- orig$omega * 0
-  orig.graph <- graph.adjacency(orig$theta != 0, mode="max", diag=FALSE)
-  ut <- upper.tri(j)
-  j[ut][stabsout$selected] <- 1
-  stabs.graph <- graph.adjacency(j!=0, mode="max", diag=FALSE)
-  layout <- layout.fruchterman.reingold(orig.graph)
-  par(mfrow=c(1,2))
-  plot(orig.graph, layout=layout, edge.color="gray50", vertex.color='red', 
-       main="Real graph",  vertex.size = 3, vertex.label = NA)
-  plot(stabs.graph, layout=layout, edge.color="gray50", vertex.color='red', 
-       main="Stabs estimated graph", vertex.size = 3, vertex.label = NA)
+
+In order to make comparisons possible, we use the following user defined plot 
+function
+```{r,StabsPlot}
+plot_comparison <- function(stabsout, orig) {
+    ## display comparison of original graph and stabs estimation
+    j <- orig$omega * 0
+    orig.graph <- graph.adjacency(orig$theta != 0, mode = "max", diag = FALSE)
+    ut <- upper.tri(j)
+    j[ut][stabsout$selected] <- 1
+    stabs.graph <- graph.adjacency(j != 0, mode = "max", diag = FALSE)
+    layout <- layout.fruchterman.reingold(orig.graph)
+    
+    par(mfrow = c(1,2))
+    plot(orig.graph, layout = layout, edge.color = "gray50", vertex.color = 'red', 
+         main = "Real graph",  vertex.size = 3, vertex.label = NA)
+    plot(stabs.graph, layout = layout, edge.color = "gray50", vertex.color = 'red', 
+         main = "Stabs estimated graph", vertex.size = 3, vertex.label = NA)
 }
 ```
 
-```{r, StabsPlotHubs}
-p1(s.hubs, dat.hubs)
+Now, we compare the three graphs:
+```{r, StabsPlotHubs, fig.width = 8, fig.height = 4, out.width = "80%"}
+plot_comparison(s.hubs, dat.hubs)
 ```
-```{r, StabsPlotCluster}
-p1(s.cluster, dat.cluster)
+```{r, StabsPlotCluster, fig.width = 8, fig.height = 4, out.width = "80%"}
+plot_comparison(s.cluster, dat.cluster)
 ```
-```{r, StabsPlotRand}
-p1(s.rand, dat.rand)
+```{r, StabsPlotRand, fig.width = 8, fig.height = 4, out.width = "80%"}
+plot_comparison(s.rand, dat.rand)
+```
+As one can see, the original graphs are resembled by the estimated
+graphs rather well in this example.
+
+# User specified `fitfun` for graphical models
+
+For general instruction on how to create a `fitfun` please refer to 
+```{r, eval = FALSE}
+vignette("Using_stabs", package = "stabs")
 ```
 
+For an example for grahical model see
+```{r}
+quic.graphical_model
+```
 
-
-
-
+A speciality of graphical models is that the function has an additional class 
+`"graphical_model"`. You can set this class immediately after having defined your
+`fitfun`, say, `my.graphical_model` as follows:
+```{r, eval=FALSE}
+class(my.graphical_model) <- c(class(my.graphical_model), "graphical_model")
+```
+This will avoid that stabsel expects a `y` argument and will change naming
+conventions for the resulting selections.
