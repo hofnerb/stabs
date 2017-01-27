@@ -19,7 +19,7 @@ lars.lasso(x, y, q, ...)
 lars.stepwise(x, y, q, ...)
 
 ## package glmnet:
-glmnet.lasso(x, y, q, ...)
+glmnet.lasso(x, y, q, type = c("conservative", "anticonservative"), ...)
 glmnet.lasso_maxCoef(x, y, q, ...)
 }
 \arguments{
@@ -28,6 +28,10 @@ glmnet.lasso_maxCoef(x, y, q, ...)
   \item{y}{a vector or matrix containing the outcome.}
   \item{q}{number of (unique) selected variables (or groups of variables
     depending on the model) that are selected on each subsample.}
+  \item{type}{ a charachter vector specifying if the number of selected
+    variables per subsample is \eqn{\leq q}{<= q} (\code{type = "conservative"}) 
+    or \eqn{\geq q}{>= q} (\code{type = "anticonservative"}). The conservative
+    version \emph{ensures} that the PFER is controlled.}
   \item{\dots}{ additional arguments passed to the underlying fitting function.
     See the example on \code{glmnet.lasso_maxCoef} in \code{\link{stabsel}} for 
     the specification of additional arguments via \code{\link{stabsel}}.}
@@ -67,6 +71,12 @@ lars.stepwise(bodyfat[, -2], bodyfat[,2], q = 3)$selected
 glmnet.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$selected
 ## selection path
 glmnet.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$path
+
+## Using the anticonservative glmnet.lasso (see args.fitfun):
+stab.glmnet <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
+                       fitfun = glmnet.lasso, 
+                       args.fitfun = list(type = "anticonservative"), 
+                       cutoff = 0.75, PFER = 1)
 }
 \keyword{models}
 \keyword{nonlinear}

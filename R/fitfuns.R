@@ -6,10 +6,10 @@
 ##
 ################################################################################
 
-glmnet.lasso <- function(x, y, q, ...) {
+glmnet.lasso <- function(x, y, q, type = c("conservative", "anticonservative"), ...) {
     if (!requireNamespace("glmnet", quietly=TRUE))
         stop("Package ", sQuote("glmnet"), " needed but not available")
-
+    
     if (is.data.frame(x)) {
         message("Note: ", sQuote("x"),
                 " is coerced to a model matrix without intercept")
@@ -21,8 +21,12 @@ glmnet.lasso <- function(x, y, q, ...) {
              " for lasso when used with stability selection.")
     
     ## fit model
-    fit <- glmnet::glmnet(x, y, dfmax = q - 1, ...)
-
+    type <- match.arg(type)
+    if (type == "conservative")
+        fit <- glmnet::glmnet(x, y, pmax = q, ...)
+    if (type == "anticonservative")
+        fit <- glmnet::glmnet(x, y, dfmax = q - 1, ...)
+    
     ## which coefficients are non-zero?
     selected <- predict(fit, type = "nonzero")
     selected <- selected[[length(selected)]]
