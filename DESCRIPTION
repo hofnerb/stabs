@@ -3,12 +3,12 @@ Title: Stability Selection with Error Control
 Version: 0.6-0
 Date: 2017-01-27
 Authors@R: c(person("Benjamin", "Hofner", role = c("aut", "cre"),
-	            email = "benjamin.hofner@fau.de"),
+	            email = "benjamin.hofner@pei.de"),
        	     person("Torsten", "Hothorn", role = c("aut")))
 Description: Resampling procedures to assess the stability of selected variables
     with additional finite sample error control for high-dimensional variable
     selection procedures such as Lasso or boosting. Both, standard stability
-    selection (Meinshausen & Buehlmann, 2010) and complementarty pairs stability
+    selection (Meinshausen & Buhlmann, 2010) and complementarty pairs stability
     selection with improved error bounds (Shah & Samworth, 2013) are
     implemented. The package can be combined with arbitrary user specified
     variable selection approaches.
