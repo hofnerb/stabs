@@ -15,6 +15,11 @@ stability selection with improved error bounds (Shah & Samworth, 2013) are
 implemented. The package can be combined with arbitrary user specified variable
 selection approaches.
 
+For an expanded and executable version of this file please see
+```r
+vignette("Using_stabs", package = "stabs")
+```
+
 ## Installation
 
 - Current version (from CRAN):
@@ -124,7 +129,7 @@ computed boosting models from
 [mboost](http://cran.r-project.org/package=mboost).
 
 ```
-library("stabsel")
+library("stabs")
 library("mboost")
 ### low-dimensional example
 mod <- glmboost(DEXfat ~ ., data = bodyfat)
@@ -140,7 +145,7 @@ stabsel(mod, q = 3, PFER = 1, sampling.type = "MB", eval = FALSE)
 ## now run stability selection
 (sbody <- stabsel(mod, q = 3, PFER = 1, sampling.type = "MB"))
 opar <- par(mai = par("mai") * c(1, 1, 1, 2.7))
-plot(sbody)
+plot(sbody, type = "paths")
 par(opar)
 
 plot(sbody, type = "maxsel", ymargin = 6)
@@ -160,7 +165,7 @@ To cite package 'stabs' in publications use:
 
   Benjamin Hofner and Torsten Hothorn (2015). stabs: Stability
   Selection with Error Control, R package version R package version
-  0.5-1, http://CRAN.R-project.org/package=stabs.
+  0.6-0, http://CRAN.R-project.org/package=stabs.
 
   Benjamin Hofner, Luigi Boccuto and Markus Goeker (2015). Controlling
   false discoveries in high-dimensional situations: Boosting with

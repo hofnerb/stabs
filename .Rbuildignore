@@ -1,6 +1,5 @@
 ^\..*
 .*/auto
-^README.md$
 ^\.travis\.yml$
 ^appveyor\.yml$
 inst/NEWS.html
