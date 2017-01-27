@@ -11,3 +11,5 @@ inst/NEWS.pdf
 ^SOP_release.txt$
 .*\.tar\.gz
 buildCRAN
+^.*\.Rproj$
+^\.Rproj\.user$

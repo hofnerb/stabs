@@ -126,7 +126,7 @@ method of choice.
 
 Instead of specifying a fitting function, one can also use `stabsel` directly on
 computed boosting models from
-[mboost](http://cran.r-project.org/package=mboost).
+[mboost](https://cran.r-project.org/package=mboost).
 
 ```
 library("stabs")

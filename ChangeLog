@@ -1,31 +1,508 @@
+commit f9b3dd67701842d5fb601d1185acbf2b5858ab34
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Fri Jan 27 18:13:43 2017 +0100
+
+    Release stabs 0.6-0
+
+commit 3a7c1448c29022d1fb4cb99bf193fadefd54e391
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Fri Jan 27 17:49:59 2017 +0100
+
+    Updated graphical models vignette
+
+commit 6736a84f6818ee4a89c30a7324ebfff11a1a782c
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Fri Jan 27 17:47:21 2017 +0100
+
+    Make CRAN happy and fix some typos
+
+commit aec9b67b9b94d6d6c3a83e99e2e73c01d93f1be9
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Fri Jan 27 16:55:58 2017 +0100
+
+    Updated affiliation
+
+commit 46f45c916d93871fa4b2b2c925d76a18972cd6b4
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Fri Jan 27 16:44:10 2017 +0100
+
+    Coding issues
+
+commit 6c29a482ac929afa8901738207c901249781429e
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Fri Jan 27 16:35:55 2017 +0100
+
+    Update README.md and add to package
+
+commit 05cffb1f8f2c2aeadb8710bf3ee2703c7d7dcea8
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Fri Jan 27 16:35:34 2017 +0100
+
+    Include vignette for basic usage
+
+commit fc76322f36c1ccab6a154bcfb399e98cd172109a
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Fri Jan 27 15:52:00 2017 +0100
+
+    Updated vignette for graphical models (previously broken)
+
+commit a4ea8e86b9a4070f3f4b470e5177d6b7c0e71a77
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Fri Jan 27 15:05:22 2017 +0100
+
+    Start preparing release candidate 0.6-0
+
+commit 985772a0a9c3dfd21c5c300b2cafe39676f3ba92
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Fri Jan 27 15:02:14 2017 +0100
+
+    Updated manual for QUIC based fitter
+
+commit 7c7b30a8b309d1098983a6811968db0cf3870134
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Fri Jan 27 14:53:45 2017 +0100
+
+    add R repository
+
+commit e4cde5471f5893eb303c4df065abdfec8cc8dc18
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Fri Jan 27 14:49:38 2017 +0100
+
+    Do not treat warnings as errors
+
+commit 37d07a2e01cd4418e7ed4ba188f0ebdfc608fcf9
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Fri Jan 27 14:47:28 2017 +0100
+
+    Update NEWS.Rd
+
+commit eaa3b49bd196eac26e56e55faa3be32f5df65f5d
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Fri Jan 27 14:22:58 2017 +0100
+
+    make sure that per default glmnet.lasso selects at maximum q variables (fixes #23)
+
+commit aad604a7ba862da822e023f35f5b9a647fa79068
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Fri Jan 27 14:22:10 2017 +0100
+
+    .Rbuildignore
+
+commit 73f715f316641eb79e8d57c3a4bb9af40ed06479
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Thu Jan 12 08:45:30 2017 +0100
+
+    added missing }
+
+commit 8a8e31e89c32e8699516aeaf410e97ef65434181
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Wed Jan 11 17:50:12 2017 +0100
+
+    improved manuals
+
+commit 8ea27b7e86d44c6270729874d20978a6bbe986ee
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Wed Jan 11 17:49:56 2017 +0100
+
+    specification of lambda not permitted for glmnet.lasso
+
+commit 626e4ec9691c999ef4b18286c5a9440a4d8516dd
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Wed Jan 11 17:07:53 2017 +0100
+
+    allow returned object of fit.fun to contain only a slot selected (path is optional)
+
+commit ac209e8d335cd95376368bac512fa1dd6d100af9
+Merge: e07546f 61b47ea
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Wed Jan 11 16:57:25 2017 +0100
+
+    Merge pull request #17 from andreyto/at_run_stabsel__check
+    
+    Fix error True/False is expected but vector is received in assertion
+
+commit e07546f446de364dcbdc26881e6306223925f264
+Merge: c28d5af af88570
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Mon Nov 28 10:25:47 2016 +0100
+
+    Merge pull request #19 from gokceneraslan/patch-1
+    
+    Make fitfuns more quiet
+
+commit af885703e699061ee63a6f612f84c8374325df45
+Author: Gökçen Eraslan <gokcen.eraslan@gmail.com>
+Date:   Mon Nov 28 09:49:44 2016 +0100
+
+    Make fitfuns more quiet
+    
+    Added quietly=TRUE option to requireNamespace calls.
+
+commit 61b47ead827d1a6dae6cfaceaab2a48feab9e14c
+Author: Andrey Tovchigrechko <tovchigrechkoa@medimmune.com>
+Date:   Thu Nov 10 19:00:55 2016 -0500
+
+    Fix error True/False is expected but vector is received in assertion
+
+commit c28d5af4ad311ae8e4ff6927ef0a1a0eca3f087c
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Fri Sep 23 08:55:48 2016 +0200
+
+    Update DESCRIPTION
+    
+    add rmarkdown to suggests
+
+commit 38f7be0ed53af4c111d94b2151be567d697534f2
+Merge: 558809a 947cc95
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Fri Sep 23 08:53:20 2016 +0200
+
+    Merge pull request #15 from richardbeare/TestFixes
+    
+    rmarkdown as a dependency
+
+commit 947cc9527b60770429329de7e841208971f4afc5
+Author: Richard Beare <Richard.Beare@gmail.com>
+Date:   Fri Sep 23 07:19:51 2016 +1000
+
+    rmarkdown as a dependency
+
+commit 558809acbc1eb81df8e1506e67c1c879f0e2ea05
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Sep 22 17:53:25 2016 +0200
+
+    Added QUIC to installed packages (on CI)
+
+commit e2ec134e163aa6d6ae1db0786c583c9087a9b227
+Merge: 39e608f 954c5f5
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Sep 22 17:46:12 2016 +0200
+
+    Merge branch 'richardbeare-GraphTrialsB'
+
+commit 39e608feed47d79994f2e5b49220a80baeb147e9
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Sep 22 17:40:17 2016 +0200
+
+    additionally install "enhanced" packages on travis-ci and appveyor
+
+commit b15cb097d3bb0228ce5512c6bae058b8e10898fc
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Sep 22 17:31:27 2016 +0200
+
+    Updated travis.ci
+
+commit 954c5f5e6359d45f69ef43fe95c87cd1877538cc
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Sep 22 17:25:09 2016 +0200
+
+    Revert .travis.yml
+
+commit a7d65e0b4d5c0daa0d1c1b35901700096e931e77
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Sep 22 17:19:36 2016 +0200
+
+    tests for QUIC must be conditional
+
+commit 228922b0f5d7e18046735369c586ca011cc13fe2
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Sep 22 16:50:03 2016 +0200
+
+    changed source of mboost and gamboostLSS
+
+commit 348d8d6984395e999b5d2daa023618b69bfc0962
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Sep 22 16:38:44 2016 +0200
+
+    load QUIC in tests
+
+commit 9085cf00d36d125cd0890f668b206954273def4e
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Sep 22 15:51:16 2016 +0200
+
+    Fixed documentation
+
+commit 8d592778e428ca3522b3e3ed972717571afa810f
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Sep 22 15:43:21 2016 +0200
+
+    clean up description
+
+commit d79ad9a25824202ea3d0d772ae4e3952f4d436ee
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Sep 22 15:36:44 2016 +0200
+
+    reverted unnecessary changes and reindented lines
+
+commit 834c6d021341fdeffe6c76dd1e3362a064096b55
+Author: Richard Beare <Richard.Beare@gmail.com>
+Date:   Wed Sep 14 20:52:12 2016 +1000
+
+    Second pass at support for graphical models in stabs, with commits squashed
+    
+    Graphical modelling behaviour is controlled by a class attribute on the fitfun.
+    
+    Use can supply a lambda path. This is to deal with the scenario of not finding
+    the required number of variables.
+
+commit 3bbecfa81b413469b921796e3356882779a0c35d
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Aug 25 16:14:21 2016 +0200
+
+    fix citation; closes #9
+
+commit 481f71158116f35a6498ba41f6f09d1a1a4daeb8
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Aug 25 16:12:53 2016 +0200
+
+    replace base-learners with effects; closes #10
+
+commit 4d0d759461fff47b77c8f021a6f203eecc400a86
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Wed Feb 10 14:32:50 2016 +0100
+
+    Forward graphical parameters to y-axis labels
+
+commit b749668614bbe395f63089da830ca1d90b71f2ab
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Fri Dec 11 16:30:13 2015 +0100
+
+    Add test for new error handling
+
+commit 7c00ec4d7e79a4a59ea9b8d65cab106213f189ee
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Fri Dec 11 16:17:04 2015 +0100
+
+    Better solution to continue stabsel after errors in folds; Fixes #2
+
+commit c55d0159b1fb96fc9acc76eb2f236a153db3e09c
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Dec 10 14:41:31 2015 +0100
+
+    Updated REAMDE.md
+
+commit 064bd7998e244ef800af4a6b403defb7d11524bb
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Dec 10 14:41:05 2015 +0100
+
+    Updated REAMDE.md
+
+commit 7b65b0fd30506d88ad4b8685b4bc41a649bb94f9
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Dec 10 14:39:23 2015 +0100
+
+    Fixed plot.stabsel if data is given as unnamed matrix; Fixes #6
+
+commit ddd88e19752bbfe3aa5de6c60cd6bdbefba8eaa6
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Dec 10 14:26:02 2015 +0100
+
+    fix newly introduced bug
+
+commit 68df6c43906ed5345f3aadbecfc275adc0a6bc43
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Dec 10 13:33:33 2015 +0100
+
+    Fix issue when variables are dropped again from active set; Fixes #5
+
+commit d79b001c28b12f91fa23442c818edb7ecbbbd244
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Dec 10 13:12:48 2015 +0100
+
+    Improved determination of q; Fixes #7
+
+commit c122889a74f3b29a609bf3b6b0575a285b8daddd
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Dec 3 16:13:54 2015 +0100
+
+    Travis-CI: Install covr
+
+commit ab3a1aad382b0d332f2cedeaed9796a441adaafc
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Dec 3 16:03:10 2015 +0100
+
+    Add coverage status badge
+
+commit ccb68645db77bd1b8e0b90cd40c506c0b728a98e
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Dec 3 14:17:04 2015 +0100
+
+    Calculate coverage
+
+commit 0874e5d7c0bd935a18b60700b6291186779428e8
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Dec 3 12:56:13 2015 +0100
+
+    Improved documentation of glmnet.lasso_maxCoef
+
+commit b147e782a96e61c8e08e24d11630109a6c724dde
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Dec 3 12:55:18 2015 +0100
+
+    Added example for glmnet (closes #4)
+
+commit 84a59f9334bf633d632701bd24888d0e7d0aab03
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Mon Sep 7 10:21:22 2015 +0200
+
+    CI: Start using AppVeyor for Windows checks/builds
+
+commit f29ce60cc7c4f756665b347ee2b89cc16d652199
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Fri Sep 4 16:11:02 2015 +0200
+
+    Update README.md
+    
+    Added CRAN badge
+
+commit 6dd85f96788105493755304f999b90cb19ea71c7
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Tue Sep 1 14:38:44 2015 +0200
+
+    Updated NEWS.Rd and increased version number
+
+commit f4512c588aca696d0a43fe1b5d456a8b5ddf2fb5
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Tue Aug 11 19:07:32 2015 +0200
+
+    Removed empty lines from DESCRIPTION
+
+commit c8564fff20656b37be0833f294572b16eff38e0b
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Tue Aug 11 19:06:04 2015 +0200
+
+    Update README.md
+
+commit c3fb7b05ff824a930e1f7066ef389d21521b8c2c
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Tue Aug 11 19:00:39 2015 +0200
+
+    Updated README.md to contain example code and help on how to add own variable selection procedures
+
+commit 2fda69f99cb6510856734bc92ce36df681cc1f19
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Tue Aug 11 19:00:27 2015 +0200
+
+    Updated DESCRIPTION to be more informative
+
+commit 29e7efd89d1fb5b3bb241f669f2a8df1fcefd901
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Fri Jul 3 13:57:58 2015 +0200
+
+    Adhere to CRAN policies regarding import of base packages (closes #3)
+
+commit d788dd61b2df450f3c6d260eff406fbae84b9605
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Wed Jun 24 16:45:36 2015 +0200
+
+    boosting specific changes: warn if mstop is to small
+
+commit 1ed947a740ab19e036bdf83159c6cf0dad2aac66
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Mon Jun 22 16:23:12 2015 +0200
+
+    Updated references: Hofner et al now available at BMC Bioinformatics
+
+commit d4852a7165e972ebe7d25a2a523efdb5e979a02c
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Mon Jun 1 17:45:37 2015 +0200
+
+    Update README.md
+
+commit 3d88f8d2583f1ba4a96276371c63be26e4ccbd09
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Mon Apr 27 13:10:48 2015 +0200
+
+    updated NEWS.Rd
+
+commit 4017a3957d64557e1a44794c77104532abd3fc91
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Mon Apr 27 13:03:36 2015 +0200
+
+    export check_folds()
+
+commit 77efcc84408eafae272b5b712bf4f132ac17801e
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Mon Apr 27 13:02:57 2015 +0200
+
+    (stabsel) continue computations even if errors in single folds occure. [fixes issue #2]
+
+commit d81c3d78729a3c2680191652fce1f3bb90beeb87
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Mon Apr 27 09:17:31 2015 +0200
+
+    (stabsel) added mc.preschedule = FALSE [closes issue #1]
+
+commit 91e5e0b46ecb5a55d1b0868731efa41d9a9ac278
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Tue Feb 17 17:37:26 2015 +0100
+
+    fixed some issues in stabsel.stabsel method
+
+commit 953d5738b19d771130bc1eb003068e54922fbebd
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Tue Feb 17 17:36:40 2015 +0100
+
+    improved print.stabsel method
+
+commit a0529bc8b59c1dc45633ecc556f77b05c853c197
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Tue Feb 17 17:34:57 2015 +0100
+
+    DESCRIPTION: make package "Description:" a sentence
+
+commit a1cf150846c63df2259726d99144db63ceb0d73b
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Tue Feb 17 17:34:46 2015 +0100
+
+    fixed typo, added example
+
+commit 1545c1276a45e0b07f6dd3640e8cdf5971c60dec
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Mon Jan 12 19:30:50 2015 +0100
+
+    Release stabs 0.5-1
+
+commit 5f3a2c4cc42083756af599b3b1f22be276728164
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Mon Jan 12 19:30:20 2015 +0100
+
+    updated release SOPs
+
 commit 75f8092d418328b87c23d89a0172ca52f7ae5de2
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Mon Jan 12 18:42:31 2015 +0100
 
     use requireNamespace instead of require
 
 commit 82a0287b56d8e9dc185b8ee5a6ca4f8a6944e91a
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Mon Jan 12 10:04:03 2015 +0100
 
     updated NEWS.Rd
 
 commit 7f5e2246cb170293fe3a7b5acb283bfa00d0ebb5
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Mon Jan 12 09:33:01 2015 +0100
 
     changed CITATION to make CRAN happy
 
 commit 5964fe07b3426ac4df12f2aa14e5a45b12960b07
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Tue Dec 9 17:34:52 2014 +0100
 
     Updated SOPs to reflect changed project structure
     Updated .Rbuildignore and .RbuildignoreCRAN
 
 commit 7e6de04ab60ea543ffa57f4086cc735cd4b4f06f
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Tue Dec 9 16:06:19 2014 +0100
 
     Updated check results (.Rout.save)
 
 commit 6a41a675d9dfe88cb27a84c71d04cedd295bf61a
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Tue Dec 9 14:56:52 2014 +0100
 
     Updated to stabs 0.5-0
     - updated NEWS.Rd to incorporate latest changes
@@ -34,47 +511,62 @@ Author: Benjamin Hofner <benjamin.hofner@fau.de>
 
 commit d2f52806c51cebc30269c100f24a5b3b2a778b2d
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Tue Dec 9 14:38:04 2014 +0100
 
     updated .Rbuildignore
 
 commit 5ba43d90a2a7bc75d72d22af2ac835f79fd22bfb
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Thu Dec 4 10:53:33 2014 +0100
 
     Update .travis.yml
+    
+    try to really install all "enhanced" packages (in the newest possible version)
 
 commit 776a09d358971e7697443e0678f95bc43945cb0e
 Merge: eaaff61 af789f8
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Mon Dec 1 19:07:46 2014 +0100
 
     Merge branch 'master' of github.com:hofnerb/stabs
 
 commit eaaff618706f006c3b23ec087a58607ac26524db
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Mon Dec 1 19:06:25 2014 +0100
 
     make tests conditional on availability of packages
 
 commit af789f84a615ec0e353f7814ba53bdd857dac127
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Mon Dec 1 17:42:11 2014 +0100
 
     Update .travis.yml
+    
+    .com --> .org
 
 commit 14dab048a34fd5821a95eb6706f3e1bc69208b05
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Mon Dec 1 17:28:46 2014 +0100
 
     Update .travis.yml
+    
+    added R-forge
 
 commit 53f6fed009f57cdfa0aa0678d8d40553bf28ead4
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Fri Nov 28 14:27:29 2014 +0100
 
     updated .Rbuildignore
 
 commit a22c9e644d3b70b21af6d8d097c8d910d3e4f8d8
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Fri Nov 28 14:23:42 2014 +0100
 
     added README.md
 
 commit 40b090a5851d754fee3ec32c8cbe6cf9b42684b5
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Fri Nov 28 14:18:28 2014 +0100
 
     use Travis-CI
     - added travis.yml
@@ -82,11 +574,13 @@ Author: Benjamin Hofner <benjamin.hofner@fau.de>
 
 commit d97570a5fb52b285b3deb4db88d4ae0b9c02beb4
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Fri Nov 28 14:16:06 2014 +0100
 
     moved pkg/ to root folder
 
 commit 764a0e5bcb367b920a14805eb68838b0d9b044b4
 Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+Date:   Wed Nov 26 16:29:03 2014 +0000
 
     - added functionality to extract parameters from fitted stabsel object:
       use parameters() or stabsel_parameters()
@@ -95,50 +589,59 @@ Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
 
 commit 7177021c4291994ee1e8ccead0815482ebc33819
 Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+Date:   Wed Nov 26 16:29:01 2014 +0000
 
     - fixed bug in stabsel.stabsel (call was not properly corrected)
 
 commit 2d4a6439aa8d6ebe58cc014d13be2c9b1129a7fa
 Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+Date:   Wed Nov 26 12:50:40 2014 +0000
 
     - added the function stabsel.stabsel to compute (new) parameter combinations
       for a fitted stabsel object
 
 commit c84111adabb28df4c232dbfe8f4867e8c8b3729a
 Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+Date:   Wed Nov 26 12:50:38 2014 +0000
 
     - moved selected method from mboost to stabs
     - added method selected.stabsel
 
 commit 8f1f35d3291d15cf7b0a9813b271179d412fcd24
 Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+Date:   Tue Nov 11 15:14:59 2014 +0000
 
     updated .Rout.save files
 
 commit 21b18f6884f4c05734abddc0a7c46e05ce6a6b78
 Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+Date:   Tue Nov 11 15:14:56 2014 +0000
 
     - added reference to stability selection paper
     - added CITATION file
 
 commit f5761b259ebe4699fd3cf00b74005c397cfa7c4e
 Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+Date:   Tue Nov 11 15:14:54 2014 +0000
 
     Added output that states the significance level
 
 commit b12ed7a037fdc55caf5f969fc9c480e096982346
 Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+Date:   Mon Nov 3 13:29:22 2014 +0000
 
     - added new lasso based fit function where the q strongest predictors
       (according to the coefficient size) are selected.
 
 commit 9efc6d915feead904286477fc0989025b55df350
 Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+Date:   Fri Oct 31 13:20:58 2014 +0000
 
     - changed output from "base-learner" to "variable"
 
 commit 3103fe80b35b4ccd860bcb7de6bd660de1a8525f
 Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+Date:   Mon Oct 20 15:17:29 2014 +0000
 
     - added manual for run_stabsel()
     - changed regtest-inference.R
@@ -146,18 +649,21 @@ Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
 
 commit dbd6cd2caf68550c5192b62af3eecbdb546259ac
 Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+Date:   Mon Oct 20 10:03:46 2014 +0000
 
     - exported run_stabsel to make it accessible by other packages
     - stabs now supports gamboostLSS
 
 commit 36b94379f3ef1acde2341f648115068b7da599da
 Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+Date:   Thu Oct 2 13:25:50 2014 +0000
 
     - Release Version 0.1-0
     - added .Rbuildignore and .RbuildignoreCRAN
 
 commit 8faed3ba18fc720ce2be56090114752973997a08
 Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+Date:   Thu Oct 2 13:13:18 2014 +0000
 
     - added manual for subsample()
     - added inst/NEWS.Rd and ChangeLog
@@ -166,16 +672,19 @@ Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
 
 commit 22a7392a9ccc49e2fbdbd36239815f4ec99bdb1c
 Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+Date:   Mon Sep 29 14:37:42 2014 +0000
 
     - added parallel to NAMESPACE
 
 commit f5d61b4bfbed0e28d262cb6cd9ea21f7aef29017
 Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+Date:   Mon Sep 29 11:02:44 2014 +0000
 
     -updated manual
 
 commit 7e885b839220c67715621dc85862b71e1b203215
 Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+Date:   Mon Sep 29 11:00:05 2014 +0000
 
     - added stability paths to fitted model
     - added subsampling method (no longer rely on mboost)
@@ -187,15 +696,23 @@ Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
 
 commit 19d2fb9b73eea6c38a5ece5ec3ffe1620fd7a6ed
 Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+Date:   Mon Sep 22 16:48:07 2014 +0000
 
     - added args.fitfun to specify further arguments to the fitter
     - started formula interface
 
 commit 1ac5eb756acdecc587fd3eaec768b746ce7e6219
 Author: Benjamin Hofner <hofnerb@users.noreply.github.com>
+Date:   Thu Sep 18 15:32:56 2014 +0000
 
     Initial version of package "stabs" which currently implements:
     - a function stabsel.matrix() to fit Lasso and stepwise models directly with stability selection
     - a function stabsel.mboost() to apply stability selection to a fitted boosting model
     - a function stabsel_parameters() to compute the error bounds of stability selection
     Additionally, print and plot functions are implemented.
+
+commit 809c532bcb774bf7184202fe3410b519419423a7
+Author: stefan7th <stefan@nomail.com>
+Date:   Thu Sep 15 15:26:09 2011 +0000
+
+    small themeroot fix
