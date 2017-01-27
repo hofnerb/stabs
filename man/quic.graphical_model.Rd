@@ -2,7 +2,7 @@
 \alias{quic.graphical_model}
 \alias{getLamPath}
 
-\title{Stability selection fit function for sparse inverse covariance using QUIC}
+\title{Stability selection fit function for sparse inverse covariance using \package{QUIC}}
 \usage{
 quic.graphical_model(x, y, q, ...)
 getLamPath(max, min, len, log = FALSE)
