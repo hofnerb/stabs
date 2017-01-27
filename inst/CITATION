@@ -11,12 +11,12 @@ citEntry(entry="Manual",
                              as.person("Torsten Hothorn")),
          year = year,
          note = paste("{R} package version", vers),
-         url = "http://CRAN.R-project.org/package=stabs",
+         url = "https://CRAN.R-project.org/package=stabs",
          textVersion =
              paste("Benjamin Hofner and Torsten Hothorn (", year,
                    "). stabs: Stability Selection with Error Control, ",
                    paste("R package version", vers),
-                   ", http://CRAN.R-project.org/package=stabs", ".",
+                   ", https://CRAN.R-project.org/package=stabs", ".",
                    sep=""))
 
 citEntry(entry="article",

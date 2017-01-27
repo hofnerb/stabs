@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 `stabs` implements resampling procedures to assess the stability of selected
 variables with additional finite sample error control for high-dimensional
 variable selection procedures such as Lasso or boosting. Both, standard
-stability selection (Meinshausen & Bühlmann, 2010) and complementarty pairs
+stability selection (Meinshausen & Bühlmann, 2010) and complementary pairs
 stability selection with improved error bounds (Shah & Samworth, 2013) are
 implemented. The package can be combined with arbitrary user specified variable
 selection approaches.
@@ -105,7 +105,7 @@ method of choice.
 
 Instead of specifying a fitting function, one can also use `stabsel` directly on
 computed boosting models from
-[mboost](http://cran.r-project.org/package=mboost).
+[mboost](https://cran.r-project.org/package=mboost).
 
 ```{r}
 library("stabs")

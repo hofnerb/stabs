@@ -8,7 +8,7 @@ Authors@R: c(person("Benjamin", "Hofner", role = c("aut", "cre"),
 Description: Resampling procedures to assess the stability of selected variables
     with additional finite sample error control for high-dimensional variable
     selection procedures such as Lasso or boosting. Both, standard stability
-    selection (Meinshausen & Buhlmann, 2010) and complementarty pairs stability
+    selection (Meinshausen & Buhlmann, 2010) and complementary pairs stability
     selection with improved error bounds (Shah & Samworth, 2013) are
     implemented. The package can be combined with arbitrary user specified
     variable selection approaches.
