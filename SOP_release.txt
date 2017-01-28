@@ -37,6 +37,7 @@
     Update Date: field in DESCRIPTION
     Update inst/NEWS.Rd
     Update ChangeLog
+    Update README (especially Citation)
 
     R CMD build --resave-data --compact-vignettes . && R CMD check --as-cran stabs_XXX.tar.gz
 

@@ -7,11 +7,11 @@ stabs
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/stabs)](https://cran.r-project.org/package=stabs)
 [![](http://cranlogs.r-pkg.org/badges/stabs)](https://cran.r-project.org/package=stabs)
 
-`stabs` implements resampling procedures to assess the stability of selected
+**stabs** implements resampling procedures to assess the stability of selected
 variables with additional finite sample error control for high-dimensional
 variable selection procedures such as Lasso or boosting. Both, standard
-stability selection (Meinshausen & Bühlmann, 2010) and complementarty pairs
-stability selection with improved error bounds (Shah & Samworth, 2013) are
+stability selection (Meinshausen & Bühlmann, 2010, [doi:10.1111/j.1467-9868.2010.00740.x](http://dx.doi.org/10.1111/j.1467-9868.2010.00740.x)) and complementarty pairs
+stability selection with improved error bounds (Shah & Samworth, 2013, [doi:10.1111/j.1467-9868.2011.01034.x](http://dx.doi.org/10.1111/j.1467-9868.2011.01034.x)) are
 implemented. The package can be combined with arbitrary user specified variable
 selection approaches.
 
@@ -24,22 +24,28 @@ vignette("Using_stabs", package = "stabs")
 
 - Current version (from CRAN):
 
-        install.packages("stabs")
+```r
+install.packages("stabs")
+```
 
-- Latest development version from GitHub:
+- Latest development version from [GitHub](https://github.com/hofnerb/stabs):
 
-        library("devtools")
-        install_github("hofnerb/stabs")
+```r
+library("devtools")
+install_github("hofnerb/stabs")
+```
 
-  To be able to use the `install_github()` command, one needs to install `devtools` first:
+To be able to use the `install_github()` command, one needs to install **devtools** first:
 
-        install.packages("devtools")
+```r
+install.packages("devtools")
+```
 
 ## Using stabs
 
-A simple example of how to use `stabs` with package `lars`:
+A simple example of how to use **stabs** with package **lars**:
 
-```
+```r
 library("stabs")
 library("lars")
 ## make data set available
@@ -68,7 +74,7 @@ dimensional example!
 
 ### User-specified variable selection approaches
 
-To use `stabs` with user specified functions, one can specify an own `fitfun`.
+To use **stabs** with user specified functions, one can specify an own `fitfun`.
 These need to take arguments `x` (the predictors), `y` (the outcome) and `q` the
 number of selected variables as defined for stability selection. Additional
 arguments to the variable selection method can be handled by `...`. In the
@@ -83,7 +89,7 @@ The `fitfun` function then needs to return a named list with two elements
 The latter is optional and only needed to draw the complete selection paths.
 
 The following example shows how `lars.lasso` is implemented:
-```
+```r
 lars.lasso <- function(x, y, q, ...) {
     if (!requireNamespace("lars"))
         stop("Package ", sQuote("lars"), " needed but not available")
@@ -128,7 +134,7 @@ Instead of specifying a fitting function, one can also use `stabsel` directly on
 computed boosting models from
 [mboost](https://cran.r-project.org/package=mboost).
 
-```
+```r
 library("stabs")
 library("mboost")
 ### low-dimensional example
@@ -154,18 +160,18 @@ plot(sbody, type = "maxsel", ymargin = 6)
 ## Citation
 
 To cite the package in publications please use
-```
+```r
 citation("stabs")
 ```
 
 which will currently give you
 
-```
+```r
 To cite package 'stabs' in publications use:
 
-  Benjamin Hofner and Torsten Hothorn (2015). stabs: Stability
+  Benjamin Hofner and Torsten Hothorn (2017). stabs: Stability
   Selection with Error Control, R package version R package version
-  0.6-0, http://CRAN.R-project.org/package=stabs.
+  0.6-1, https://CRAN.R-project.org/package=stabs.
 
   Benjamin Hofner, Luigi Boccuto and Markus Goeker (2015). Controlling
   false discoveries in high-dimensional situations: Boosting with
@@ -177,6 +183,6 @@ Use ‘toBibtex(citation("stabs"))’ to extract BibTeX references.
 
 To obtain BibTeX references use
 
-```
+```r
 toBibtex(citation("stabs"))
 ```

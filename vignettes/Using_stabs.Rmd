@@ -13,11 +13,11 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-`stabs` implements resampling procedures to assess the stability of selected
+**stabs** implements resampling procedures to assess the stability of selected
 variables with additional finite sample error control for high-dimensional
 variable selection procedures such as Lasso or boosting. Both, standard
-stability selection (Meinshausen & Bühlmann, 2010) and complementary pairs
-stability selection with improved error bounds (Shah & Samworth, 2013) are
+stability selection (Meinshausen & Bühlmann, 2010, [doi:10.1111/j.1467-9868.2010.00740.x](http://dx.doi.org/10.1111/j.1467-9868.2010.00740.x)) and complementarty pairs
+stability selection with improved error bounds (Shah & Samworth, 2013, [doi:10.1111/j.1467-9868.2011.01034.x](http://dx.doi.org/10.1111/j.1467-9868.2011.01034.x)) are
 implemented. The package can be combined with arbitrary user specified variable
 selection approaches.
 
@@ -29,14 +29,14 @@ selection approaches.
 install.packages("stabs")
 ```
 
-- Latest development version from GitHub:
+- Latest development version from [GitHub](https://github.com/hofnerb/stabs):
 
 ```{r, eval = FALSE}
 library("devtools")
 install_github("hofnerb/stabs")
 ```
 
-To be able to use the `install_github()` command, one needs to install `devtools` first:
+To be able to use the `install_github()` command, one needs to install **devtools** first:
 
 ```{r, eval = FALSE}
 install.packages("devtools")
@@ -44,7 +44,7 @@ install.packages("devtools")
 
 ## Using stabs
 
-A simple example of how to use `stabs` with package `lars`:
+A simple example of how to use **stabs** with package **lars**:
 
 ```{r}
 library("stabs")
@@ -78,7 +78,7 @@ dimensional example!
 
 ### User-specified variable selection approaches
 
-To use `stabs` with user specified functions, one can specify an own `fitfun`.
+To use **stabs** with user specified functions, one can specify an own `fitfun`.
 These need to take arguments `x` (the predictors), `y` (the outcome) and `q` the
 number of selected variables as defined for stability selection. Additional
 arguments to the variable selection method can be handled by `...`. In the
