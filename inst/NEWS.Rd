@@ -1,6 +1,14 @@
 \name{NEWS}
 \title{News for Package 'stabs'}
 
+\section{Changes in stabs version 0.6-1 (2017-01-28)}{
+  \subsection{Miscellaneous}{
+    \itemize{
+    \item Added DOIs to \file{DESCRIPTION} to fulfill CRAN policies.
+    }
+  }
+}
+
 \section{Changes in stabs version 0.6-0 (2017-01-27)}{
   \subsection{User-visible changes}{
     \itemize{

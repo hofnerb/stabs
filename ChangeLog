@@ -1,4 +1,11 @@
-commit f9b3dd67701842d5fb601d1185acbf2b5858ab34
+commit 95bbdb954900327d7d34bb90c82e35c47a37b023
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Sat Jan 28 14:02:50 2017 +0100
+
+    Added DOIs to \file{DESCRIPTION} to fulfill CRAN policies.
+    Release stabs 0.6-1
+
+commit 9bc3696e66252d9713f8007716b5f8876baccc87
 Author: Benjamin Hofner <benjamin.hofner@pei.de>
 Date:   Fri Jan 27 18:13:43 2017 +0100
 
