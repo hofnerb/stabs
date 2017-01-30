@@ -23,7 +23,7 @@ glmnet.lasso <- function(x, y, q, type = c("conservative", "anticonservative"), 
     ## fit model
     type <- match.arg(type)
     if (type == "conservative")
-        fit <- glmnet::glmnet(x, y, pmax = q, ...)
+        fit <- suppressWarnings(glmnet::glmnet(x, y, pmax = q, ...))
     if (type == "anticonservative")
         fit <- glmnet::glmnet(x, y, dfmax = q - 1, ...)
     
