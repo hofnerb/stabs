@@ -1,7 +1,7 @@
 
-R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
-Copyright (C) 2014 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R version 3.3.2 (2016-10-31) -- "Sincere Pumpkin Patch"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -20,12 +20,12 @@ Loading required package: parallel
 > attach(asNamespace("stabs"))
 The following objects are masked from package:stabs:
 
-    glmnet.lasso, glmnet.lasso_maxCoef, lars.lasso, lars.stepwise,
-    parameters, plot.stabsel, print.stabsel, print.stabsel_parameters,
-    run_stabsel, selected, selected.stabsel, stabsel,
-    stabsel.data.frame, stabsel.matrix, stabsel.stabsel,
-    stabsel_parameters, stabsel_parameters.default,
-    stabsel_parameters.stabsel, subsample
+    check_folds, getLamPath, glmnet.lasso, glmnet.lasso_maxCoef,
+    lars.lasso, lars.stepwise, parameters, plot.stabsel, print.stabsel,
+    print.stabsel_parameters, quic.graphical_model, run_stabsel,
+    selected, selected.stabsel, stabsel, stabsel.data.frame,
+    stabsel.matrix, stabsel.stabsel, stabsel_parameters,
+    stabsel_parameters.default, stabsel_parameters.stabsel, subsample
 
 The following object is masked from package:stats:
 
@@ -201,10 +201,19 @@ The following object is masked from package:stats:
 +     stabsel(mod, q = 3, PFER = 0.2, sampling.type = "SS", eval = FALSE)
 + }
 Loading required package: mboost
-This is mboost 2.4-1. See 'package?mboost' and the NEWS file
+This is mboost 2.7-0. See 'package?mboost' and 'news(package  = "mboost")'
 for a complete list of changes.
 
 Loading required package: TH.data
+Loading required package: survival
+Loading required package: MASS
+
+Attaching package: 'TH.data'
+
+The following object is masked from 'package:MASS':
+
+    geyser
+
 	Stability Selection without further assumptions
 
 No variables selected
@@ -560,7 +569,6 @@ Cutoff: 0.61; q: 10; PFER (*):  1.01
 PFER (specified upper bound):  1.005863 
 PFER corresponds to signif. level 0.0101 (without multiplicity adjustment)
 > 
-> 
 > proc.time()
    user  system elapsed 
- 21.245   0.322  20.950 
+  15.16    0.28   15.47 
