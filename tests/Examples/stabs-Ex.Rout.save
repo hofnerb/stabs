@@ -20,6 +20,7 @@ Type 'q()' to quit R.
 > pkgname <- "stabs"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
+> options(pager = "console")
 > library('stabs')
 Loading required package: parallel
 > 
@@ -38,39 +39,65 @@ Loading required package: parallel
 > 
 > ### ** Examples
 > 
-> data("bodyfat", package = "TH.data")
-> ## selected variables
-> lars.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$selected
+>   if (require("TH.data")) {
++       ## make data set available
++       data("bodyfat", package = "TH.data")
++   } else {
++       ## simulate some data if TH.data not available. 
++       ## Note that results are non-sense with this data.
++       bodyfat <- matrix(rnorm(720), nrow = 72, ncol = 10)
++   }
+Loading required package: TH.data
+Loading required package: survival
+Loading required package: MASS
+
+Attaching package: 'TH.data'
+
+The following object is masked from 'package:MASS':
+
+    geyser
+
+>   
+>   if (require("lars")) {
++       ## selected variables
++       lars.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$selected
++       lars.stepwise(bodyfat[, -2], bodyfat[,2], q = 3)$selected
++   }
 Loading required package: lars
 Loaded lars 1.2
 
-Note: ‘x’ is coerced to a model matrix without intercept
-         age    waistcirc      hipcirc elbowbreadth  kneebreadth     anthro3a 
-       FALSE         TRUE         TRUE        FALSE        FALSE         TRUE 
-    anthro3b     anthro3c      anthro4 
-       FALSE        FALSE        FALSE 
-> lars.stepwise(bodyfat[, -2], bodyfat[,2], q = 3)$selected
-Note: ‘x’ is coerced to a model matrix without intercept
+Note: 'x' is coerced to a model matrix without intercept
+Note: 'x' is coerced to a model matrix without intercept
          age    waistcirc      hipcirc elbowbreadth  kneebreadth     anthro3a 
        FALSE        FALSE         TRUE        FALSE         TRUE        FALSE 
     anthro3b     anthro3c      anthro4 
         TRUE        FALSE        FALSE 
-> glmnet.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$selected
+>   
+>   if (require("glmnet")) {
++       glmnet.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$selected
++       ## selection path
++       glmnet.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$path
++   
++       ## Using the anticonservative glmnet.lasso (see args.fitfun):
++       stab.glmnet <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
++                              fitfun = glmnet.lasso, 
++                              args.fitfun = list(type = "anticonservative"), 
++                              cutoff = 0.75, PFER = 1)
++   }
 Loading required package: glmnet
 Loading required package: Matrix
-Loaded glmnet 1.9-8
+Loading required package: foreach
+Loaded glmnet 2.0-5
 
-Note: ‘x’ is coerced to a model matrix without intercept
-         age    waistcirc      hipcirc elbowbreadth  kneebreadth     anthro3a 
-       FALSE         TRUE         TRUE        FALSE        FALSE         TRUE 
-    anthro3b     anthro3c      anthro4 
-       FALSE        FALSE        FALSE 
+Note: 'x' is coerced to a model matrix without intercept
+Note: 'x' is coerced to a model matrix without intercept
 > 
 > 
 > 
 > cleanEx()
 
-detaching ‘package:glmnet’, ‘package:Matrix’, ‘package:lars’
+detaching 'package:glmnet', 'package:foreach', 'package:Matrix',
+  'package:lars', 'package:TH.data', 'package:MASS', 'package:survival'
 
 > nameEx("plot")
 > ### * plot
@@ -84,7 +111,25 @@ detaching ‘package:glmnet’, ‘package:Matrix’, ‘package:lars’
 > 
 > ### ** Examples
 > 
->   data("bodyfat", package = "TH.data")
+>   if (require("TH.data")) {
++       ## make data set available
++       data("bodyfat", package = "TH.data")
++   } else {
++       ## simulate some data if TH.data not available. 
++       ## Note that results are non-sense with this data.
++       bodyfat <- matrix(rnorm(720), nrow = 72, ncol = 10)
++   }
+Loading required package: TH.data
+Loading required package: survival
+Loading required package: MASS
+
+Attaching package: 'TH.data'
+
+The following object is masked from 'package:MASS':
+
+    geyser
+
+>   
 >   ## set seed
 >   set.seed(1234)
 > 
@@ -109,7 +154,53 @@ Loaded lars 1.2
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 
-detaching ‘package:lars’
+detaching 'package:lars', 'package:TH.data', 'package:MASS',
+  'package:survival'
+
+> nameEx("quic.graphical_model")
+> ### * quic.graphical_model
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: quic.graphical_model
+> ### Title: Stability selection fit function for sparse inverse covariance
+> ###   using QUIC
+> ### Aliases: quic.graphical_model getLamPath
+> ### Keywords: models nonlinear nonparametric
+> 
+> ### ** Examples
+> 
+> if (require("huge") & require("QUIC")) {
++   set.seed(10010)
++   dat.hubs <- huge.generator(n = 1000, d = 40, graph = "hub")
++   s.hubs <- stabsel(x = dat.hubs$data, fitfun = quic.graphical_model, 
++                     cutoff = 0.75, PFER = 10)
++ }
+Loading required package: huge
+Loading required package: Matrix
+Loading required package: lattice
+Loading required package: igraph
+
+Attaching package: 'igraph'
+
+The following objects are masked from 'package:stats':
+
+    decompose, spectrum
+
+The following object is masked from 'package:base':
+
+    union
+
+Loading required package: MASS
+Loading required package: QUIC
+Generating data from the multivariate normal distribution with the hub graph structure....done.
+> 
+> 
+> 
+> cleanEx()
+
+detaching 'package:QUIC', 'package:huge', 'package:MASS',
+  'package:igraph', 'package:lattice', 'package:Matrix'
 
 > nameEx("stabsel")
 > ### * stabsel
@@ -123,11 +214,29 @@ detaching ‘package:lars’
 > 
 > ### ** Examples
 > 
->   ## make data set available
->   data("bodyfat", package = "TH.data")
+>   
+>   if (require("TH.data")) {
++       ## make data set available
++       data("bodyfat", package = "TH.data")
++   } else {
++       ## simulate some data if TH.data not available. 
++       ## Note that results are non-sense with this data.
++       bodyfat <- matrix(rnorm(720), nrow = 72, ncol = 10)
++   }
+Loading required package: TH.data
+Loading required package: survival
+Loading required package: MASS
+
+Attaching package: 'TH.data'
+
+The following object is masked from 'package:MASS':
+
+    geyser
+
+>   
 >   ## set seed
 >   set.seed(1234)
-> 
+>   
 >   ####################################################################
 >   ### using stability selection with Lasso methods:
 > 
@@ -147,6 +256,46 @@ detaching ‘package:lars’
 Loading required package: lars
 Loaded lars 1.2
 
+> 
+>   ## set seed (again to make results comparable)
+>   set.seed(1234)
+>   if (require("glmnet")) {
++       (stab.glmnet <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
++                               fitfun = glmnet.lasso, cutoff = 0.75,
++                               PFER = 1))
++       par(mfrow = c(2, 1))
++       plot(stab.glmnet, main = "Lasso (glmnet)")
++       if (exists("stab.lasso"))
++           plot(stab.lasso, main = "Lasso (lars)")    
++   }
+Loading required package: glmnet
+Loading required package: Matrix
+Loading required package: foreach
+Loaded glmnet 2.0-5
+
+>   
+>   
+>   ## Select variables with maximum coefficients based on lasso estimate
+>   
+>   set.seed(1234) # reset seed
+>   if (require("glmnet")) {
++       ## use cross-validated lambda 
++       lambda.min <- cv.glmnet(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2])$lambda.min
++       (stab.maxCoef <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
++                                fitfun = glmnet.lasso_maxCoef, 
++                                # specify additional parameters to fitfun
++                                args.fitfun = list(lambda = lambda.min),
++                                cutoff = 0.75, PFER = 1))
++                                
++       ## WARNING: Using a fixed penalty (lambda) is usually not permitted and 
++       ##          not sensible. See ?fitfun for details.
++       
++       ## now compare standard lasso with "maximal parameter estimates" from lasso
++       par(mfrow = c(2, 1))
++       plot(stab.maxCoef, main = "Lasso (glmnet; Maximum Coefficients)")
++       plot(stab.glmnet, main = "Lasso (glmnet)")
++       ## --> very different results.
++   }
 > 
 >   ####################################################################
 >   ### using stability selection directly on computed boosting models
@@ -173,7 +322,7 @@ Loaded lars 1.2
 +       plot(sbody, type = "maxsel", ymargin = 6)
 +   }
 Loading required package: mboost
-This is mboost 2.4-1. See ‘package?mboost’ and the NEWS file
+This is mboost 2.7-0. See 'package?mboost' and 'news(package  = "mboost")'
 for a complete list of changes.
 
 > 
@@ -182,7 +331,9 @@ for a complete list of changes.
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 
-detaching ‘package:mboost’, ‘package:lars’
+detaching 'package:mboost', 'package:glmnet', 'package:foreach',
+  'package:Matrix', 'package:lars', 'package:TH.data', 'package:MASS',
+  'package:survival'
 
 > nameEx("stabsel_stabsel")
 > ### * stabsel_stabsel
@@ -196,8 +347,25 @@ detaching ‘package:mboost’, ‘package:lars’
 > 
 > ### ** Examples
 > 
->   ## make data set available
->   data("bodyfat", package = "TH.data")
+>   if (require("TH.data")) {
++       ## make data set available
++       data("bodyfat", package = "TH.data")
++   } else {
++       ## simulate some data if TH.data not available. 
++       ## Note that results are non-sense with this data.
++       bodyfat <- matrix(rnorm(720), nrow = 72, ncol = 10)
++   }
+Loading required package: TH.data
+Loading required package: survival
+Loading required package: MASS
+
+Attaching package: 'TH.data'
+
+The following object is masked from 'package:MASS':
+
+    geyser
+
+>   
 >   ## set seed
 >   set.seed(1234)
 > 
@@ -228,7 +396,8 @@ Loaded lars 1.2
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 
-detaching ‘package:lars’
+detaching 'package:lars', 'package:TH.data', 'package:MASS',
+  'package:survival'
 
 > nameEx("subsample")
 > ### * subsample
@@ -308,7 +477,7 @@ attr(,"type")
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.201 0.138 3.474 1.68 0.131 
+Time elapsed:  7.94 0.34 8.5 NA NA 
 > grDevices::dev.off()
 null device 
           1 
