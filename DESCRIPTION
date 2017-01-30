@@ -1,7 +1,7 @@
 Package: stabs
 Title: Stability Selection with Error Control
-Version: 0.6-1
-Date: 2017-01-28
+Version: 0.6-2
+Date: 2017-01-30
 Authors@R: c(person("Benjamin", "Hofner", role = c("aut", "cre"),
 	            email = "benjamin.hofner@pei.de"),
        	     person("Torsten", "Hothorn", role = c("aut")))
@@ -16,8 +16,8 @@ Description: Resampling procedures to assess the stability of selected variables
 VignetteBuilder: knitr
 Depends: R (>= 2.14.0), methods, stats, parallel
 Imports: graphics, grDevices, utils
-Suggests: TH.data, hdi, testthat, knitr, rmarkdown, igraph, huge
-Enhances: glmnet, lars, mboost (> 2.3-0), gamboostLSS (>= 1.2-0), QUIC
+Suggests: glmnet, lars, mboost (> 2.3-0), gamboostLSS (>= 1.2-0), QUIC, 
+    TH.data, hdi, testthat, knitr, rmarkdown, igraph, huge
 LazyData: yes
 License: GPL-2
 URL: https://github.com/hofnerb/stabs

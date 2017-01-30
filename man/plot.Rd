@@ -96,7 +96,15 @@
   \code{\link{stabsel}}
 }
 \examples{
-  data("bodyfat", package = "TH.data")
+  if (require("TH.data")) {
+      ## make data set available
+      data("bodyfat", package = "TH.data")
+  } else {
+      ## simulate some data if TH.data not available. 
+      ## Note that results are non-sense with this data.
+      bodyfat <- matrix(rnorm(720), nrow = 72, ncol = 10)
+  }
+  
   ## set seed
   set.seed(1234)
 

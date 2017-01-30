@@ -64,19 +64,32 @@ glmnet.lasso_maxCoef(x, y, q, ...)
 \code{\link{stabsel}} for stability selection itself, and \code{\link{quic.graphical_model}} for stability selection for graphical models.
 }
 \examples{
-data("bodyfat", package = "TH.data")
-## selected variables
-lars.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$selected
-lars.stepwise(bodyfat[, -2], bodyfat[,2], q = 3)$selected
-glmnet.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$selected
-## selection path
-glmnet.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$path
-
-## Using the anticonservative glmnet.lasso (see args.fitfun):
-stab.glmnet <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
-                       fitfun = glmnet.lasso, 
-                       args.fitfun = list(type = "anticonservative"), 
-                       cutoff = 0.75, PFER = 1)
+  if (require("TH.data")) {
+      ## make data set available
+      data("bodyfat", package = "TH.data")
+  } else {
+      ## simulate some data if TH.data not available. 
+      ## Note that results are non-sense with this data.
+      bodyfat <- matrix(rnorm(720), nrow = 72, ncol = 10)
+  }
+  
+  if (require("lars")) {
+      ## selected variables
+      lars.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$selected
+      lars.stepwise(bodyfat[, -2], bodyfat[,2], q = 3)$selected
+  }
+  
+  if (require("glmnet")) {
+      glmnet.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$selected
+      ## selection path
+      glmnet.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$path
+  
+      ## Using the anticonservative glmnet.lasso (see args.fitfun):
+      stab.glmnet <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
+                             fitfun = glmnet.lasso, 
+                             args.fitfun = list(type = "anticonservative"), 
+                             cutoff = 0.75, PFER = 1)
+  }
 }
 \keyword{models}
 \keyword{nonlinear}
