@@ -1,10 +1,21 @@
 \name{NEWS}
 \title{News for Package 'stabs'}
 
+\section{Changes in stabs version 0.6-2 (2017-01-30)}{
+  \subsection{Miscellaneous}{
+    \itemize{
+    \item Move packages from \code{Enhances} to \code{Suggests}.
+    \item Make manuals work without package \pkg{TH.data}.
+    \item Use markup \code{\\doi} for DOIs in manual.
+    }
+  }
+}
+
 \section{Changes in stabs version 0.6-1 (2017-01-28)}{
   \subsection{Miscellaneous}{
     \itemize{
     \item Added DOIs to \file{DESCRIPTION} to fulfill CRAN policies.
+    \item Updated \file{README.md} and vignettes.
     }
   }
 }
