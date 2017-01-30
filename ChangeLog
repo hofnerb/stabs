@@ -1,4 +1,58 @@
-commit 95bbdb954900327d7d34bb90c82e35c47a37b023
+commit 4fdced74acfff97b94c1e924e8862d24ce4679bb
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Mon Jan 30 14:43:38 2017 +0100
+
+    Relase stabs 0.6-2
+
+commit 43b7783c9cf416c20df9ad8ad010681dfaefed91
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Mon Jan 30 14:38:53 2017 +0100
+
+    add donttest to speed up check time on CRAN
+
+commit a7c01c65035e315b0871bc4818b493576b8c14a0
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Mon Jan 30 14:12:43 2017 +0100
+
+    Update .Rout.save of examples
+
+commit 46253d4651155a940067da4f2de9cddb98bab4b9
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Mon Jan 30 14:12:20 2017 +0100
+
+    Suppress warning of glmnet
+
+commit 36d0f06f56aba198630e916a923a6b2042581a19
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Mon Jan 30 12:58:37 2017 +0100
+
+    Update .Rout.save files
+
+commit 694920aab2558e1c4b5197152fd41b9c603fc8ba
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Mon Jan 30 12:42:02 2017 +0100
+
+    fix conditions in tests
+
+commit 54c2fc33d679f753766ce617195765019eca21c7
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Mon Jan 30 12:13:42 2017 +0100
+
+    Use markup \doi for DOIs in manuals
+
+commit 1e89301e99989e34308160b26400430231353531
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+Date:   Mon Jan 30 12:11:14 2017 +0100
+
+    Make tests really conditional on TH.data and other packages
+
+commit 8f3361e6554d7df692915b97e38325f45423b09a
+Author: Benjamin Hofner <benjamin.hofner@fau.de>
+Date:   Sat Jan 28 14:39:18 2017 +0100
+
+    Updated README and vignette
+
+commit 3a629a679b2c4c2e243d98b3956341f49510c619
 Author: Benjamin Hofner <benjamin.hofner@fau.de>
 Date:   Sat Jan 28 14:02:50 2017 +0100
 

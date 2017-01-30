@@ -6,6 +6,7 @@
     \itemize{
     \item Move packages from \code{Enhances} to \code{Suggests}.
     \item Make manuals work without package \pkg{TH.data}.
+    \item Speed up examples by adding \code{\\donttest} in two occassions.
     \item Use markup \code{\\doi} for DOIs in manual.
     }
   }
