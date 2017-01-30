@@ -2,9 +2,8 @@
 context("QUIC stability selection regression test")
 
 library("stabs")
-library("huge")
 
-if (require("QUIC")) {
+if (require("QUIC") && require("huge")) {
 
     set.seed(10010)
     dat.hubs <- huge.generator(n=1000, d=40, graph="hub")

@@ -1,5 +1,5 @@
-library("testthat")
 library("stabs")
 
-test_check("stabs")
+if (require("testthat"))
+    test_check("stabs")
 
