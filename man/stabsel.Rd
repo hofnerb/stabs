@@ -225,6 +225,7 @@ stabsel(x, ...)
   ### using stability selection directly on computed boosting models
   ### from mboost
 
+
   if (require("mboost")) {
       ### low-dimensional example
       mod <- glmboost(DEXfat ~ ., data = bodyfat)
@@ -237,13 +238,14 @@ stabsel(x, ...)
       ## the same:
       stabsel(mod, q = 3, PFER = 1, sampling.type = "MB", eval = FALSE)
 
+      \donttest{### Do not test the following code per default on CRAN as it takes some time to run:
       ## now run stability selection
       (sbody <- stabsel(mod, q = 3, PFER = 1, sampling.type = "MB"))
       opar <- par(mai = par("mai") * c(1, 1, 1, 2.7))
       plot(sbody)
       par(opar)
-
       plot(sbody, type = "maxsel", ymargin = 6)
+      }
   }
 }
 \keyword{nonparametric}

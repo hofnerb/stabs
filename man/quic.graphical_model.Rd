@@ -42,11 +42,13 @@ set the class to \code{"graphical_model"}.
 \code{\link{stabsel}} for stability selection itself, and \code{\link{fitfun}} for other fitting functions.
 }
 \examples{
-if (require("huge") & require("QUIC")) {
+\donttest{### Do not test the following code per default on CRAN as it takes some time to run:
+if (require("huge") && require("QUIC")) {
   set.seed(10010)
   dat.hubs <- huge.generator(n = 1000, d = 40, graph = "hub")
   s.hubs <- stabsel(x = dat.hubs$data, fitfun = quic.graphical_model, 
                     cutoff = 0.75, PFER = 10)
+}
 }
 }
 \keyword{models}
