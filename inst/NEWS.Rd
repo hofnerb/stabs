@@ -39,7 +39,7 @@
       \item Make sure that per default \code{glmnet.lasso} selects at maximum
         \code{q} variables. The previous anti-conservative version 
         stays available via \code{args.fitfun = list(type = "anticonservative")} (closes 
-        \href{https://github.com/hofnerb/stabs/issues/22}{#23})
+        \href{https://github.com/hofnerb/stabs/issues/23}{#23})
       }
   }
   \subsection{Miscellaneous}{
