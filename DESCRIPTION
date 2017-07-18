@@ -1,7 +1,7 @@
 Package: stabs
 Title: Stability Selection with Error Control
-Version: 0.6-2
-Date: 2017-01-30
+Version: 0.6-3
+Date: 2017-07-19
 Authors@R: c(person("Benjamin", "Hofner", role = c("aut", "cre"),
 	            email = "benjamin.hofner@pei.de"),
        	     person("Torsten", "Hothorn", role = c("aut")))

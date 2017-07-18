@@ -1,11 +1,25 @@
 \name{NEWS}
 \title{News for Package 'stabs'}
 
+\section{Changes in stabs version 0.6-3 (2017-07-19)}{
+  \subsection{Miscellaneous}{
+    \itemize{
+    \item Added reference to stability selection with \CRANpkg{gamboostLSS}.
+    }
+    \subsection{Bug-fixes}{
+    \itemize{
+    \item Make vignettes conditional on suggested packages 
+      (closes \href{https://github.com/hofnerb/stabs/issues/24}{#24}).
+    \item Fixed tests.
+    }
+  }
+}
+
 \section{Changes in stabs version 0.6-2 (2017-01-30)}{
   \subsection{Miscellaneous}{
     \itemize{
     \item Move packages from \code{Enhances} to \code{Suggests}.
-    \item Make manuals work without package \pkg{TH.data}.
+    \item Make manuals work without package \CRANpkg{TH.data}.
     \item Speed up examples by adding \code{\\donttest} in two occassions.
     \item Use markup \code{\\doi} for DOIs in manual.
     }
@@ -24,7 +38,7 @@
 \section{Changes in stabs version 0.6-0 (2017-01-27)}{
   \subsection{User-visible changes}{
     \itemize{
-      \item Added support for graphical models via package \pkg{QUIC}
+      \item Added support for graphical models via package \CRANpkg{QUIC}
         (closes \href{https://github.com/hofnerb/stabs/issues/12}{#12}, 
         \href{https://github.com/hofnerb/stabs/issues/13}{#13} and 
         \href{https://github.com/hofnerb/stabs/issues/14}{#14}; Code contributed
@@ -93,7 +107,7 @@
       \item Added a function \code{stabsel.stabsel()} to compute (new)
       parameter combinations for a fitted \code{stabsel} object
       \item Included \code{selected()} method (originally from
-      \pkg{mboost}); \code{selected()} can now be used on stability
+      \CRANpkg{mboost}); \code{selected()} can now be used on stability
       selection results to extract selected effects
       \item Added functionality to extract parameters from fitted
       \code{stabsel} objects:
@@ -118,7 +132,7 @@
       \code{stabsel_parameter} objects (needed for better outputs)
       \item Added \file{inst/CITATION}
       \item Added reference to stability selection paper
-      \item \pkg{stabs} now enhances \pkg{gamboostLSS}
+      \item \CRANpkg{stabs} now enhances \CRANpkg{gamboostLSS}
     }
   }
   \subsection{Bug-fixes}{
@@ -131,13 +145,13 @@
 \section{Changes in stabs version 0.1-0 (2014-10-02)}{
   \itemize{
     \item Initial submission to CRAN
-    \item \pkg{stabs} implements stability selection for a range of
+    \item \CRANpkg{stabs} implements stability selection for a range of
     models, including a novel \code{matrix} interface for \code{stabsel}
     that can be used with generic fit functions.
     \item The code is based on the \code{stabsel} function that was
-    implemented in \pkg{mboost} until version 2.3-0. \code{stabsel} is
+    implemented in \CRANpkg{mboost} until version 2.3-0. \code{stabsel} is
     now a generic function with a specialized method for boosting models
-    that is implemented in \pkg{mboost}. The back-end is now completely
-    implemented in package \pkg{stabs}.
+    that is implemented in \CRANpkg{mboost}. The back-end is now completely
+    implemented in package \CRANpkg{stabs}.
   }
 }
