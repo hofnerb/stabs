@@ -13,6 +13,7 @@ if (require("QUIC") && require("huge")) {
                       cutoff=pcutoff, PFER=PFER, verbose=FALSE)
     
     load("quic.hub.test.Rda")
+    testthat::test_that("Data same", expect_equal(dat.hubs, dat.hubs.orig))
     testthat::test_that("Selected same", expect_equal(s.hubs$selected, s.hubs.orig$selected))
     
     ## Now for argument testing
