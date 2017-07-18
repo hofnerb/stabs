@@ -6,7 +6,8 @@
     \itemize{
     \item Added reference to stability selection with \CRANpkg{gamboostLSS}.
     }
-    \subsection{Bug-fixes}{
+  }
+  \subsection{Bug-fixes}{
     \itemize{
     \item Make vignettes conditional on suggested packages 
       (closes \href{https://github.com/hofnerb/stabs/issues/24}{#24}).
@@ -124,8 +125,7 @@
   }
   \subsection{Miscellaneous}{
     \itemize{
-      \item Package development moved from
-      \url{http://r-forge.r-project.org/projects/stabsel/}
+      \item Package development moved from R-forge
       to \url{http://github.com/hofnerb/stabs}
 
       \item Added \code{specifiedPFER} to \code{stabsel} and
