@@ -1,7 +1,7 @@
 
-R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
-Copyright (C) 2014 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R version 3.4.0 (2017-04-21) -- "You Stupid Darkness"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -21,6 +21,18 @@ Type 'q()' to quit R.
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
 > options(pager = "console")
+> base::assign(".ExTimings", "stabs-Ex.timings", pos = 'CheckExEnv')
+> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+> base::assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   options(OutDec = '.')
++   format(x[1L:3L], digits = 7L)
++ },
++ pos = 'CheckExEnv')
+> 
+> ### * </HEADER>
 > library('stabs')
 Loading required package: parallel
 > 
@@ -31,6 +43,7 @@ Loading required package: parallel
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: Fitting Functions
 > ### Title: Fit Functions for Stability Selection
 > ### Aliases: fitfun fitfuns glmnet.lasso glmnet.lasso_maxCoef lars.lasso
@@ -87,13 +100,15 @@ Note: 'x' is coerced to a model matrix without intercept
 Loading required package: glmnet
 Loading required package: Matrix
 Loading required package: foreach
-Loaded glmnet 2.0-5
+Loaded glmnet 2.0-9
 
 Note: 'x' is coerced to a model matrix without intercept
 Note: 'x' is coerced to a model matrix without intercept
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("fitfuns", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
 
 detaching 'package:glmnet', 'package:foreach', 'package:Matrix',
@@ -104,6 +119,7 @@ detaching 'package:glmnet', 'package:foreach', 'package:Matrix',
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: plot.stabsel
 > ### Title: Plot and Print Methods for Stability Selection
 > ### Aliases: plot plot.stabsel print.stabsel
@@ -151,6 +167,8 @@ Loaded lars 1.2
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("plot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 
@@ -162,6 +180,7 @@ detaching 'package:lars', 'package:TH.data', 'package:MASS',
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: quic.graphical_model
 > ### Title: Stability selection fit function for sparse inverse covariance
 > ###   using QUIC
@@ -170,43 +189,18 @@ detaching 'package:lars', 'package:TH.data', 'package:MASS',
 > 
 > ### ** Examples
 > 
-> if (require("huge") & require("QUIC")) {
-+   set.seed(10010)
-+   dat.hubs <- huge.generator(n = 1000, d = 40, graph = "hub")
-+   s.hubs <- stabsel(x = dat.hubs$data, fitfun = quic.graphical_model, 
-+                     cutoff = 0.75, PFER = 10)
-+ }
-Loading required package: huge
-Loading required package: Matrix
-Loading required package: lattice
-Loading required package: igraph
-
-Attaching package: 'igraph'
-
-The following objects are masked from 'package:stats':
-
-    decompose, spectrum
-
-The following object is masked from 'package:base':
-
-    union
-
-Loading required package: MASS
-Loading required package: QUIC
-Generating data from the multivariate normal distribution with the hub graph structure....done.
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("quic.graphical_model", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
-
-detaching 'package:QUIC', 'package:huge', 'package:MASS',
-  'package:igraph', 'package:lattice', 'package:Matrix'
-
 > nameEx("stabsel")
 > ### * stabsel
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: stabsel
 > ### Title: Stability Selection
 > ### Aliases: stabsel stabsel.matrix stabsel.data.frame
@@ -271,7 +265,7 @@ Loaded lars 1.2
 Loading required package: glmnet
 Loading required package: Matrix
 Loading required package: foreach
-Loaded glmnet 2.0-5
+Loaded glmnet 2.0-9
 
 >   
 >   
@@ -301,6 +295,7 @@ Loaded glmnet 2.0-5
 >   ### using stability selection directly on computed boosting models
 >   ### from mboost
 > 
+> 
 >   if (require("mboost")) {
 +       ### low-dimensional example
 +       mod <- glmboost(DEXfat ~ ., data = bodyfat)
@@ -313,21 +308,21 @@ Loaded glmnet 2.0-5
 +       ## the same:
 +       stabsel(mod, q = 3, PFER = 1, sampling.type = "MB", eval = FALSE)
 + 
-+       ## now run stability selection
-+       (sbody <- stabsel(mod, q = 3, PFER = 1, sampling.type = "MB"))
-+       opar <- par(mai = par("mai") * c(1, 1, 1, 2.7))
-+       plot(sbody)
-+       par(opar)
-+ 
-+       plot(sbody, type = "maxsel", ymargin = 6)
 +   }
 Loading required package: mboost
-This is mboost 2.7-0. See 'package?mboost' and 'news(package  = "mboost")'
+This is mboost 2.8-1. See 'package?mboost' and 'news(package  = "mboost")'
 for a complete list of changes.
 
+Stability selection without further assumptions
+
+Cutoff: 0.95; q: 3; PFER:  1 
+PFER (specified upper bound):  1 
+PFER corresponds to signif. level 0.1 (without multiplicity adjustment)
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("stabsel", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 
@@ -340,6 +335,7 @@ detaching 'package:mboost', 'package:glmnet', 'package:foreach',
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: stabsel.stabsel
 > ### Title: Change Parameters of Stability Selection
 > ### Aliases: stabsel.stabsel
@@ -393,6 +389,8 @@ Loaded lars 1.2
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("stabsel_stabsel", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 
@@ -404,6 +402,7 @@ detaching 'package:lars', 'package:TH.data', 'package:MASS',
 > 
 > flush(stderr()); flush(stdout())
 > 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 > ### Name: subsample
 > ### Title: Draw Random Subsamples
 > ### Aliases: subsample
@@ -473,11 +472,13 @@ attr(,"type")
 > 
 > 
 > 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("subsample", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > ### * <FOOTER>
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.94 0.34 8.5 NA NA 
+Time elapsed:  3.62 0.32 4.32 NA NA 
 > grDevices::dev.off()
 null device 
           1 

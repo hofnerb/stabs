@@ -32,7 +32,7 @@ if (is.null(vignettes))
     vignettes <- FALSE
 
 path <- "."
-check_path <- "stabs.Rcheck/"
+check_path <- "../stabs.Rcheck/"
 
 ################################################################################
 ## Copy output of test files
@@ -45,10 +45,10 @@ if (vignettes == FALSE) {
 
     ROUT.SAVE <- list.files(path = path, pattern = ".Rout.save$", recursive = TRUE)
     ## remove new Routs from checks
-    ROUT.SAVE <- ROUT.SAVE[!grepl(check_path, ROUT.SAVE)]
+    #ROUT.SAVE <- ROUT.SAVE[!grepl(check_path, ROUT.SAVE)]
     ROUT.SAVE <- paste(path, "/", ROUT.SAVE, sep ="")
     ROUT.SAVE <- ROUT.SAVE[grep("test", ROUT.SAVE)]
-
+    
     if (length(ROUT.SAVE) == length(ROUT)) {
         ## sort ROUT.SAVE
         idx <- rep(NA, length(ROUT))

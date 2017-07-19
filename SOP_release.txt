@@ -24,7 +24,9 @@
     ../relative/path/to/R-devel/bin/R
 
   Run
-    install.packages(c("parallel", "TH.data", "hdi", "glmnet", "lars", "mboost", "gamboostLSS"))
+    install.packages(c("parallel", "TH.data", "hdi", "glmnet", "lars", "mboost", 
+                       "gamboostLSS", "QUIC", "testthat", "knitr", "rmarkdown", 
+                       "igraph", "huge"))
 
   Quit R and run
    ../relative/path/to/R-devel/bin/R CMD check --as-cran stabs_XXX.tar.gz
@@ -45,19 +47,15 @@
     (see section "Checking the package with latest development version of R")
 
     If differences to .Rout.save occure:
-       - Manually check differences. You might want to use something like:
-            cd stabs.Rcheck/tests
-	    meld Examples/stabs-Ex.Rout.save ../stabs-Ex.Rout &
-	or
-	    meld regtest-XXX.Rout.save regtest-XXX.Rout &
-
-       - If ok, copy new .Rout files to .Rout.save:
+       - Copy new .Rout files to .Rout.save:
 
        	    Rscript copy_Rout_to_Routsave.R "vignettes=FALSE"
 
        - Update vignette .Rout.save files if necessary
 
             Rscript copy_Rout_to_Routsave.R "vignettes=TRUE"
+            
+     Check differences manually. If ok commit to github, otherwise revert changes (see comment in script).
 
 	 For details see
          http://r.789695.n4.nabble.com/Generate-Rout-save-files-for-vignettes-td4652752.html

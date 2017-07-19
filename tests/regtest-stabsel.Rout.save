@@ -1,6 +1,6 @@
 
-R version 3.3.2 (2016-10-31) -- "Sincere Pumpkin Patch"
-Copyright (C) 2016 The R Foundation for Statistical Computing
+R version 3.4.0 (2017-04-21) -- "You Stupid Darkness"
+Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-w64-mingw32/x64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -292,13 +292,13 @@ The following object is masked from 'package:MASS':
     geyser
 
 Loading required package: mboost
-This is mboost 2.7-0. See 'package?mboost' and 'news(package  = "mboost")'
+This is mboost 2.8-1. See 'package?mboost' and 'news(package  = "mboost")'
 for a complete list of changes.
 
 Loading required package: glmnet
 Loading required package: Matrix
 Loading required package: foreach
-Loaded glmnet 2.0-5
+Loaded glmnet 2.0-9
 
 Loading required package: hdi
 Loading required package: scalreg
@@ -339,4 +339,4 @@ Error in if (max(abs(w - floor(w))) < sqrt(.Machine$double.eps)) return(w) :
 > 
 > proc.time()
    user  system elapsed 
-   9.29    0.18    9.70 
+   9.34    0.26   10.01 

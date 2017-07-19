@@ -1,6 +1,6 @@
 
-R version 3.3.2 (2016-10-31) -- "Sincere Pumpkin Patch"
-Copyright (C) 2016 The R Foundation for Statistical Computing
+R version 3.4.0 (2017-04-21) -- "You Stupid Darkness"
+Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-w64-mingw32/x64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -201,7 +201,7 @@ The following object is masked from package:stats:
 +     stabsel(mod, q = 3, PFER = 0.2, sampling.type = "SS", eval = FALSE)
 + }
 Loading required package: mboost
-This is mboost 2.7-0. See 'package?mboost' and 'news(package  = "mboost")'
+This is mboost 2.8-1. See 'package?mboost' and 'news(package  = "mboost")'
 for a complete list of changes.
 
 Loading required package: TH.data
@@ -571,4 +571,4 @@ PFER corresponds to signif. level 0.0101 (without multiplicity adjustment)
 > 
 > proc.time()
    user  system elapsed 
-  15.16    0.28   15.47 
+  15.10    0.23   15.50 
