@@ -1,6 +1,6 @@
 
-R version 3.4.0 (2017-04-21) -- "You Stupid Darkness"
-Copyright (C) 2017 The R Foundation for Statistical Computing
+R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
+Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-w64-mingw32/x64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -20,12 +20,12 @@ Loading required package: parallel
 > attach(asNamespace("stabs"))
 The following objects are masked from package:stabs:
 
-    check_folds, getLamPath, glmnet.lasso, glmnet.lasso_maxCoef,
-    lars.lasso, lars.stepwise, parameters, plot.stabsel, print.stabsel,
-    print.stabsel_parameters, quic.graphical_model, run_stabsel,
-    selected, selected.stabsel, stabsel, stabsel.data.frame,
-    stabsel.matrix, stabsel.stabsel, stabsel_parameters,
-    stabsel_parameters.default, stabsel_parameters.stabsel, subsample
+    check_folds, glmnet.lasso, glmnet.lasso_maxCoef, lars.lasso,
+    lars.stepwise, parameters, plot.stabsel, print.stabsel,
+    print.stabsel_parameters, run_stabsel, selected, selected.stabsel,
+    stabsel, stabsel.data.frame, stabsel.matrix, stabsel.stabsel,
+    stabsel_parameters, stabsel_parameters.default,
+    stabsel_parameters.stabsel, subsample
 
 The following object is masked from package:stats:
 
@@ -201,9 +201,6 @@ The following object is masked from package:stats:
 +     stabsel(mod, q = 3, PFER = 0.2, sampling.type = "SS", eval = FALSE)
 + }
 Loading required package: mboost
-This is mboost 2.8-1. See 'package?mboost' and 'news(package  = "mboost")'
-for a complete list of changes.
-
 Loading required package: TH.data
 Loading required package: survival
 Loading required package: MASS
@@ -219,10 +216,10 @@ The following object is masked from 'package:MASS':
 No variables selected
 
 Selection probabilities:
-         age elbowbreadth  (Intercept)  kneebreadth      anthro4     anthro3c 
-        0.00         0.00         0.01         0.02         0.09         0.15 
-    anthro3b     anthro3a    waistcirc      hipcirc 
-        0.16         0.61         0.97         0.99 
+ (Intercept)          age elbowbreadth  kneebreadth     anthro3c     anthro3b 
+        0.00         0.00         0.00         0.02         0.12         0.13 
+     anthro4     anthro3a    waistcirc      hipcirc 
+        0.19         0.61         0.95         0.98 
 
 ---
 Cutoff: 1; q: 3; PFER:  0.9 
@@ -235,10 +232,10 @@ waistcirc   hipcirc
         3         4 
 
 Selection probabilities:
- (Intercept)          age elbowbreadth  kneebreadth      anthro4     anthro3b 
-        0.00         0.00         0.00         0.06         0.13         0.14 
-    anthro3c     anthro3a    waistcirc      hipcirc 
-        0.22         0.52         0.96         0.97 
+ (Intercept)          age elbowbreadth  kneebreadth     anthro3c     anthro3b 
+        0.00         0.00         0.00         0.05         0.12         0.13 
+     anthro4     anthro3a    waistcirc      hipcirc 
+        0.16         0.59         0.96         0.99 
 
 ---
 Cutoff: 0.96; q: 3; PFER (*):  0.176 
@@ -571,4 +568,4 @@ PFER corresponds to signif. level 0.0101 (without multiplicity adjustment)
 > 
 > proc.time()
    user  system elapsed 
-  15.10    0.23   15.50 
+  10.20    0.15   10.34 

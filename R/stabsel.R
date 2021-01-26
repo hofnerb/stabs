@@ -292,11 +292,10 @@ run_stabsel <- function(fitter, args.fitter,
     ## Depending on papply, this is done sequentially or in parallel
 
     ## if mclappy is used consider mc.preschedule
-    if (all.equal(papply, mclapply) == TRUE) {
+    if (all.equal(papply, mclapply, check.environment = FALSE) == TRUE) {
         res <- suppressWarnings(
                  papply(1:ncol(folds), function(...) try(fitter(...), silent = TRUE), folds = folds, q = q,
-                        args.fitfun = args.fitter, mc.preschedule =
-                        mc.preschedule, ...))
+                        args.fitfun = args.fitter, mc.preschedule = mc.preschedule, ...))
     } else {
         res <- papply(1:ncol(folds), function(...) try(fitter(...), silent = TRUE), folds = folds, q = q,
                       args.fitfun = args.fitter, ...)

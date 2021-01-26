@@ -1,6 +1,21 @@
 \name{NEWS}
 \title{News for Package 'stabs'}
 
+\section{Changes in stabs version 0.6-4 (2021-01-28)}{
+  \subsection{User-visible changes}{
+    \itemize{
+      \item Removed support for graphical models via package \CRANpkg{QUIC}
+        as QUIC is no longer maintained and was archived on CRAN.
+    }
+  }
+  \subsection{Bug-fixes}{
+    \itemize{
+      \item{Fixed CRAN checks regarding \code{all.equal} by adding 
+        \code{check.environment = FALSE}.}
+    }
+  }
+}
+
 \section{Changes in stabs version 0.6-3 (2017-07-19)}{
   \subsection{Miscellaneous}{
     \itemize{
@@ -126,7 +141,7 @@
   \subsection{Miscellaneous}{
     \itemize{
       \item Package development moved from R-forge
-      to \url{http://github.com/hofnerb/stabs}
+      to \url{https://github.com/hofnerb/stabs}
 
       \item Added \code{specifiedPFER} to \code{stabsel} and
       \code{stabsel_parameter} objects (needed for better outputs)

@@ -1,7 +1,7 @@
 Package: stabs
 Title: Stability Selection with Error Control
-Version: 0.6-3
-Date: 2017-07-19
+Version: 0.6-4
+Date: 2021-01-28
 Authors@R: c(person("Benjamin", "Hofner", role = c("aut", "cre"),
 	            email = "benjamin.hofner@pei.de"),
        	     person("Torsten", "Hothorn", role = c("aut")))
@@ -17,7 +17,7 @@ VignetteBuilder: knitr
 Depends: R (>= 2.14.0), methods, stats, parallel
 Imports: graphics, grDevices, utils
 Suggests: glmnet, lars, mboost (> 2.3-0), gamboostLSS (>= 1.2-0), 
-    TH.data, hdi, testthat, knitr, rmarkdown, igraph, huge
+    TH.data, hdi, testthat, knitr, rmarkdown
 LazyData: yes
 License: GPL-2
 URL: https://github.com/hofnerb/stabs

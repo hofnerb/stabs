@@ -1,4 +1,24 @@
-commit ef045534b7d474da2c8ec1fa92d39c8359f8f9f7
+commit fa9b5edfa012b710103214634e9685475fa642b2
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+
+    Release stabs 0.6-4
+
+commit fd382c7899b10e6cb0939202000150f98a6ecef2
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+
+    Removed all code dependent on QUIC as QUIC was archived on CRAN.
+
+commit 23b59b0b82cb8d833d8287478a891f31eed0276a
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+
+    fixed type and clarified default
+
+commit 84c889961b8ec5e5375c60b0881ba3bbbb5728d7
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+
+    added tests for (stratified) subsampling
+
+commit a30766a218d57ce92712772f1110f86f05f2c9df
 Author: Benjamin Hofner <benjamin.hofner@pei.de>
 
     Release stabs 0.6-3
