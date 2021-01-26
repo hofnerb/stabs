@@ -25,7 +25,7 @@
 
   Run
     install.packages(c("parallel", "TH.data", "hdi", "glmnet", "lars", "mboost", 
-                       "gamboostLSS", "QUIC", "testthat", "knitr", "rmarkdown", 
+                       "gamboostLSS", "testthat", "knitr", "rmarkdown", 
                        "igraph", "huge"))
 
   Quit R and run

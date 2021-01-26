@@ -16,7 +16,6 @@ r_github_packages:
 r_packages:
   - glmnet
   - lars
-  - QUIC
   - rmarkdown
   
 after_failure:

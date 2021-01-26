@@ -16,7 +16,7 @@ Description: Resampling procedures to assess the stability of selected variables
 VignetteBuilder: knitr
 Depends: R (>= 2.14.0), methods, stats, parallel
 Imports: graphics, grDevices, utils
-Suggests: glmnet, lars, mboost (> 2.3-0), gamboostLSS (>= 1.2-0), QUIC, 
+Suggests: glmnet, lars, mboost (> 2.3-0), gamboostLSS (>= 1.2-0), 
     TH.data, hdi, testthat, knitr, rmarkdown, igraph, huge
 LazyData: yes
 License: GPL-2

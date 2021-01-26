@@ -1,4 +1,4 @@
-## Regression test for stability selection with QUIC
+## Regression test for subsampling
 context("subsample regression tests")
 
 library("stabs")

@@ -61,7 +61,7 @@ glmnet.lasso_maxCoef(x, y, q, ...)
     columns represent the steps.}
 }
 \seealso{
-\code{\link{stabsel}} for stability selection itself, and \code{\link{quic.graphical_model}} for stability selection for graphical models.
+\code{\link{stabsel}} for stability selection itself.
 }
 \examples{
   if (require("TH.data")) {
