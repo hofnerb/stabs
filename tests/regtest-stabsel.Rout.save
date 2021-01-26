@@ -1,6 +1,6 @@
 
-R version 3.4.0 (2017-04-21) -- "You Stupid Darkness"
-Copyright (C) 2017 The R Foundation for Statistical Computing
+R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
+Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-w64-mingw32/x64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -292,13 +292,15 @@ The following object is masked from 'package:MASS':
     geyser
 
 Loading required package: mboost
-This is mboost 2.8-1. See 'package?mboost' and 'news(package  = "mboost")'
-for a complete list of changes.
-
 Loading required package: glmnet
 Loading required package: Matrix
-Loading required package: foreach
-Loaded glmnet 2.0-9
+Loaded glmnet 4.1
+
+Attaching package: 'glmnet'
+
+The following object is masked from 'package:mboost':
+
+    Cindex
 
 Loading required package: hdi
 Loading required package: scalreg
@@ -320,7 +322,7 @@ Original error message(s):
 Error in if (any(nosignal)) { : missing value where TRUE/FALSE needed
 Error in if (any(nosignal)) { : missing value where TRUE/FALSE needed
 
-4: In cvrisk.mboost(x, fun = fun, folds = folds, papply = papply, ...) :
+4: In cvrisk.mboost(object = list(baselearner = list(list(model.frame = function ()  :
   2 fold(s) encountered an error. Results are based on 98 folds only.
 Original error message(s):
 Error in if (max(abs(w - floor(w))) < sqrt(.Machine$double.eps)) return(w) : 
@@ -328,7 +330,9 @@ Error in if (max(abs(w - floor(w))) < sqrt(.Machine$double.eps)) return(w) :
 Error in if (max(abs(w - floor(w))) < sqrt(.Machine$double.eps)) return(w) : 
   missing value where TRUE/FALSE needed
 
-5: In cvrisk.mboost(x, fun = fun, folds = folds, papply = papply, ...) :
+5: In stabsel.mboost(mod, cutoff = 0.75, PFER = 1, sampling.type = "SS",  :
+  'mstop' too small in 2 of the 100 subsampling replicates to select 'q' base-learners; Increase 'mstop' bevor applying 'stabsel'
+6: In cvrisk.mboost(object = list(baselearner = list(list(model.frame = function ()  :
   2 fold(s) encountered an error. Results are based on 98 folds only.
 Original error message(s):
 Error in if (max(abs(w - floor(w))) < sqrt(.Machine$double.eps)) return(w) : 
@@ -336,7 +340,9 @@ Error in if (max(abs(w - floor(w))) < sqrt(.Machine$double.eps)) return(w) :
 Error in if (max(abs(w - floor(w))) < sqrt(.Machine$double.eps)) return(w) : 
   missing value where TRUE/FALSE needed
 
+7: In stabsel.mboost(mod, cutoff = 0.75, PFER = 1, sampling.type = "SS",  :
+  'mstop' too small in 2 of the 100 subsampling replicates to select 'q' base-learners; Increase 'mstop' bevor applying 'stabsel'
 > 
 > proc.time()
    user  system elapsed 
-   9.34    0.26   10.01 
+   6.00    0.07    6.10 

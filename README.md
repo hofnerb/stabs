@@ -169,9 +169,9 @@ which will currently give you
 ```r
 To cite package 'stabs' in publications use:
 
-  Benjamin Hofner and Torsten Hothorn (2017). stabs: Stability
+  Benjamin Hofner and Torsten Hothorn (2021). stabs: Stability
   Selection with Error Control, R package version R package version
-  0.6-3, https://CRAN.R-project.org/package=stabs.
+  0.6-4, https://CRAN.R-project.org/package=stabs.
 
   Benjamin Hofner, Luigi Boccuto and Markus Goeker (2015). Controlling
   false discoveries in high-dimensional situations: Boosting with
