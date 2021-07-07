@@ -78,7 +78,8 @@ print.stabsel_parameters <- function(x, heading = TRUE, ...) {
     invisible(x)
 }
 
-plot.stabsel <- function(x, main = deparse(x$call), type = c("maxsel", "paths"),
+plot.stabsel <- function(x, main = deparse(x$call),
+                         type = c("maxsel", "paths", "subsamples"),
                          xlab = NULL, ylab = NULL,
                          col = NULL, ymargin = 10, np = sum(x$max > 0),
                          labels = NULL, ...) {
@@ -90,6 +91,11 @@ plot.stabsel <- function(x, main = deparse(x$call), type = c("maxsel", "paths"),
     if (type == "paths" && is.null(x$phat)) {
         warning("Stability paths ", sQuote("x$phat"), " are missing, ",
                 "plot maximum selection frequency instead")
+        type <- "maxsel"
+    }
+    if (type == "subsamples" && is.null(x$selection.per.subsample)) {
+        warning("Subsample selections ", sQuote("x$selection.per.subsample"), " are missing, ",
+                "use keep.subsampling=T in stabsel call. Plotting maximum selection frequency instead")
         type <- "maxsel"
     }
     if (type == "paths") {
@@ -117,6 +123,17 @@ plot.stabsel <- function(x, main = deparse(x$call), type = c("maxsel", "paths"),
             labels <- rownames(x$phat)
         axis(4, at = x$phat[rowSums(x$phat) > 0, ncol(x$phat)],
              labels = labels[rowSums(x$phat) > 0], las = 1, ...)
+    } else if (type == "subsamples") {
+      if (!requireNamespace("pheatmap", quietly=TRUE)) {
+        stop("Package ", sQuote("pheatmap"), " needed but not available")
+      }
+      heat <- x$selection.per.subsample
+      mode(heat) <- 'numeric'
+      #exclude rows and cols with zero sd
+      heat <- heat[apply(heat, 1, sd) > .Machine$double.eps, ]
+      heat <- heat[, apply(heat, 2, sd) > .Machine$double.eps]
+      pheatmap::pheatmap(heat, color = c('white', 'lightblue'),
+                         treeheight_row = 0, show_rownames = FALSE)
     } else {
         ## if par(mar) not set by user ahead of plotting
         if (all(par()[["mar"]] == c(5, 4, 4, 2) + 0.1))
