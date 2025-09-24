@@ -4,11 +4,10 @@ citHeader("To cite package 'stabs' in publications use:")
 year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date)
 vers <- meta$Version
 
-citEntry(entry="Manual",
+bibentry(bibtype="Manual",
          key = paste0("Hofner:pkg_stabs:", year),
          title = "{stabs}: Stability Selection with Error Control",
-         author = personList(as.person("Benjamin Hofner"),
-                             as.person("Torsten Hothorn")),
+         author = c(as.person("Benjamin Hofner"), as.person("Torsten Hothorn")),
          year = year,
          note = paste("{R} package version", vers),
          url = "https://CRAN.R-project.org/package=stabs",
@@ -19,12 +18,12 @@ citEntry(entry="Manual",
                    ", https://CRAN.R-project.org/package=stabs", ".",
                    sep=""))
 
-citEntry(entry="article",
+bibentry(bibtype="article",
          key = "Hofner:StabSel:2015",
          title = "Controlling false discoveries in high-dimensional situations: Boosting with stability selection",
-         author = personList(as.person("Benjamin Hofner"),
-                             as.person("Luigi Boccuto"),
-                             as.person('Markus G\\"oker')),
+         author = c(as.person("Benjamin Hofner"),
+                    as.person("Luigi Boccuto"),
+                    as.person('Markus G\\"oker')),
          journal     = "{BMC Bioinformatics}",
          year        = "2015",
          volume      = "16",
@@ -35,16 +34,16 @@ citEntry(entry="article",
            "Boosting with stability selection.",
            "BMC Bioinformatics, 16:144.",
            "doi:10.1186/s12859-015-0575-3"))
-           
-citEntry(
-  entry= "Article",
+
+bibentry(
+  bibtype= "Article",
   title = "Gradient boosting for distributional regression - faster tuning and improved variable selection via noncyclical updates",
-  author   =  personList(as.person("Janek Thomas"),
-                         as.person("Andreas Mayr"),
-			             as.person("Bernd Bischl"),
-			             as.person("Matthias Schmid"),
-			             as.person("Adam Smith"),
-                         as.person("Benjamin Hofner")),
+  author   =  c(as.person("Janek Thomas"),
+                as.person("Andreas Mayr"),
+                as.person("Bernd Bischl"),
+                as.person("Matthias Schmid"),
+                as.person("Adam Smith"),
+                as.person("Benjamin Hofner")),
   year	   = "2017",
   journal  = "{Statistics and Computing}",
   note     = "Online First",
@@ -54,6 +53,6 @@ citEntry(
     paste("Thomas, J., Mayr, A., Bischl, B., Schmid, M., Smith, A., and Hofner, B. (2017).",
           "Gradient boosting for distributional regression - faster tuning and improved variable selection via noncyclical updates.",
           "Statistics and Computing. Online First. DOI 10.1007/s11222-017-9754-6")
-)           
+)
 
 citFooter('Use ', sQuote('toBibtex(citation("stabs"))'), ' to extract BibTeX references.')
