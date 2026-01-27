@@ -314,14 +314,29 @@ run_stabsel <- function(fitter, args.fitter,
 
     idx <- sapply(res, is.character)
     
-    ## if all folds produce an error stop here
+    ## if all folds produce an error stop here and provide clean error messages if possible
     if (all(idx)) {
       ## if the package is missing extract error message and repeat it
       if (grepl("Package (.*) needed but not available. Please install the package.", res[[1]])) {
-        txt <- gsub(".*(Package .* needed but not available. Please install the package.).*", "\\1",
+          txt <- gsub(".*(Package .* needed but not available. Please install the package.).*", "\\1",
+                      res[[1]])
+          stop(txt)
+      }
+      ## if penalty parameter is missing or not a fixed value
+      if (grepl("Please specify a fixed penalty parameter", res[[1]])) {
+          txt <- gsub(".*(Please specify a fixed penalty parameter .* can be selected).*", "\\1",
+                      res[[1]])
+          txt <- paste0(txt, ".\nThe penalty parameter can be specified via ", 
+                        sQuote("args.fitfun = list(lambda = .)"))
+          stop(txt)
+      }
+      ## if penalty parameter is specified but not permitted
+      if (grepl("It is not permitted to specify the penalty parameter", res[[1]])) {
+        txt <- gsub(".*(It is not permitted to specify the penalty parameter(.*)).*", "\\1",
                     res[[1]])
         stop(txt)
-      } 
+      }
+      
       ## else provide error messages as is  
       stop("The model could not be fitted on any fold.\n",
            "Please see original error messages for a solution:\n\n",

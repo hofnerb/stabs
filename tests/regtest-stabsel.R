@@ -262,4 +262,21 @@ if (require("TH.data")) {
         env[["check_folds"]] <- check_folds_orig
         env2[["check_folds"]] <- check_folds_orig
     }
+    
+    ## Test glmnet.lasso_maxCoed
+    if (require("glmnet")) {
+      ############################################################################
+      ### run stability selection with lasso_maxCoef (from glmnet)
+      try(stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
+                          cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso_maxCoef))
+
+      set.seed(1234)
+      stab_01 <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
+                         cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso_maxCoef,
+                         args.fitfun = list(lambda = 0.1))
+      set.seed(1234)
+      stab_03 <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
+                         cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso_maxCoef,
+                         args.fitfun = list(lambda = 0.3))
+    }
 }

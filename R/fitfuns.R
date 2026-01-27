@@ -18,7 +18,7 @@ glmnet.lasso <- function(x, y, q, type = c("conservative", "anticonservative"), 
     
     if ("lambda" %in% names(list(...)))
         stop("It is not permitted to specify the penalty parameter ", sQuote("lambda"),
-             " for lasso when used with stability selection.")
+             " for ", sQuote("glmnet.lasso"))
     
     ## fit model
     type <- match.arg(type)
@@ -118,8 +118,8 @@ glmnet.lasso_maxCoef <- function(x, y, q, ...) {
 
     args <- list(...)
     if (!("lambda" %in% names(args)) && length(args$lambda) != 1)
-        stop("Please specify a fixed (!) value of ", sQuote("lambda"),
-             ", which is small enough that at least ", sQuote("q"),
+        stop("Please specify a fixed penalty parameter ", sQuote("lambda"),
+             ",\nwhich is small enough that at least ", sQuote("q"),
              " variables can be selected.")
 
     ## fit model
