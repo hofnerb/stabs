@@ -43,9 +43,9 @@ glmnet.lasso_maxCoef(x, y, q, ...)
   package \pkg{glmnet}.
 
   \code{glmnet.lasso_maxCoef} fits a lasso model with a given penalty parameter 
-  and returns the \code{q} largest coefficients. If one wants to use
-  \code{glmnet.lasso_maxCoef}, one must specify the penalty parameter
-  \code{lambda} (via the \code{\dots} argument) or in
+  and returns the \code{q} variables with the largest (absolute) coefficients. 
+  If one wants to use \code{glmnet.lasso_maxCoef}, one must specify the penalty 
+  parameter   \code{lambda} (via the \code{\dots} argument) or in
   \code{\link{stabsel}} via \code{args.fitfun(lambda = )}. Note that usually, 
   the penalty parameter cannot be specified but is chosen such that \code{q}
   variables are selected. For an example on how to use 
@@ -89,6 +89,14 @@ glmnet.lasso_maxCoef(x, y, q, ...)
                              fitfun = glmnet.lasso, 
                              args.fitfun = list(type = "anticonservative"), 
                              cutoff = 0.75, PFER = 1)
+                             
+      ## Using glmnet.lasso_maxCoef with penalty parameter specified via args.fitfun:
+      stab.maxcoef <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
+                              cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso_maxCoef,
+                              args.fitfun = list(lambda = 0.3))
+      ## this selectes the q variables with the largest (abolute) effects rather
+      ## than the first q variables which are selected in the lasso model
+      ## hence leading to a very different selection
   }
 }
 \keyword{models}

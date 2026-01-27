@@ -126,7 +126,7 @@ glmnet.lasso_maxCoef <- function(x, y, q, ...) {
     fit <- glmnet::glmnet(x, y, ...)
 
     ## which coefficients are the q biggest
-    selected <- order(coef(fit)[-1])[1:q]
+    selected <- order(abs(coef(fit)[-1]), decreasing = TRUE)[1:q]
     ret <- logical(ncol(x))
     ret[selected] <- TRUE
     names(ret) <- colnames(x)

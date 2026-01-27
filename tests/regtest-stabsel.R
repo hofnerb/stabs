@@ -271,12 +271,46 @@ if (require("TH.data")) {
                           cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso_maxCoef))
 
       set.seed(1234)
-      stab_01 <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
+      (stab_01 <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
                          cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso_maxCoef,
-                         args.fitfun = list(lambda = 0.1))
+                         args.fitfun = list(lambda = 0.1)))
       set.seed(1234)
-      stab_03 <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
+      (stab_03 <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
                          cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso_maxCoef,
-                         args.fitfun = list(lambda = 0.3))
+                         args.fitfun = list(lambda = 0.3)))
+      
+      ## compare with "standard" lasso
+      set.seed(1234)
+      try(stab_lasso <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
+                                cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso,
+                                args.fitfun = list(lambda = 0.1)))
+      (stab_lasso <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
+                             cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso))
+      
+      ## Fit model with perturbed data to verify that absolute values are used
+      X <- as.matrix(bodyfat[, -2])
+      X[, "anthro3b"] <- -X[, "anthro3b"]
+      model <- glmnet(x = X, y = bodyfat[,2], lambda = 0.3)
+      coef(model) ## anthro3b has the largest (absolute) effect
+      
+      set.seed(1234)
+      (stab_03_perturbed <- stabsel(x = X, y = bodyfat[,2],
+                                    cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso_maxCoef,
+                                    args.fitfun = list(lambda = 0.3)))
+      
+      ## Fit model with perturbed data to verify that absolute values are used
+      X <- as.matrix(bodyfat[, -2])
+      X[, "anthro3a"] <- -X[, "anthro3a"]
+      model <- glmnet(x = X, y = bodyfat[,2], lambda = 0.3)
+      coef(model) ## anthro3b has the largest (absolute) effect
+      
+      set.seed(1234)
+      (stab_03_perturbed2 <- stabsel(x = X, y = bodyfat[,2],
+                                     cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso_maxCoef,
+                                     args.fitfun = list(lambda = 0.3)))
+      
+      stopifnot(all(stab_03$max == stab_03_perturbed$max))
+      stopifnot(all(stab_03_perturbed$max == stab_03_perturbed$max))
+      
     }
 }
