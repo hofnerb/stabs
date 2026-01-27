@@ -1,6 +1,28 @@
 \name{NEWS}
 \title{News for Package 'stabs'}
 
+\section{Changes in stabs version 0.7-0 (2026-01-27)}{
+  \subsection{User-visible changes}{
+    \itemize{
+      \item Allow \code{cutoff} to be less than 0.5 in case of 
+        \code{assumption = "r-concave"}
+        (closes \href{https://github.com/hofnerb/stabs/issues/35}{#35}).
+      \item Updated error messages and error handling if the required package 
+        for \code{fitfun} is missing (closes \href{https://github.com/hofnerb/stabs/issues/29}{#29}).
+    }
+  }
+  \subsection{Bug-fixes}{
+    \itemize{
+      \item{\code{glmnet.lasso_maxCoef} now correctly extracts the vatriables 
+        with largest (absolute) coefficients (closes \href{https://github.com/hofnerb/stabs/issues/32}{#32}).}
+      \item{Fixed issues from CRAN checks: changed citation style, 
+      fixed call to \code{\\code} in manuals and removed \code{LazyData} from \file{DESCRIPTION}. 
+      Additionally added a link to the github issue tracker under \code{BugReports}
+      (contributed by Roberto Villegas-Diaz; see pull request \href{https://github.com/hofnerb/stabs/pull/34}{#34}).}
+    }
+  }
+}
+
 \section{Changes in stabs version 0.6-4 (2021-01-28)}{
   \subsection{User-visible changes}{
     \itemize{

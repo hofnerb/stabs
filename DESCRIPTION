@@ -1,10 +1,12 @@
 Package: stabs
 Title: Stability Selection with Error Control
-Version: 0.6-4
-Date: 2021-01-28
+Version: 0.7-0
+Date: 2026-01-27
 Authors@R: c(person("Benjamin", "Hofner", role = c("aut", "cre"),
-	            email = "benjamin.hofner@pei.de"),
-       	     person("Torsten", "Hothorn", role = c("aut")))
+	                  email = "benjamin.hofner@pei.de",
+	                  comment = c(ORCID = "0000-0003-2810-3186")),
+       	     person("Torsten", "Hothorn", role = c("aut"),
+       	            comment = c(ORCID = "0000-0001-8301-0471")))
 Description: Resampling procedures to assess the stability of selected variables
     with additional finite sample error control for high-dimensional variable
     selection procedures such as Lasso or boosting. Both, standard stability

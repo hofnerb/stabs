@@ -1,7 +1,7 @@
 
-R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
-Copyright (C) 2020 The R Foundation for Statistical Computing
-Platform: x86_64-w64-mingw32/x64 (64-bit)
+R version 4.4.2 (2024-10-31 ucrt) -- "Pile of Leaves"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -22,8 +22,10 @@ Loading required package: parallel
 +     test_check("stabs")
 Loading required package: testthat
 [ FAIL 0 | WARN 0 | SKIP 0 | PASS 4 ]
+Warning message:
+package 'testthat' was built under R version 4.4.3 
 > 
 > 
 > proc.time()
    user  system elapsed 
-   0.42    0.04    0.45 
+   0.57    0.21    0.78 

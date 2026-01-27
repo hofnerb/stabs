@@ -101,7 +101,7 @@
       data("bodyfat", package = "TH.data")
   } else {
       ## simulate some data if TH.data not available. 
-      ## Note that results are non-sense with this data.
+      ## Note that results are nonsense with this data.
       bodyfat <- matrix(rnorm(720), nrow = 72, ncol = 10)
   }
   

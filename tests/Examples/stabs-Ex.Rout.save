@@ -1,13 +1,11 @@
 
-R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
-Copyright (C) 2020 The R Foundation for Statistical Computing
-Platform: x86_64-w64-mingw32/x64 (64-bit)
+R version 4.4.2 (2024-10-31 ucrt) -- "Pile of Leaves"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -58,10 +56,11 @@ Loading required package: parallel
 +       data("bodyfat", package = "TH.data")
 +   } else {
 +       ## simulate some data if TH.data not available. 
-+       ## Note that results are non-sense with this data.
++       ## Note that results are nonsense with this data.
 +       bodyfat <- matrix(rnorm(720), nrow = 72, ncol = 10)
 +   }
 Loading required package: TH.data
+Warning: package 'TH.data' was built under R version 4.4.3
 Loading required package: survival
 Loading required package: MASS
 
@@ -78,7 +77,7 @@ The following object is masked from 'package:MASS':
 +       lars.stepwise(bodyfat[, -2], bodyfat[,2], q = 3)$selected
 +   }
 Loading required package: lars
-Loaded lars 1.2
+Loaded lars 1.3
 
 Note: 'x' is coerced to a model matrix without intercept
 Note: 'x' is coerced to a model matrix without intercept
@@ -97,10 +96,19 @@ Note: 'x' is coerced to a model matrix without intercept
 +                              fitfun = glmnet.lasso, 
 +                              args.fitfun = list(type = "anticonservative"), 
 +                              cutoff = 0.75, PFER = 1)
++                              
++       ## Using glmnet.lasso_maxCoef with penalty parameter specified via args.fitfun:
++       stab.maxcoef <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
++                               cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso_maxCoef,
++                               args.fitfun = list(lambda = 0.3))
++       ## this selectes the q variables with the largest (abolute) effects rather
++       ## than the first q variables which are selected in the lasso model
++       ## hence leading to a very different selection
 +   }
 Loading required package: glmnet
+Warning: package 'glmnet' was built under R version 4.4.3
 Loading required package: Matrix
-Loaded glmnet 4.1
+Loaded glmnet 4.1-10
 Note: 'x' is coerced to a model matrix without intercept
 Note: 'x' is coerced to a model matrix without intercept
 > 
@@ -131,10 +139,11 @@ detaching 'package:glmnet', 'package:Matrix', 'package:lars',
 +       data("bodyfat", package = "TH.data")
 +   } else {
 +       ## simulate some data if TH.data not available. 
-+       ## Note that results are non-sense with this data.
++       ## Note that results are nonsense with this data.
 +       bodyfat <- matrix(rnorm(720), nrow = 72, ncol = 10)
 +   }
 Loading required package: TH.data
+Warning: package 'TH.data' was built under R version 4.4.3
 Loading required package: survival
 Loading required package: MASS
 
@@ -161,7 +170,7 @@ The following object is masked from 'package:MASS':
 +       plot(stab.lasso, type = "paths")
 +   }
 Loading required package: lars
-Loaded lars 1.2
+Loaded lars 1.3
 
 > 
 > 
@@ -193,10 +202,11 @@ detaching 'package:lars', 'package:TH.data', 'package:MASS',
 +       data("bodyfat", package = "TH.data")
 +   } else {
 +       ## simulate some data if TH.data not available. 
-+       ## Note that results are non-sense with this data.
++       ## Note that results are nonsense with this data.
 +       bodyfat <- matrix(rnorm(720), nrow = 72, ncol = 10)
 +   }
 Loading required package: TH.data
+Warning: package 'TH.data' was built under R version 4.4.3
 Loading required package: survival
 Loading required package: MASS
 
@@ -227,7 +237,7 @@ The following object is masked from 'package:MASS':
 +       ##     dimensional example!
 +   }
 Loading required package: lars
-Loaded lars 1.2
+Loaded lars 1.3
 
 > 
 >   ## set seed (again to make results comparable)
@@ -242,8 +252,9 @@ Loaded lars 1.2
 +           plot(stab.lasso, main = "Lasso (lars)")    
 +   }
 Loading required package: glmnet
+Warning: package 'glmnet' was built under R version 4.4.3
 Loading required package: Matrix
-Loaded glmnet 4.1
+Loaded glmnet 4.1-10
 >   
 >   
 >   ## Select variables with maximum coefficients based on lasso estimate
@@ -297,6 +308,7 @@ Loaded glmnet 4.1
 + ## End(No test)
 +   }
 Loading required package: mboost
+Warning: package 'mboost' was built under R version 4.4.3
 
 Attaching package: 'mboost'
 
@@ -332,11 +344,12 @@ detaching 'package:mboost', 'package:glmnet', 'package:Matrix',
 +       ## make data set available
 +       data("bodyfat", package = "TH.data")
 +   } else {
-+       ## simulate some data if TH.data not available. 
-+       ## Note that results are non-sense with this data.
++       ## simulate some data if TH.data not available.
++       ## Note that results are nonsense with this data.
 +       bodyfat <- matrix(rnorm(720), nrow = 72, ncol = 10)
 +   }
 Loading required package: TH.data
+Warning: package 'TH.data' was built under R version 4.4.3
 Loading required package: survival
 Loading required package: MASS
 
@@ -346,7 +359,7 @@ The following object is masked from 'package:MASS':
 
     geyser
 
->   
+> 
 >   ## set seed
 >   set.seed(1234)
 > 
@@ -369,7 +382,7 @@ The following object is masked from 'package:MASS':
 +       ## variables
 +   }
 Loading required package: lars
-Loaded lars 1.2
+Loaded lars 1.3
 
 > 
 > 
@@ -464,7 +477,7 @@ attr(,"type")
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.19 0.16 3.39 NA NA 
+Time elapsed:  4.11 0.2 4.34 NA NA 
 > grDevices::dev.off()
 null device 
           1 

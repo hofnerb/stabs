@@ -1,7 +1,7 @@
 
-R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
-Copyright (C) 2020 The R Foundation for Statistical Computing
-Platform: x86_64-w64-mingw32/x64 (64-bit)
+R version 4.4.2 (2024-10-31 ucrt) -- "Pile of Leaves"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -280,6 +280,57 @@ Loading required package: parallel
 +         env[["check_folds"]] <- check_folds_orig
 +         env2[["check_folds"]] <- check_folds_orig
 +     }
++     
++     ## Test glmnet.lasso_maxCoed
++     if (require("glmnet")) {
++       ############################################################################
++       ### run stability selection with lasso_maxCoef (from glmnet)
++       try(stab <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
++                           cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso_maxCoef))
++ 
++       set.seed(1234)
++       (stab_01 <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
++                          cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso_maxCoef,
++                          args.fitfun = list(lambda = 0.1)))
++       set.seed(1234)
++       (stab_03 <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
++                          cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso_maxCoef,
++                          args.fitfun = list(lambda = 0.3)))
++       
++       ## compare with "standard" lasso
++       set.seed(1234)
++       try(stab_lasso <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
++                                 cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso,
++                                 args.fitfun = list(lambda = 0.1)))
++       (stab_lasso <- stabsel(x = as.matrix(bodyfat[, -2]), y = bodyfat[,2],
++                              cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso))
++       
++       ## Fit model with perturbed data to verify that absolute values are used
++       X <- as.matrix(bodyfat[, -2])
++       X[, "anthro3b"] <- -X[, "anthro3b"]
++       model <- glmnet(x = X, y = bodyfat[,2], lambda = 0.3)
++       coef(model) ## anthro3b has the largest (absolute) effect
++       
++       set.seed(1234)
++       (stab_03_perturbed <- stabsel(x = X, y = bodyfat[,2],
++                                     cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso_maxCoef,
++                                     args.fitfun = list(lambda = 0.3)))
++       
++       ## Fit model with perturbed data to verify that absolute values are used
++       X <- as.matrix(bodyfat[, -2])
++       X[, "anthro3a"] <- -X[, "anthro3a"]
++       model <- glmnet(x = X, y = bodyfat[,2], lambda = 0.3)
++       coef(model) ## anthro3b has the largest (absolute) effect
++       
++       set.seed(1234)
++       (stab_03_perturbed2 <- stabsel(x = X, y = bodyfat[,2],
++                                      cutoff = 0.75, PFER = 1, fitfun = glmnet.lasso_maxCoef,
++                                      args.fitfun = list(lambda = 0.3)))
++       
++       stopifnot(all(stab_03$max == stab_03_perturbed$max))
++       stopifnot(all(stab_03_perturbed$max == stab_03_perturbed$max))
++       
++     }
 + }
 Loading required package: TH.data
 Loading required package: survival
@@ -294,7 +345,7 @@ The following object is masked from 'package:MASS':
 Loading required package: mboost
 Loading required package: glmnet
 Loading required package: Matrix
-Loaded glmnet 4.1
+Loaded glmnet 4.1-10
 
 Attaching package: 'glmnet'
 
@@ -305,44 +356,17 @@ The following object is masked from 'package:mboost':
 Loading required package: hdi
 Loading required package: scalreg
 Loading required package: lars
-Loaded lars 1.2
+Loaded lars 1.3
 
-Warning messages:
-1: In plot.stabsel(stab, type = "paths") :
-  Stability paths 'x$phat' are missing, plot maximum selection frequency instead
-2: In run_stabsel(fitter = fit_model, args.fitter = args.fitfun, n = n,  :
-  2 fold(s) encountered an error. Results are based on 98 folds only.
-Original error message(s):
-Error in if (any(nosignal)) { : missing value where TRUE/FALSE needed
-Error in if (any(nosignal)) { : missing value where TRUE/FALSE needed
+Error in run_stabsel(fitter = fit_model, args.fitter = args.fitfun, n = n,  : 
+  Please specify a fixed penalty parameter 'lambda',
+which is small enough that at least 'q' variables can be selected.
+The penalty parameter can be specified via 'args.fitfun = list(lambda = .)'
+In addition: There were 11 warnings (use warnings() to see them)
+Error in run_stabsel(fitter = fit_model, args.fitter = args.fitfun, n = n,  : 
+  It is not permitted to specify the penalty parameter 'lambda' for 'glmnet.lasso'
 
-3: In run_stabsel(fitter = fit_model, args.fitter = args.fitfun, n = n,  :
-  2 fold(s) encountered an error. Results are based on 98 folds only.
-Original error message(s):
-Error in if (any(nosignal)) { : missing value where TRUE/FALSE needed
-Error in if (any(nosignal)) { : missing value where TRUE/FALSE needed
-
-4: In cvrisk.mboost(object = list(baselearner = list(list(model.frame = function ()  :
-  2 fold(s) encountered an error. Results are based on 98 folds only.
-Original error message(s):
-Error in if (max(abs(w - floor(w))) < sqrt(.Machine$double.eps)) return(w) : 
-  missing value where TRUE/FALSE needed
-Error in if (max(abs(w - floor(w))) < sqrt(.Machine$double.eps)) return(w) : 
-  missing value where TRUE/FALSE needed
-
-5: In stabsel.mboost(mod, cutoff = 0.75, PFER = 1, sampling.type = "SS",  :
-  'mstop' too small in 2 of the 100 subsampling replicates to select 'q' base-learners; Increase 'mstop' bevor applying 'stabsel'
-6: In cvrisk.mboost(object = list(baselearner = list(list(model.frame = function ()  :
-  2 fold(s) encountered an error. Results are based on 98 folds only.
-Original error message(s):
-Error in if (max(abs(w - floor(w))) < sqrt(.Machine$double.eps)) return(w) : 
-  missing value where TRUE/FALSE needed
-Error in if (max(abs(w - floor(w))) < sqrt(.Machine$double.eps)) return(w) : 
-  missing value where TRUE/FALSE needed
-
-7: In stabsel.mboost(mod, cutoff = 0.75, PFER = 1, sampling.type = "SS",  :
-  'mstop' too small in 2 of the 100 subsampling replicates to select 'q' base-learners; Increase 'mstop' bevor applying 'stabsel'
 > 
 > proc.time()
    user  system elapsed 
-   6.00    0.07    6.10 
+   8.43    0.48    8.86 

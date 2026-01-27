@@ -1,4 +1,67 @@
-commit fa9b5edfa012b710103214634e9685475fa642b2
+commit c7bd4dc11b1b6b432b4cf03779f3a2d49457f133
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+
+    Release 0.7-0
+
+commit 17454bc1f486b0fe81e84a13caf86314ccd5bd05
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+
+    glmnet.lasso_maxCoef now correctly extracts the vatriables with largest (absolute) coefficients
+    (closes #32)
+
+commit 390e3b6adcc4ffaf7e9283c9dd2f36f17f033e35
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+
+    Improved error messages for glmnet.lasso and glmnet.lasso_maxCoef
+
+commit 1e6f7743af031650126e2f136f794fee372093ba
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+
+    Updated error messages and error handling if required package for fit.fun is missing (closes #29)
+
+commit b698d9b66975858d333e36bd43cb0c25e2e255d5
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+
+    Allow cutoffs below 0.5 in case of r-concavity (closes #35)
+
+commit a88458218a4d6a35d5f515a4b93ba0ddd38d82e0
+Merge: 51e0afc df61ff7
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+
+    Merge pull request #34 from villegar/master
+
+commit df61ff7b7c4c7d1b176b52e6072385ef4d79ab94
+Author: Roberto Villegas-Diaz <villegar@users.noreply.github.com>
+
+    Update citation to use bibentry instead of citEntry and c() instead of personList()
+
+commit 19f42d1539dd23abbd23fce913c2bbd5738196c9
+Author: Roberto Villegas-Diaz <villegar@users.noreply.github.com>
+
+    Remove unused LazyData entry and add BugReports to point to the GitHub repo
+
+commit 58c52a66ff7290291a918f532255a3e8e2ec8fba
+Author: Roberto Villegas-Diaz <villegar@users.noreply.github.com>
+
+    Fix calls to macro code with missing forward slash
+
+commit 5ef55b4e8489c7c514fbcb3afcf6372e5c91539c
+Author: Roberto Villegas-Diaz <villegar@users.noreply.github.com>
+
+    Remove trailing period from title
+
+commit 51e0afc2ecde0dc41c4464b9c670bb6e7282f825
+Merge: 07a7a5d 5a38935
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+
+    Merge branch 'master' of https://github.com/hofnerb/stabs
+
+commit 07a7a5df3c0788bae07993bf7fb3f3c1571ec9e1
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+
+    Release stabs 0.6-4
+
+commit 5a389354b0436725374eafd2a0f43e32fc3d9a7c
 Author: Benjamin Hofner <benjamin.hofner@pei.de>
 
     Release stabs 0.6-4

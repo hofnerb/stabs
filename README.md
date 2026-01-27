@@ -169,23 +169,22 @@ which will currently give you
 ```r
 To cite package 'stabs' in publications use:
 
-  Benjamin Hofner and Torsten Hothorn (2021). stabs: Stability
-  Selection with Error Control, R package version R package version
-  0.6-4, https://CRAN.R-project.org/package=stabs.
+  Benjamin Hofner and Torsten Hothorn (2026). stabs: Stability Selection with Error Control, R package version 0.7-0,
+  https://CRAN.R-project.org/package=stabs.
 
-  Benjamin Hofner, Luigi Boccuto and Markus Goeker (2015). Controlling
-  false discoveries in high-dimensional situations: Boosting with
-  stability selection. BMC Bioinformatics, 16:144.
-  doi:10.1186/s12859-015-0575-3
-  
+  Benjamin Hofner, Luigi Boccuto and Markus Goeker (2015). Controlling false discoveries in high-dimensional situations:
+  Boosting with stability selection. BMC Bioinformatics, 16:144. doi:10.1186/s12859-015-0575-3
+
 To cite the stability selection for 'gamboostLSS' models use:
 
-  Thomas, J., Mayr, A., Bischl, B., Schmid, M., Smith, A., 
-  and Hofner, B. (2017). Gradient boosting for distributional regression -
-  faster tuning and improved variable selection via noncyclical updates. 
-  Statistics and Computing. Online First. DOI 10.1007/s11222-017-9754-6  
+  Thomas, J., Mayr, A., Bischl, B., Schmid, M., Smith, A., and Hofner, B. (2017). Gradient boosting for distributional
+  regression - faster tuning and improved variable selection via noncyclical updates. Statistics and Computing. Online
+  First. DOI 10.1007/s11222-017-9754-6
 
 Use ‘toBibtex(citation("stabs"))’ to extract BibTeX references.
+
+To see these entries in BibTeX format, use 'print(<citation>, bibtex=TRUE)', 'toBibtex(.)', or set
+'options(citation.bibtex.max=999)'.
 ```
 
 To obtain BibTeX references use

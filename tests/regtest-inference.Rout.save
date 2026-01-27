@@ -1,7 +1,7 @@
 
-R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
-Copyright (C) 2020 The R Foundation for Statistical Computing
-Platform: x86_64-w64-mingw32/x64 (64-bit)
+R version 4.4.2 (2024-10-31 ucrt) -- "Pile of Leaves"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -248,8 +248,10 @@ Cutoff: 0.96; q: 3; PFER (*):  0.176
    (*) or expected number of low selection probability variables
 PFER (specified upper bound):  0.2 
 PFER corresponds to signif. level 0.0176 (without multiplicity adjustment)
-Warning message:
-In stabsel_parameters.default(p = p, cutoff = cutoff, q = q, PFER = PFER,  :
+Warning messages:
+1: package 'mboost' was built under R version 4.4.3 
+2: package 'TH.data' was built under R version 4.4.3 
+3: In stabsel_parameters.default(p = p, cutoff = cutoff, q = q, PFER = PFER,  :
   Upper bound for PFER > 0.2 for the given value of 'q' (true upper bound = 0.9)
 > 
 > ## check stabsel_parameters and (theoretical) error control
@@ -509,18 +511,18 @@ PFER corresponds to signif. level 0.0114 (without multiplicity adjustment)
 +                            sampling.type = "SS", assumption = "r-concave"))
 Stability selection with r-concavity assumption
 
-Cutoff: 0.5; q: 10; PFER (*):  2.48 
+Cutoff: 0.37; q: 10; PFER (*):  4.99 
    (*) or expected number of low selection probability variables
 PFER (specified upper bound):  5 
-PFER corresponds to signif. level 0.0248 (without multiplicity adjustment)
+PFER corresponds to signif. level 0.0499 (without multiplicity adjustment)
 > stabsel_parameters(p = p, cutoff = res$cutoff, q = q, B = B,
 +                    sampling.type = "SS", assumption = "r-concave")
 Stability selection with r-concavity assumption
 
-Cutoff: 0.5; q: 10; PFER (*):  2.48 
+Cutoff: 0.37; q: 10; PFER (*):  4.99 
    (*) or expected number of low selection probability variables
-PFER (specified upper bound):  2.484542 
-PFER corresponds to signif. level 0.0248 (without multiplicity adjustment)
+PFER (specified upper bound):  4.988848 
+PFER corresponds to signif. level 0.0499 (without multiplicity adjustment)
 > # low PFER
 > PFER <- 0.001
 > (res <- stabsel_parameters(p = p, q = q, PFER = PFER, B = B,
@@ -566,6 +568,21 @@ Cutoff: 0.61; q: 10; PFER (*):  1.01
 PFER (specified upper bound):  1.005863 
 PFER corresponds to signif. level 0.0101 (without multiplicity adjustment)
 > 
+> ## check that threshold is not lower than q/p 
+> stabsel_parameters(p = p, cutoff = 0.2, q = q, B = B,
++                    sampling.type = "SS", assumption = "r-concave")
+Stability selection with r-concavity assumption
+
+Cutoff: 0.2; q: 10; PFER (*):  100 
+   (*) or expected number of low selection probability variables
+PFER (specified upper bound):  100 
+PFER corresponds to signif. level 1 (without multiplicity adjustment)
+> ## expect error
+> try(stabsel_parameters(p = p, cutoff = 0.1, q = q, B = B,
++                        sampling.type = "SS", assumption = "r-concave"))
+Error in stabsel_parameters.default(p = p, cutoff = 0.1, q = q, B = B,  : 
+  'cutoff' must be larger than q/p
+> 
 > proc.time()
    user  system elapsed 
-  10.20    0.15   10.34 
+  21.56    0.45   22.01 
