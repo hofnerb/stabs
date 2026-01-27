@@ -1,7 +1,7 @@
 \name{check_folds}
 \alias{check_folds}
 \title{
-  Check if folds result from subsampling with p = 0.5.
+  Check if folds result from subsampling with p = 0.5
 }
 \description{
   (Internal) function that checks if folds result from subsampling with

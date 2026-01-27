@@ -18,6 +18,6 @@ Depends: R (>= 2.14.0), methods, stats, parallel
 Imports: graphics, grDevices, utils
 Suggests: glmnet, lars, mboost (> 2.3-0), gamboostLSS (>= 1.2-0), 
     TH.data, hdi, testthat, knitr, rmarkdown
-LazyData: yes
 License: GPL-2
 URL: https://github.com/hofnerb/stabs
+BugReports: https://github.com/hofnerb/stabs/issues

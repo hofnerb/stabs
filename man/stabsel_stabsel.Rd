@@ -22,7 +22,7 @@
     distributions of the selection probabilities and simultaneous
     selection probabilities. Only applicable for
     \code{sampling.type = "SS"}. For \code{sampling.type = "MB"} we
-    always use code{"none"}.}
+    always use \code{"none"}.}
   \item{\dots}{ additional arguments that are currently ignored. }
 }
 \details{
@@ -47,11 +47,11 @@
       ## make data set available
       data("bodyfat", package = "TH.data")
   } else {
-      ## simulate some data if TH.data not available. 
+      ## simulate some data if TH.data not available.
       ## Note that results are non-sense with this data.
       bodyfat <- matrix(rnorm(720), nrow = 72, ncol = 10)
   }
-  
+
   ## set seed
   set.seed(1234)
 
