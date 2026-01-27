@@ -188,8 +188,14 @@ stabsel_parameters.default <- function(p, cutoff, q, PFER,
     if ((!missing(PFER) || !missing(FWER)) && PFER < 0)
         stop(sQuote("PFER"), " must be greater 0")
 
-    if (!missing(cutoff) && (cutoff < 0.5 | cutoff > 1))
+    if (!missing(cutoff) && assumption != "r-concave" && (cutoff < 0.5 | cutoff > 1))
         stop(sQuote("cutoff"), " must be between 0.5 and 1")
+    
+    ## in case of r-concavity the threshold might be less than 0.5
+    ## as q might not be specified it first needs to be computed and threshold should be rechecked then
+    if (!missing(cutoff) && assumption == "r-concave" && (cutoff < 0 | cutoff > 1))
+      stop(sQuote("cutoff"), " must be between 0 and 1")
+    
 
     if (!missing(q)) {
         if (p < q)
@@ -243,6 +249,11 @@ stabsel_parameters.default <- function(p, cutoff, q, PFER,
                     " for the given value of ", sQuote("cutoff"),
                     " (true upper bound = ", upperbound, ")")
     }
+    
+    ## in case of r-concavity the threshold might be less than 0.5 but larger than q/p
+    if (!missing(cutoff) && assumption == "r-concave" && cutoff <= q/p)
+      stop(sQuote("cutoff"), " must be larger than q/p")
+    
 
     if (missing(PFER)) {
         if (assumption == "none") {

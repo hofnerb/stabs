@@ -22,7 +22,7 @@ run_stabsel(fitter, args.fitter, n, p, cutoff, q, PFER, folds, B, assumption,
   \item{n}{ the number of observations; needed for internal checks.}
   \item{p}{ number of possible predictors (including intercept if
     applicable).}
-  \item{cutoff}{cutoff between 0.5 and 1. }
+  \item{cutoff}{cutoff between 0.5 and 1 or q/p and 1 in case of r-concavity.}
   \item{q}{number of (unique) selected variables (or groups of variables
     depending on the model) that are selected on each subsample.}
   \item{PFER}{ upper bound for the per-family error rate.}

@@ -221,3 +221,10 @@ stabsel_parameters(p = p, cutoff = res$cutoff, q = q, B = B,
                    sampling.type = "SS", assumption = "r-concave")
 stabsel_parameters(p = p, cutoff = res$cutoff - 0.01, q = q, B = B,
                    sampling.type = "SS", assumption = "r-concave")
+
+## check that threshold is not lower than q/p 
+stabsel_parameters(p = p, cutoff = 0.2, q = q, B = B,
+                   sampling.type = "SS", assumption = "r-concave")
+## expect error
+try(stabsel_parameters(p = p, cutoff = 0.1, q = q, B = B,
+                       sampling.type = "SS", assumption = "r-concave"))

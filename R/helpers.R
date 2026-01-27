@@ -98,7 +98,11 @@ optimal_cutoff <- function(p, q, PFER, B, assumption = "unimodal") {
     } else {
         ## cutoff values can only be multiples of 1/(2B)
         cutoff <- (2*B):1/(2*B)
-        cutoff <- cutoff[cutoff >= 0.5]
+        if (assumption == "r-concave") {
+          cutoff <- cutoff[cutoff > q/p]
+        } else {
+          cutoff <- cutoff[cutoff >= 0.5]
+        }
         for (i in 1:length(cutoff)) {
             if (minD(q, p, cutoff[i], B) * p > PFER) {
                 if (i == 1)

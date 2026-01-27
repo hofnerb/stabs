@@ -14,7 +14,8 @@
 \arguments{
   \item{x}{an object that results from a call to \code{\link{stabsel}}.}
   \item{cutoff}{cutoff between 0.5 and 1. Preferably a value between 0.6
-    and 0.9 should be used.}
+    and 0.9 should be used. If \code{assumption = "r-concave"} the cutoff
+    can be below 0.5 but needs to be larger than \code{q/p}.}
   \item{PFER}{upper bound for the per-family error rate. This
     specifies the amount of falsely selected base-learners, which is
     tolerated. See details.}

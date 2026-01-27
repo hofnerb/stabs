@@ -24,7 +24,8 @@ stabsel_parameters(p, ...)
   \item{p}{ number of possible predictors (including intercept if
     applicable).}
   \item{cutoff}{cutoff between 0.5 and 1. Preferably a value between 0.6
-    and 0.9 should be used.}
+    and 0.9 should be used. If \code{assumption = "r-concave"} the cutoff
+    can be below 0.5 but needs to be larger than \code{q/p}.}
   \item{q}{number of (unique) selected variables (or groups of variables
     depending on the model) that are selected on each subsample.}
   \item{PFER}{upper bound for the per-family error rate. This
