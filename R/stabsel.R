@@ -312,8 +312,24 @@ run_stabsel <- function(fitter, args.fitter,
                       args.fitfun = args.fitter, ...)
     }
 
-    ## if any errors occured remove results and issue a warning
-    if (any(idx <- sapply(res, is.character))) {
+    idx <- sapply(res, is.character)
+    
+    ## if all folds produce an error stop here
+    if (all(idx)) {
+      ## if the package is missing extract error message and repeat it
+      if (grepl("Package (.*) needed but not available. Please install the package.", res[[1]])) {
+        txt <- gsub(".*(Package .* needed but not available. Please install the package.).*", "\\1",
+                    res[[1]])
+        stop(txt)
+      } 
+      ## else provide error messages as is  
+      stop("The model could not be fitted on any fold.\n",
+           "Please see original error messages for a solution:\n\n",
+           sapply(res[idx], function(x) x))
+    }
+    
+    ## if any errors occurred remove results and issue a warning
+    if (any(idx)) {
         warning(sum(idx), " fold(s) encountered an error. ",
                 "Results are based on ", ncol(folds) - sum(idx),
                 " folds only.\n",

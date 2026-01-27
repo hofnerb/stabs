@@ -8,7 +8,7 @@
 
 glmnet.lasso <- function(x, y, q, type = c("conservative", "anticonservative"), ...) {
     if (!requireNamespace("glmnet", quietly=TRUE))
-        stop("Package ", sQuote("glmnet"), " needed but not available")
+        stop("Package ", sQuote("glmnet"), " needed but not available. Please install the package.")
     
     if (is.data.frame(x)) {
         message("Note: ", sQuote("x"),
@@ -42,7 +42,7 @@ glmnet.lasso <- function(x, y, q, type = c("conservative", "anticonservative"), 
 
 lars.lasso <- function(x, y, q, ...) {
     if (!requireNamespace("lars", quietly=TRUE))
-        stop("Package ", sQuote("lars"), " needed but not available")
+        stop("Package ", sQuote("lars"), " needed but not available. Please install the package.")
 
     if (is.data.frame(x)) {
         message("Note: ", sQuote("x"),
@@ -75,7 +75,7 @@ lars.lasso <- function(x, y, q, ...) {
 
 lars.stepwise <- function(x, y, q, ...) {
     if (!requireNamespace("lars", quietly=TRUE))
-        stop("Package ", sQuote("lars"), " needed but not available")
+        stop("Package ", sQuote("lars"), " needed but not available. Please install the package.")
 
     if (is.data.frame(x)) {
         message("Note: ", sQuote("x"),
@@ -108,7 +108,7 @@ lars.stepwise <- function(x, y, q, ...) {
 
 glmnet.lasso_maxCoef <- function(x, y, q, ...) {
     if (!requireNamespace("glmnet", quietly=TRUE))
-        stop("Package ", sQuote("glmnet"), " needed but not available")
+        stop("Package ", sQuote("glmnet"), " needed but not available. Please install the package.")
 
     if (is.data.frame(x)) {
         message("Note: ", sQuote("x"),
