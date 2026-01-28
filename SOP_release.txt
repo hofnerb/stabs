@@ -62,7 +62,7 @@
          http://r.789695.n4.nabble.com/Generate-Rout-save-files-for-vignettes-td4652752.html
 
     Gives no warnings / errors.
-
+    
     Commit changes
 
     Now build package without test folder to be submitted to CRAN
@@ -70,6 +70,10 @@
         mv .RbuildignoreCRAN .Rbuildignore
         cd ..
         R CMD build --resave-data --compact-vignettes="gs+qpdf" stabs && R CMD check --as-cran --run-donttest stabs_XXX.tar.gz
+        cd stabs
         git checkout -- .RbuildignoreCRAN .Rbuildignore
+        
+    Run checks on WinBuilder:
+    upload package to http://win-builder.r-project.org/
 
     Ftp source package to CRAN or use web form at http://xmpalantir.wu.ac.at/cransubmit/.

@@ -5,6 +5,7 @@
 inst/NEWS.html
 inst/NEWS.pdf
 ^TODO$
+^Reverse_dependency_check.R$
 ^copy_Rout_to_Routsave.R$
 ^SOP_release.txt$
 .*\.tar\.gz
