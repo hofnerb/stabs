@@ -176,10 +176,20 @@ stabsel(x, ...)
   if (require("lars")) {
       (stab.lasso <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
                              fitfun = lars.lasso, cutoff = 0.75,
-                             PFER = 1))
+                             PFER = 1, , mc.cores = 1L))
+      ## set mc.cores = 1L only to avoid parallelization on CRAN;
+      ## In practice you usually do not need set this value unless you want to
+      ## avoid parallelization via mclapply or restrict it to a specific number
+      ## of available cores. See documentation of mclapply for more details.
+                             
       (stab.stepwise <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
                                 fitfun = lars.stepwise, cutoff = 0.75,
-                                PFER = 1))
+                                PFER = 1, , mc.cores = 1L)) 
+      ## set mc.cores = 1L only to avoid parallelization on CRAN;
+      ## In practice you usually do not need set this value unless you want to
+      ## avoid parallelization via mclapply or restrict it to a specific number
+      ## of available cores. See documentation of mclapply for more details.
+      
       par(mfrow = c(2, 1))
       plot(stab.lasso, main = "Lasso")
       plot(stab.stepwise, main = "Stepwise Selection")
@@ -192,16 +202,20 @@ stabsel(x, ...)
   if (require("glmnet")) {
       (stab.glmnet <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
                               fitfun = glmnet.lasso, cutoff = 0.75,
-                              PFER = 1))
+                              PFER = 1, mc.cores = 1L))
+      ## set mc.cores = 1L only to avoid parallelization on CRAN;
+      ## In practice you usually do not need set this value unless you want to
+      ## avoid parallelization via mclapply or restrict it to a specific number
+      ## of available cores. See documentation of mclapply for more details.
+     
       par(mfrow = c(2, 1))
       plot(stab.glmnet, main = "Lasso (glmnet)")
       if (exists("stab.lasso"))
           plot(stab.lasso, main = "Lasso (lars)")    
   }
   
-  
+\donttest{ 
   ## Select variables with maximum coefficients based on lasso estimate
-  
   set.seed(1234) # reset seed
   if (require("glmnet")) {
       ## use cross-validated lambda 
@@ -221,11 +235,11 @@ stabsel(x, ...)
       plot(stab.glmnet, main = "Lasso (glmnet)")
       ## --> very different results.
   }
+}
 
   ####################################################################
   ### using stability selection directly on computed boosting models
   ### from mboost
-
 
   if (require("mboost")) {
       ### low-dimensional example
@@ -239,7 +253,7 @@ stabsel(x, ...)
       ## the same:
       stabsel(mod, q = 3, PFER = 1, sampling.type = "MB", eval = FALSE)
 
-      \donttest{### Do not test the following code per default on CRAN as it takes some time to run:
+      \donttest{
       ## now run stability selection
       (sbody <- stabsel(mod, q = 3, PFER = 1, sampling.type = "MB"))
       opar <- par(mai = par("mai") * c(1, 1, 1, 2.7))

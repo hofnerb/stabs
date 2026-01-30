@@ -62,14 +62,22 @@
   if (require("lars")) {
       (stab.lasso <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
                              fitfun = lars.lasso, cutoff = 0.75,
-                             PFER = 1))
+                             PFER = 1, mc.cores = 1L))
+      ## set mc.cores = 1L only to avoid parallelization on CRAN;
+      ## In practice you usually do not need set this value unless you want to
+      ## avoid parallelization via mclapply or restrict it to a specific number
+      ## of available cores. See documentation of mclapply for more details.
 
       par(mfrow = c(2, 1))
       plot(stab.lasso)
 
       ## now change the PFER and the assumption:
       (stab.lasso_cf0.93_rconc <- stabsel(stab.lasso, cutoff = 0.93,
-                                          assumption = "r-concave"))
+                                          assumption = "r-concave", mc.cores = 1L))
+      ## In practice you usually do not need set this value unless you want to
+      ## avoid parallelization via mclapply or restrict it to a specific number
+      ## of available cores. See documentation of mclapply for more details.
+
       plot(stab.lasso_cf0.93_rconc)
       ## the cutoff did change and hence the PFER and the selected
       ## variables

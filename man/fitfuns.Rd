@@ -78,12 +78,13 @@ glmnet.lasso_maxCoef(x, y, q, ...)
       lars.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$selected
       lars.stepwise(bodyfat[, -2], bodyfat[,2], q = 3)$selected
   }
-  
+
+
   if (require("glmnet")) {
       glmnet.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$selected
       ## selection path
       glmnet.lasso(bodyfat[, -2], bodyfat[,2], q = 3)$path
-  
+\donttest{    
       ## Using the anticonservative glmnet.lasso (see args.fitfun):
       stab.glmnet <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
                              fitfun = glmnet.lasso, 
@@ -97,7 +98,7 @@ glmnet.lasso_maxCoef(x, y, q, ...)
       ## this selectes the q variables with the largest (abolute) effects rather
       ## than the first q variables which are selected in the lasso model
       ## hence leading to a very different selection
-  }
+}  }
 }
 \keyword{models}
 \keyword{nonlinear}

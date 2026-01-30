@@ -114,7 +114,12 @@
   if (require("lars")) {
       (stab.lasso <- stabsel(x = bodyfat[, -2], y = bodyfat[,2],
                              fitfun = lars.lasso, cutoff = 0.75,
-                             PFER = 1))
+                             PFER = 1, mc.cores = 1L))
+      ## set mc.cores = 1L only to avoid parallelization on CRAN;
+      ## In practice you usually do not need set this value unless you want to
+      ## avoid parallelization via mclapply or restrict it to a specific number
+      ## of available cores. See documentation of mclapply for more details.
+
       par(mfrow = c(2, 1))
       plot(stab.lasso, ymargin = 6)
       opar <- par(mai = par("mai") * c(1, 1, 1, 2.7))

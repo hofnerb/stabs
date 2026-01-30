@@ -1,6 +1,16 @@
 \name{NEWS}
 \title{News for Package 'stabs'}
 
+\section{Changes in stabs version 0.7-1 (2026-01-30)}{
+  \subsection{Miscellaneous}{
+    \itemize{
+      \item{Fixed timing issues for checks of examples on CRAN: 
+      added \code{\\donttest} in two cases and make sure that code is not
+      executed in parallel.}
+    }
+  }
+}
+
 \section{Changes in stabs version 0.7-0 (2026-01-27)}{
   \subsection{User-visible changes}{
     \itemize{

@@ -1,4 +1,14 @@
-commit c7bd4dc11b1b6b432b4cf03779f3a2d49457f133
+commit cbe709c889ec47bbd648dd159a89c26fc70f6384
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+
+    Release 0.7-1 to (hopefully) make CRAN happy regarding timings for checks of examples
+
+commit 5a28e41490b909deaae9b52beaf5614f7ca0cdd7
+Author: Benjamin Hofner <benjamin.hofner@pei.de>
+
+    Last patches for CRAN
+
+commit 170285983dd926889017661d9c6430638c4f89bf
 Author: Benjamin Hofner <benjamin.hofner@pei.de>
 
     Release 0.7-0
